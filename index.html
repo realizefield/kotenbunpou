@@ -602,6 +602,59 @@ body::before{content:'';position:fixed;inset:0;
 
   </div><!-- /.unit-grid UNIT9-13 -->
 
+
+  <!-- ══ 古文常識 ══ -->
+  <div class="chapter-head" style="margin-top:32px;">
+    <span class="ch-num">📖</span>
+    <span class="ch-title">古文常識 ─ 方位・時刻・月の異名・古語の読みと意味</span>
+    <div class="ch-line"></div>
+  </div>
+  <div class="unit-grid">
+
+    <!-- UNIT14 古文常識(1) -->
+    <div class="unit-card rank-none" id="card-14" data-unit="14">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 14</div><div class="card-title">古文常識(1)</div></div>
+        <div class="rank-badge none" id="badge-14">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">方位と時刻（十二支）・月の異名（睦月〜師走）。丑三つ時・正午・鬼門・五月雨など頻出事項。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(14,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(14,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(14,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(14)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_joshiki1.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;margin-bottom:6px;">📝 テストを受ける →</a>
+        <a href="koten_joshiki1.html" class="go-btn">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- UNIT15 古文常識(2) -->
+    <div class="unit-card rank-none" id="card-15" data-unit="15">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 15</div><div class="card-title">古文常識(2)</div></div>
+        <div class="rank-badge none" id="badge-15">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">古語の読みと意味（愛敬・物怪・几帳・方違へ・上達部・御息所・直衣・阿闍梨・網代・遣水など）。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(15,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(15,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(15,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(15)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_joshiki2.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;margin-bottom:6px;">📝 テストを受ける →</a>
+        <a href="koten_joshiki2.html" class="go-btn">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+  </div><!-- /.unit-grid UNIT14-15 -->
+
   <!-- ══ ティータイム ══ -->
   <div class="chapter-head" style="margin-top:32px;">
     <span class="ch-num">🍵</span>
@@ -739,7 +792,7 @@ body::before{content:'';position:fixed;inset:0;
 <div class="comment-toast" id="comment-toast"></div>
 
 <script>
-// ══ DATA ══════════════════════════════════════════════
+// ---
 
 // フラッシュカードデータ
 const FLASH_DATA = {
@@ -800,7 +853,32 @@ const FLASH_DATA = {
     {front:'頼む（自）vs 頼む（他）',hint:'未然形の母音で判断',answer:'自→マ行四段（頼まず） / 他→マ行下二段（頼めず）',note:'頼まず（ア段）→四段→自→頼りにする / 頼めず（エ段）→下二段→他→当てにさせる'},
     {front:'漬（ひ）つの自他',hint:'ぬれる vs ぬらす',answer:'自→タ行上二段（ぬれる） / 他→タ行下二段（ぬらす）',note:'袖ひちて（自・ぬれて）/ 袖をひてて（他・ぬらして）'},
     {front:'「見ゆ」の意味',hint:'「見る」との違い',answer:'見える・見られる・現れる',note:'ヤ行下二段活用。「見す」は「見せる」の意'},
-  ]}
+  ]},
+  14: {title:'古文常識(1) 方位・時刻・月の異名',cards:[
+    {front:'午の刻',hint:'現代時刻は？',answer:'11〜13時（正午を中心）',note:'「正午」の語源。午の刻の正中＝12時'},
+    {front:'丑三つ時',hint:'何時頃？',answer:'午前2時〜2時30分（丑の刻の3番目）',note:'丑の刻（1〜3時）を4分割した3番目。怪異の時間'},
+    {front:'鬼門（きもん）',hint:'どの方角？',answer:'北東（丑寅の方角）',note:'鬼が出入りすると忌み嫌われた方角'},
+    {front:'睦月（むつき）',hint:'何月？',answer:'旧暦1月',note:'人々が睦み合う月。正月に親族が集まる'},
+    {front:'弥生（やよひ）',hint:'何月？',answer:'旧暦3月',note:'草木がいよいよ生い茂る。弥（いよいよ）＋生'},
+    {front:'皐月（さつき）',hint:'何月？',answer:'旧暦5月',note:'「五月雨」は現代の梅雨（6〜7月頃）'},
+    {front:'神無月（かんなづき）',hint:'何月？',answer:'旧暦10月',note:'全国の神が出雲に集まる月。出雲では「神在月」'},
+    {front:'師走（しはす）',hint:'何月？',answer:'旧暦12月',note:'師（僧侶）が走り回るほど忙しい月。現代でも使われる'},
+    {front:'水無月（みなづき）',hint:'何月？',answer:'旧暦6月',note:'「無」は「の」の意。田に水を引く月'},
+    {front:'文月（ふみづき）',hint:'何月？',answer:'旧暦7月',note:'七夕に書（文）を供える月'},
+  ]},
+  15: {title:'古文常識(2) 古語の読みと意味',cards:[
+    {front:'愛敬',hint:'あいきゃう',answer:'魅力・かわいらしさ・人の心を引きつける力',note:'現代語「愛嬌（あいきょう）」の語源'},
+    {front:'物怪',hint:'もののけ',answer:'死霊・生霊などの怪しい霊',note:'人に取り憑き病気や死をもたらす。源氏物語に多出'},
+    {front:'几帳',hint:'きちゃう',answer:'目隠し・仕切りに用いる移動式衝立',note:'「几帳面」の語源。布を垂らした豪華な調度品'},
+    {front:'方違へ',hint:'かたたがへ',answer:'凶方位を避けて一泊してから目的地へ向かう風習',note:'陰陽道の慣習。枕草子・源氏物語に多数登場'},
+    {front:'上達部',hint:'かんだちめ',answer:'三位以上の高位の貴族の総称',note:'公卿ともいう。朝廷の政治の中枢'},
+    {front:'御息所',hint:'みやすどころ',answer:'天皇の寵愛を受けた女性・天皇の子を産んだ女性',note:'六条御息所（源氏物語）が有名'},
+    {front:'直衣',hint:'なほし',answer:'貴族男性の平常の略装',note:'束帯より格式が低い。天皇や上位貴族が私的に着用'},
+    {front:'阿闍梨',hint:'あじゃり',answer:'高徳の僧・弟子を導く師僧',note:'仏教用語。サンスクリット語が語源'},
+    {front:'網代',hint:'あじろ',answer:'竹・木を編んだ魚を捕る仕掛け・網代車',note:'冬の風物詩。車の装飾にも使われた'},
+    {front:'遣水',hint:'やりみづ',answer:'庭に引き込んだ小川・水路',note:'貴族庭園の風雅な演出。源氏物語に描かれる'},
+  ]},
+
 };
 
 // クイズデータ
@@ -815,7 +893,7 @@ const QUIZ_DATA = {
   8: [{q:'「書かず」の「書か」の活用形は？',opts:['未然形', '連用形', '終止形', '已然形'],ans:0},{q:'「書きたり」の「書き」の活用形は？',opts:['未然形', '連用形', '終止形', '命令形'],ans:1},{q:'「入る人」の「入る」の活用形は？',opts:['終止形', '連体形', '已然形', '命令形'],ans:1},{q:'「降れども」の「降れ」の活用形は？',opts:['連用形', '終止形', '已然形', '命令形'],ans:2},{q:'「参れ（命令）」の活用形は？',opts:['終止形', '連体形', '已然形', '命令形'],ans:3},{q:'「已然形＋ば」の意味は？',opts:['仮定条件', '確定条件', '逆接', '打消'],ans:1}]
 };
 
-// ══ RANK MANAGEMENT ════════════════════════════════════
+// ---
 function getRanks(){
   try{ return JSON.parse(localStorage.getItem('kotenbun_ranks')||'{}'); }
   catch(e){ return {}; }
@@ -848,7 +926,7 @@ function applyRank(unit, rank){
 function updateStats(){
   const ranks = getRanks();
   let a=0,b=0,c=0,n=0;
-  for(let i=1;i<=13;i++){
+  for(let i=1;i<=15;i++){
     const r=ranks[i];
     if(r==='A') a++;
     else if(r==='B') b++;
@@ -863,13 +941,13 @@ function updateStats(){
 
 function initRanks(){
   const ranks = getRanks();
-  for(let i=1;i<=13;i++){
+  for(let i=1;i<=15;i++){
     if(ranks[i]) applyRank(i, ranks[i]);
   }
   updateStats();
 }
 
-// ══ FLASH CARDS ════════════════════════════════════════
+// ---
 let flashUnit=1, flashIdx=0;
 let flashSpeed=0;        // 0=制限なし, 1/2/3=秒数
 let flashTimerID=null;
@@ -937,7 +1015,7 @@ function flashPrev(){
   setPlayBtns('idle');
 }
 
-// ── 速度設定 ──
+// 速度設定 ──
 function setSpeed(sec){
   flashSpeed=sec;
   document.querySelectorAll('.spd-btn').forEach(b=>b.classList.remove('active'));
@@ -949,7 +1027,7 @@ function setSpeed(sec){
   }
 }
 
-// ── スタート ──
+// スタート ──
 function flashStart(){
   if(flashSpeed===0){ alert('先に表示時間（1秒・2秒・3秒）を選んでください。'); return; }
   flashIdx=0; flashLap=1; flashPhase='front';
@@ -961,7 +1039,7 @@ function flashStart(){
   startFlashTimer();
 }
 
-// ── ストップ ──
+// ストップ ──
 function flashStop(){
   clearFlashTimer();
   flashRunning=false;
@@ -969,7 +1047,7 @@ function flashStop(){
   document.getElementById('phase-label').textContent='⏸ 一時停止中';
 }
 
-// ── 継続 ──
+// 継続 ──
 function flashResume(){
   flashRunning=true;
   setPlayBtns('running');
@@ -985,7 +1063,7 @@ function flashResume(){
   startFlashTimer();
 }
 
-// ── タイマー本体 ──
+// タイマー本体 ──
 function startFlashTimer(){
   if(!flashRunning || flashSpeed===0) return;
   const ms=flashSpeed*1000;
@@ -1045,7 +1123,7 @@ function animateBar(ms){
   }));
 }
 
-// ── ボタン状態管理 ──
+// ボタン状態管理 ──
 // state: 'idle'=初期, 'running'=再生中, 'paused'=停止中, 'done'=完了
 function setPlayBtns(state){
   const bs=document.getElementById('btn-start');
@@ -1065,7 +1143,7 @@ function updatePhaseLabel(phase){
   el.textContent=phase==='front'?'【 表を確認 】':'【 答えを確認 】';
 }
 
-// ══ QUIZ ═══════════════════════════════════════════════
+// ---
 let quizUnit=1, quizIdx=0, quizScore=0, quizAnswered=false, quizQuestions=[];
 
 function openMiniQuiz(unit){
@@ -1149,7 +1227,7 @@ function showResult(){
   rankEl.className='result-rank '+rankClass;
 }
 
-// ══ COMMENT TOAST ══════════════════════════════════════
+// ---
 function showComment(msg, ok){
   const t=document.getElementById('comment-toast');
   t.textContent=msg;
@@ -1158,7 +1236,7 @@ function showComment(msg, ok){
   setTimeout(()=>t.classList.remove('show'),900);
 }
 
-// ══ CONFETTI ═══════════════════════════════════════════
+// ---
 function launchConfetti(){
   const wrap=document.getElementById('confetti-wrap');
   wrap.innerHTML='';
@@ -1180,7 +1258,7 @@ function launchConfetti(){
   setTimeout(()=>wrap.innerHTML='',3000);
 }
 
-// ══ INIT ═══════════════════════════════════════════════
+// ---
 initRanks();
 
 // close modal on bg click

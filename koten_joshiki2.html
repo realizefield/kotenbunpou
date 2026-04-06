@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>古文常識(2) ─ 古語の読みと意味（③④）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sumi:#2d2416;--verm:#c0392b;--verm-lt:#e74c3c;
+  --gold:#b8860b;--gold-lt:#d4a017;--gold-pale:#fff9e8;
+  --jade:#2e7d52;--jade-lt:#43a36b;--jade-pale:#edfaf3;
+  --indigo:#1a3a5c;--indigo-lt:#2980b9;--indigo-pale:#eef4fb;
+  --paper:#faf6ef;--paper-dk:#f0e8d8;--paper-md:#e8dcc8;
+  --cream:#fdfaf4;--gray:#8a7f72;
+  --shadow:rgba(90,60,20,0.13);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);font-family:'Noto Serif JP',serif;
+  color:var(--sumi);min-height:100vh;padding-bottom:90px;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;}
+.timer-header{background:linear-gradient(135deg,#2d2416,#1a1008);color:white;
+  padding:11px 24px;display:flex;justify-content:space-between;align-items:center;
+  border-bottom:2px solid #b8860b;}
+.timer-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:#d4a017;
+  letter-spacing:0.15em;margin-right:8px;}
+.timer-main{font-family:'Courier New',monospace;font-size:24px;color:#ffd700;font-weight:bold;}
+.rec-box{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  color:rgba(255,255,255,0.65);display:flex;gap:10px;align-items:center;}
+.rec-item{display:flex;align-items:center;gap:4px;}
+.rec-n{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);
+  border-radius:3px;padding:2px 6px;font-size:10px;}
+.rec-v{color:#ffd700;font-weight:bold;font-family:monospace;}
+.wrapper{max-width:960px;margin:0 auto;padding:26px 18px 60px;position:relative;z-index:1;}
+.page-header{margin-bottom:22px;padding-bottom:14px;
+  border-bottom:1px solid var(--paper-md);position:relative;}
+.page-header::after{content:'';position:absolute;bottom:-1px;left:0;
+  width:80px;height:3px;background:var(--verm);}
+.breadcrumb{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  color:var(--gray);letter-spacing:0.1em;margin-bottom:7px;}
+.page-title{font-family:'Zen Old Mincho',serif;font-size:26px;
+  font-weight:700;color:var(--sumi);letter-spacing:0.1em;}
+.page-sub{font-family:'Noto Sans JP',sans-serif;font-size:12px;
+  color:var(--gray);margin-top:4px;}
+/* Section card */
+.sec-card{background:var(--cream);border:1.5px solid var(--paper-md);
+  border-radius:6px;box-shadow:0 2px 12px var(--shadow);
+  padding:22px 24px;margin-bottom:20px;
+  animation:cardIn 0.4s ease-out both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.sec-head{display:flex;align-items:center;gap:10px;
+  margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--paper-md);}
+.sec-badge{color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;
+  font-weight:700;letter-spacing:0.12em;padding:3px 10px;border-radius:2px;}
+.sec-title{font-family:'Zen Old Mincho',serif;font-size:16px;font-weight:700;color:var(--sumi);}
+/* 単語カードグリッド */
+.word-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:10px;}
+.word-card{background:var(--paper);border:1px solid var(--paper-md);border-radius:4px;
+  padding:13px 16px;position:relative;transition:box-shadow 0.2s;}
+.word-card:hover{box-shadow:0 3px 10px var(--shadow);}
+.word-reading{font-family:'Noto Sans JP',sans-serif;font-size:10px;
+  color:var(--indigo-lt);letter-spacing:0.1em;margin-bottom:3px;}
+.word-main{font-family:'Zen Old Mincho',serif;font-size:20px;
+  font-weight:700;color:var(--sumi);margin-bottom:6px;}
+.word-kana{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  color:var(--verm);font-weight:700;margin-bottom:6px;}
+.word-mean{font-family:'Noto Serif JP',serif;font-size:13px;
+  line-height:1.85;color:#3a3020;}
+.word-mean strong{color:var(--indigo);}
+.word-tag{display:inline-block;font-family:'Noto Sans JP',sans-serif;font-size:9px;
+  font-weight:700;padding:1px 7px;border-radius:10px;margin-bottom:5px;}
+.tag-jikan{background:rgba(192,57,43,0.12);color:var(--verm);}
+.tag-mono{background:rgba(26,58,92,0.1);color:var(--indigo);}
+.tag-hito{background:rgba(46,125,82,0.1);color:var(--jade);}
+.tag-koto{background:rgba(184,134,11,0.12);color:var(--gold);}
+/* 時刻図 */
+.jissui-ring{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0;}
+.jissui-item{background:var(--paper);border:1px solid var(--paper-md);
+  border-radius:4px;padding:10px 8px;text-align:center;}
+.ji-kanji{font-family:'Zen Old Mincho',serif;font-size:22px;font-weight:700;}
+.ji-yomi{font-family:'Noto Sans JP',sans-serif;font-size:10px;color:var(--gray);}
+.ji-time{font-family:'Courier New',monospace;font-size:12px;color:var(--indigo);font-weight:700;}
+.ji-dir{font-family:'Noto Sans JP',sans-serif;font-size:10px;color:var(--verm);}
+/* 月の異名テーブル */
+.tsuki-table{width:100%;border-collapse:collapse;font-size:13px;}
+.tsuki-table th{background:var(--sumi);color:white;padding:8px 12px;
+  font-family:'Noto Sans JP',sans-serif;font-size:11px;letter-spacing:0.08em;}
+.tsuki-table td{padding:8px 12px;border-bottom:1px solid var(--paper-md);vertical-align:top;}
+.tsuki-table tr:nth-child(even) td{background:rgba(250,246,239,0.6);}
+.tsuki-table .t-num{font-family:'Zen Old Mincho',serif;font-size:16px;font-weight:700;text-align:center;}
+.tsuki-table .t-name{font-family:'Zen Old Mincho',serif;font-size:15px;color:var(--verm);font-weight:700;}
+.tsuki-table .t-kana{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gray);}
+.tsuki-table .t-note{font-family:'Noto Serif JP',serif;font-size:12px;color:#3a3020;line-height:1.7;}
+/* desc box */
+.desc-box{background:var(--paper);border:1px solid var(--paper-md);
+  border-left:4px solid var(--indigo-lt);border-radius:0 3px 3px 0;
+  padding:13px 16px;font-size:13.5px;line-height:2;margin-bottom:14px;color:#3a3020;}
+.desc-box .verm{color:var(--verm);font-weight:700;}
+.point-box{background:rgba(184,134,11,0.07);border:1px solid rgba(184,134,11,0.2);
+  border-left:4px solid var(--gold);border-radius:0 3px 3px 0;
+  padding:12px 16px;font-family:'Noto Sans JP',sans-serif;
+  font-size:12.5px;line-height:1.9;color:#3a2808;margin-top:10px;}
+.point-box strong{color:var(--verm);}
+/* blank/challenge */
+.blank{display:inline-flex;align-items:center;justify-content:center;
+  min-width:80px;height:30px;padding:0 8px;border-radius:3px;cursor:pointer;
+  font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif;
+  transition:all 0.2s;white-space:nowrap;}
+.blank.initial{color:var(--verm);background:rgba(192,57,43,0.06);
+  border:1.5px dashed rgba(192,57,43,0.4);}
+.blank.challenge{background:var(--paper);border:1.5px solid var(--indigo-lt);
+  color:transparent;cursor:pointer;}
+.blank.filled{background:var(--indigo-pale);border:1.5px solid var(--indigo-lt);color:var(--indigo);}
+.blank.correct{background:var(--jade-pale);border:2px solid var(--jade);
+  color:var(--jade);animation:pop 0.3s;}
+.blank.wrong{background:rgba(192,57,43,0.07);border:2px solid var(--verm);
+  color:var(--verm);}
+@keyframes pop{0%{transform:scale(0.9)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+/* word bank */
+#word-bank-fixed{position:fixed;bottom:0;left:0;width:100%;
+  background:linear-gradient(180deg,var(--cream),var(--paper-dk));
+  border-top:3px solid var(--indigo);padding:12px 0 18px;
+  z-index:9999;box-shadow:0 -8px 28px rgba(0,0,0,0.13);
+  display:none;animation:bankUp 0.3s ease-out;}
+@keyframes bankUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.bank-inner{max-width:960px;margin:0 auto;padding:0 18px;}
+.bank-title{font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;
+  color:var(--indigo);letter-spacing:0.15em;text-align:center;margin-bottom:9px;}
+.word-list{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;}
+.word-item{background:white;border:1.5px solid var(--indigo-lt);padding:5px 12px;
+  border-radius:3px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;
+  font-weight:700;font-size:12px;color:var(--indigo);transition:all 0.15s;}
+.word-item:hover:not(.used){background:var(--indigo-pale);transform:translateY(-1px);}
+.word-item.sel{background:var(--indigo);color:white;}
+.word-item.used{opacity:0.14;cursor:default;}
+/* btn */
+.btn-area{display:flex;justify-content:center;gap:10px;
+  margin-top:20px;padding-top:16px;border-top:1px solid var(--paper-md);flex-wrap:wrap;}
+.btn{padding:10px 24px;font-family:'Noto Sans JP',sans-serif;font-weight:700;
+  font-size:13px;letter-spacing:0.1em;border:none;border-radius:3px;
+  cursor:pointer;transition:all 0.2s;}
+.btn-start{background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;}
+.btn-check{background:linear-gradient(135deg,#43a36b,#27694a);color:white;}
+.btn-reset{background:var(--paper);color:var(--gray);border:1px solid var(--paper-md);}
+.score-badge{display:inline-flex;align-items:center;gap:6px;
+  background:rgba(67,163,107,0.09);border:1.5px solid var(--jade);
+  border-radius:3px;padding:6px 14px;font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;color:var(--jade);font-weight:700;margin-top:12px;}
+/* toast/confetti */
+.toast{position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0.85);background:var(--sumi);color:white;
+  padding:14px 28px;border-radius:8px;font-family:'Zen Old Mincho',serif;font-size:18px;
+  z-index:99999;opacity:0;pointer-events:none;transition:all 0.25s;
+  box-shadow:0 8px 30px rgba(0,0,0,0.4);border:2px solid var(--gold);}
+.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.toast.ok{border-color:var(--jade);}
+.cfw{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden;}
+.cp{position:absolute;top:-12px;animation:cf linear forwards;}
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+/* nav */
+#koten-unit-nav{display:flex;justify-content:center;align-items:center;gap:10px;
+  padding:11px 18px;background:#2d2416;border-top:2px solid #b8860b;
+  position:fixed;bottom:0;left:0;width:100%;z-index:500;flex-wrap:wrap;}
+.kun-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 15px;
+  border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:0.08em;cursor:pointer;
+  transition:all 0.2s;text-decoration:none;border:none;}
+.kun-btn.prev{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);
+  border:1px solid rgba(255,255,255,0.2);}
+.kun-btn.idx{background:#b8860b;color:white;}
+.kun-btn.nxt{background:#c0392b;color:white;}
+.kun-btn.test{background:#2980b9;color:white;}
+</style></head><body>
+<div class="timer-header">
+  <div style="display:flex;align-items:center;">
+    <span class="timer-label">TIME</span>
+    <span class="timer-main" id="timer">00:00.0</span>
+  </div>
+  <div class="rec-box">
+    <span class="rec-item"><span class="rec-n">1回目</span><span class="rec-v" id="r1">―</span></span>
+    <span class="rec-item"><span class="rec-n">2回目</span><span class="rec-v" id="r2">―</span></span>
+    <span class="rec-item"><span class="rec-n">3回目</span><span class="rec-v" id="r3">―</span></span>
+  </div>
+</div>
+<div class="wrapper">
+<div class="page-header">
+  <div class="breadcrumb">古典文法 › 古文常識 › UNIT 15</div>
+  <h1 class="page-title">古文常識(2)</h1>
+  <p class="page-sub">古語の読みと意味（③④）─ 人物・もの・場所・ことばを覚える</p>
+</div>
+
+<!-- ② 古語（愛敬〜今様） -->
+<div class="sec-card">
+  <div class="sec-head">
+    <span class="sec-badge" style="background:linear-gradient(135deg,#5a3010,#7a4820);">② 古語①</span>
+    <span class="sec-title">古語の読みと意味（愛敬〜今様）</span>
+  </div>
+  <div class="desc-box" style="font-size:12.5px;">
+    古文特有の名詞を取り上げてその意味を理解しておこう。読み方とおよその意味を覚えること。
+  </div>
+  <div class="word-grid">
+<div class="word-card">
+  <span class="word-tag tag-hito">人物</span>
+  <div class="word-main">愛敬</div>
+  <div class="word-kana">【あいきゃう】</div>
+  <div class="word-mean">魅力・かわいらしさ・愛らしい様子。人の心を引きつける魅力。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-hito">人物</span>
+  <div class="word-main">阿闍梨</div>
+  <div class="word-kana">【あじゃり】</div>
+  <div class="word-mean">高徳の僧。弟子を導く師僧。仏に供える水花を持ち弟子を導く。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">網代</div>
+  <div class="word-kana">【あじろ】</div>
+  <div class="word-mean">竹や木を編んで作った魚を捕る仕掛け・車（網代車）。冬の風物詩。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">場所</span>
+  <div class="word-main">東</div>
+  <div class="word-kana">【あづま】</div>
+  <div class="word-mean">東国（関東地方）。都（京都）から見た東の地方。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-hito">人物</span>
+  <div class="word-main">海士</div>
+  <div class="word-kana">【あま】</div>
+  <div class="word-mean">海で魚・貝・海藻を採る漁師。主に女性の漁師を指すことも。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">案内</div>
+  <div class="word-kana">【あない】</div>
+  <div class="word-mean">事情・ようす・知らせること。「案内者」は道案内をする者。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">朝臣</div>
+  <div class="word-kana">【あそん】</div>
+  <div class="word-mean">五位以上の貴族につける敬称。「朝廷の臣」の意。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">今様</div>
+  <div class="word-kana">【いまやう】</div>
+  <div class="word-mean">現代風・当世風。平安末期に流行した歌謡・歌曲のこと。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">一様</div>
+  <div class="word-kana">【いちやう】</div>
+  <div class="word-mean">同じ様子・一律。変化がないこと。</div>
+</div>
+  </div>
+</div>
+
+<div style="margin-top:0;padding:18px 20px;background:linear-gradient(135deg,var(--indigo-pale),var(--cream));border:1.5px solid rgba(26,58,92,0.15);border-radius:6px;"><div style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:var(--indigo);letter-spacing:0.15em;margin-bottom:14px;">📝 読みをすべて答えなさい</div><div id="blanks-grp1" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-bottom:14px;"><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">愛敬</div><span class="blank initial" id="bl-grp1-あいきゃう" data-ans="あいきゃう" data-grp="grp1" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">あいきゃう</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">阿闍梨</div><span class="blank initial" id="bl-grp1-あじゃり" data-ans="あじゃり" data-grp="grp1" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">あじゃり</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">網代</div><span class="blank initial" id="bl-grp1-あじろ" data-ans="あじろ" data-grp="grp1" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">あじろ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">東</div><span class="blank initial" id="bl-grp1-あづま" data-ans="あづま" data-grp="grp1" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">あづま</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">海士</div><span class="blank initial" id="bl-grp1-あま" data-ans="あま" data-grp="grp1" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">あま</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">案内</div><span class="blank initial" id="bl-grp1-あない" data-ans="あない" data-grp="grp1" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">あない</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">朝臣</div><span class="blank initial" id="bl-grp1-あそん" data-ans="あそん" data-grp="grp1" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">あそん</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">今様</div><span class="blank initial" id="bl-grp1-いまやう" data-ans="いまやう" data-grp="grp1" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">いまやう</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">一様</div><span class="blank initial" id="bl-grp1-いちやう" data-ans="いちやう" data-grp="grp1" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">いちやう</span></div></div><div id="wb-wrap-grp1" style="display:none;margin-bottom:12px;padding:12px 14px;background:var(--gold-pale);border:1px solid rgba(184,134,11,0.25);border-radius:4px;"><div style="font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.15em;margin-bottom:8px;">【 語 群 】</div><div id="wb-grp1" style="display:flex;flex-wrap:wrap;gap:6px;"><div class="word-item" data-val="あいきゃう" data-grp="grp1">あいきゃう</div><div class="word-item" data-val="あじゃり" data-grp="grp1">あじゃり</div><div class="word-item" data-val="あじろ" data-grp="grp1">あじろ</div><div class="word-item" data-val="あづま" data-grp="grp1">あづま</div><div class="word-item" data-val="あま" data-grp="grp1">あま</div><div class="word-item" data-val="あない" data-grp="grp1">あない</div><div class="word-item" data-val="あそん" data-grp="grp1">あそん</div><div class="word-item" data-val="いまやう" data-grp="grp1">いまやう</div><div class="word-item" data-val="いちやう" data-grp="grp1">いちやう</div></div></div><div id="score-grp1"></div><div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;"><button class="btn btn-start" onclick="startGrp('grp1')">▶ チャレンジ開始</button><button class="btn btn-check" id="check-grp1" style="display:none;" onclick="checkGrp('grp1')">✓ 判定する</button><button class="btn btn-reset" onclick="resetGrp('grp1')">↺ リセット</button></div></div>
+<!-- ③ 古語（方違へ〜指貫） -->
+<div class="sec-card">
+  <div class="sec-head">
+    <span class="sec-badge" style="background:linear-gradient(135deg,#2e7d52,#1a5a38);">③ 古語②</span>
+    <span class="sec-title">古語の読みと意味（方違へ〜指貫）</span>
+  </div>
+  <div class="word-grid">
+<div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">方違へ</div>
+  <div class="word-kana">【かたたがへ】</div>
+  <div class="word-mean">陰陽道の凶方位を避けるため別の方向に一泊してから目的地へ向かう風習。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">時雨</div>
+  <div class="word-kana">【しぐれ】</div>
+  <div class="word-mean">秋から冬にかけて降ったり止んだりする雨。もの悲しさの象徴。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">郭公</div>
+  <div class="word-kana">【ほととぎす】</div>
+  <div class="word-mean">夏の鳥。鳴き声が美しく和歌に多く詠まれる。「不如帰」とも書く。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">遠垣</div>
+  <div class="word-kana">【とほがき】</div>
+  <div class="word-mean">遠くを遮る垣根。貴族の邸宅の外構え。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-hito">人物</span>
+  <div class="word-main">上達部</div>
+  <div class="word-kana">【かんだちめ】</div>
+  <div class="word-mean">三位以上の高位の貴族の総称。公卿とも。政治の中枢を担う。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">場所</span>
+  <div class="word-main">乾</div>
+  <div class="word-kana">【いぬゐ】</div>
+  <div class="word-mean">北西の方角（戌と亥の間）。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">狩衣</div>
+  <div class="word-kana">【かりぎぬ】</div>
+  <div class="word-mean">貴族男性の略装・外出着。もとは狩猟の服。現代の「かりぎぬ」。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">韓衣</div>
+  <div class="word-kana">【からころも】</div>
+  <div class="word-mean">中国風の衣服。異国的な美しさの象徴。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">徒歩</div>
+  <div class="word-kana">【かち】</div>
+  <div class="word-mean">徒歩で歩くこと。馬に乗らずに歩くこと。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-hito">人物</span>
+  <div class="word-main">侍</div>
+  <div class="word-kana">【さむらひ】</div>
+  <div class="word-mean">主君のそばに仕える者。武士の意味でも使われるようになった。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">飯</div>
+  <div class="word-kana">【かれいひ】</div>
+  <div class="word-mean">干し飯。水で戻して食べる携帯食。武士・旅人の食料。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">衣冠</div>
+  <div class="word-kana">【ゐかん】</div>
+  <div class="word-mean">朝廷の儀式に用いる貴族男性の正装。束帯より略式。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">几帳</div>
+  <div class="word-kana">【きちゃう】</div>
+  <div class="word-mean">貴族の邸内で目隠しや仕切りに用いる調度品。布を垂らした移動式衝立。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-hito">人物</span>
+  <div class="word-main">公卿</div>
+  <div class="word-kana">【くぎゃう】</div>
+  <div class="word-mean">三位以上または参議以上の高位の貴族。朝廷の最高幹部。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">宣旨</div>
+  <div class="word-kana">【せんじ】</div>
+  <div class="word-mean">天皇の命令を伝える文書。口頭の命令を書面にしたもの。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">前栽</div>
+  <div class="word-kana">【せんざい】</div>
+  <div class="word-mean">庭の植え込み・庭園の草木。貴族邸の庭を飾る植物。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-hito">人物</span>
+  <div class="word-main">僧都</div>
+  <div class="word-kana">【そうづ】</div>
+  <div class="word-mean">僧侶の位のひとつ。僧正の次位。高位の僧を指す。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">草子</div>
+  <div class="word-kana">【さうし】</div>
+  <div class="word-mean">書物・冊子のこと。「枕草子」「源氏物語」も草子の一種。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">指貫</div>
+  <div class="word-kana">【さしぬき】</div>
+  <div class="word-mean">袴の一種。裾に紐を通して絞った貴族男性の下衣。</div>
+</div>
+  </div>
+</div>
+
+<div style="margin-top:0;padding:18px 20px;background:linear-gradient(135deg,var(--indigo-pale),var(--cream));border:1.5px solid rgba(26,58,92,0.15);border-radius:6px;"><div style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:var(--indigo);letter-spacing:0.15em;margin-bottom:14px;">📝 読みをすべて答えなさい</div><div id="blanks-grp2" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-bottom:14px;"><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">方違へ</div><span class="blank initial" id="bl-grp2-かたたがへ" data-ans="かたたがへ" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">かたたがへ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">時雨</div><span class="blank initial" id="bl-grp2-しぐれ" data-ans="しぐれ" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">しぐれ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">郭公</div><span class="blank initial" id="bl-grp2-ほととぎす" data-ans="ほととぎす" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">ほととぎす</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">遠垣</div><span class="blank initial" id="bl-grp2-とほがき" data-ans="とほがき" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">とほがき</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">上達部</div><span class="blank initial" id="bl-grp2-かんだちめ" data-ans="かんだちめ" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">かんだちめ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">乾</div><span class="blank initial" id="bl-grp2-いぬゐ" data-ans="いぬゐ" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">いぬゐ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">狩衣</div><span class="blank initial" id="bl-grp2-かりぎぬ" data-ans="かりぎぬ" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">かりぎぬ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">韓衣</div><span class="blank initial" id="bl-grp2-からころも" data-ans="からころも" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">からころも</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">徒歩</div><span class="blank initial" id="bl-grp2-かち" data-ans="かち" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">かち</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">侍</div><span class="blank initial" id="bl-grp2-さむらひ" data-ans="さむらひ" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">さむらひ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">飯</div><span class="blank initial" id="bl-grp2-かれいひ" data-ans="かれいひ" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">かれいひ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">衣冠</div><span class="blank initial" id="bl-grp2-ゐかん" data-ans="ゐかん" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">ゐかん</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">几帳</div><span class="blank initial" id="bl-grp2-きちゃう" data-ans="きちゃう" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">きちゃう</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">公卿</div><span class="blank initial" id="bl-grp2-くぎゃう" data-ans="くぎゃう" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">くぎゃう</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">宣旨</div><span class="blank initial" id="bl-grp2-せんじ" data-ans="せんじ" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">せんじ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">前栽</div><span class="blank initial" id="bl-grp2-せんざい" data-ans="せんざい" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">せんざい</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">僧都</div><span class="blank initial" id="bl-grp2-そうづ" data-ans="そうづ" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">そうづ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">草子</div><span class="blank initial" id="bl-grp2-さうし" data-ans="さうし" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">さうし</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">指貫</div><span class="blank initial" id="bl-grp2-さしぬき" data-ans="さしぬき" data-grp="grp2" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">さしぬき</span></div></div><div id="wb-wrap-grp2" style="display:none;margin-bottom:12px;padding:12px 14px;background:var(--gold-pale);border:1px solid rgba(184,134,11,0.25);border-radius:4px;"><div style="font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.15em;margin-bottom:8px;">【 語 群 】</div><div id="wb-grp2" style="display:flex;flex-wrap:wrap;gap:6px;"><div class="word-item" data-val="かたたがへ" data-grp="grp2">かたたがへ</div><div class="word-item" data-val="しぐれ" data-grp="grp2">しぐれ</div><div class="word-item" data-val="ほととぎす" data-grp="grp2">ほととぎす</div><div class="word-item" data-val="とほがき" data-grp="grp2">とほがき</div><div class="word-item" data-val="かんだちめ" data-grp="grp2">かんだちめ</div><div class="word-item" data-val="いぬゐ" data-grp="grp2">いぬゐ</div><div class="word-item" data-val="かりぎぬ" data-grp="grp2">かりぎぬ</div><div class="word-item" data-val="からころも" data-grp="grp2">からころも</div><div class="word-item" data-val="かち" data-grp="grp2">かち</div><div class="word-item" data-val="さむらひ" data-grp="grp2">さむらひ</div><div class="word-item" data-val="かれいひ" data-grp="grp2">かれいひ</div><div class="word-item" data-val="ゐかん" data-grp="grp2">ゐかん</div><div class="word-item" data-val="きちゃう" data-grp="grp2">きちゃう</div><div class="word-item" data-val="くぎゃう" data-grp="grp2">くぎゃう</div><div class="word-item" data-val="せんじ" data-grp="grp2">せんじ</div><div class="word-item" data-val="せんざい" data-grp="grp2">せんざい</div><div class="word-item" data-val="そうづ" data-grp="grp2">そうづ</div><div class="word-item" data-val="さうし" data-grp="grp2">さうし</div><div class="word-item" data-val="さしぬき" data-grp="grp2">さしぬき</div></div></div><div id="score-grp2"></div><div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;"><button class="btn btn-start" onclick="startGrp('grp2')">▶ チャレンジ開始</button><button class="btn btn-check" id="check-grp2" style="display:none;" onclick="checkGrp('grp2')">✓ 判定する</button><button class="btn btn-reset" onclick="resetGrp('grp2')">↺ リセット</button></div></div>
+<!-- ④ 古語（築地〜遣水） -->
+<div class="sec-card">
+  <div class="sec-head">
+    <span class="sec-badge" style="background:linear-gradient(135deg,#1a2540,#2a3560);">④ 古語③</span>
+    <span class="sec-title">古語の読みと意味（築地〜遣水）</span>
+  </div>
+  <div class="word-grid">
+<div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">築地</div>
+  <div class="word-kana">【ついぢ】</div>
+  <div class="word-mean">土を突き固めて作った塀。瓦で屋根を葺いた土塀。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">局</div>
+  <div class="word-kana">【つぼね】</div>
+  <div class="word-mean">宮中や貴族の邸に仕える女房の部屋・仕切られた個室。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">手度</div>
+  <div class="word-kana">【てど】</div>
+  <div class="word-mean">手紙・書状のこと。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">場所</span>
+  <div class="word-main">天竺</div>
+  <div class="word-kana">【てんぢく】</div>
+  <div class="word-mean">インドのこと。仏教の発祥地として神聖視された。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">読経</div>
+  <div class="word-kana">【どきゃう】</div>
+  <div class="word-mean">経典を声に出して読むこと。勤行（ごんぎょう）の中心。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-hito">人物</span>
+  <div class="word-main">内侍</div>
+  <div class="word-kana">【ないし】</div>
+  <div class="word-mean">宮中に仕える女官。天皇の側近として仕える女性。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-hito">人物</span>
+  <div class="word-main">最上人</div>
+  <div class="word-kana">【さいじゃうびと】</div>
+  <div class="word-mean">最高位の人。天皇・上皇などを指すこともある。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">物怪</div>
+  <div class="word-kana">【もののけ】</div>
+  <div class="word-mean">死霊・生霊などの怪しい霊。人に取り憑いて病気や死をもたらすとされた。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">文</div>
+  <div class="word-kana">【ふみ】</div>
+  <div class="word-mean">手紙・書状・書物。「ふみ」は広く文字を書いたものを指す。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">場所</span>
+  <div class="word-main">文里</div>
+  <div class="word-kana">【ふるさと】</div>
+  <div class="word-mean">故郷・もとの住まい。昔なじみの場所。「古里」とも書く。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">変化</div>
+  <div class="word-kana">【へんげ】</div>
+  <div class="word-mean">怪しい者・化け物。神仏や霊が姿を変えて現れたもの。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">御廉</div>
+  <div class="word-kana">【みす】</div>
+  <div class="word-mean">御簾。竹で編んで絹の縁をつけた簾。貴族の部屋の間仕切り。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-hito">人物</span>
+  <div class="word-main">御息所</div>
+  <div class="word-kana">【みやすどころ】</div>
+  <div class="word-mean">天皇の寵愛を受けた女性。天皇の子を産んだ女性の敬称。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">直衣</div>
+  <div class="word-kana">【なほし】</div>
+  <div class="word-mean">貴族男性の平常の着物。略装で束帯より格式が低い。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">木枯</div>
+  <div class="word-kana">【こがらし】</div>
+  <div class="word-mean">秋から冬にかけて吹く強く冷たい風。落ち葉を吹き散らす。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">山水</div>
+  <div class="word-kana">【やまみづ】</div>
+  <div class="word-mean">庭に引いた水・山から流れる清水。庭園を飾る流れ。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-koto">ことば</span>
+  <div class="word-main">山籠</div>
+  <div class="word-kana">【やまごもり】</div>
+  <div class="word-mean">山に籠もって修行すること。出家・修行の一形態。</div>
+</div><div class="word-card">
+  <span class="word-tag tag-mono">もの</span>
+  <div class="word-main">遣水</div>
+  <div class="word-kana">【やりみづ】</div>
+  <div class="word-mean">庭に引き込んだ小川・水路。庭園の風雅な演出。</div>
+</div>
+  </div>
+</div>
+
+<div style="margin-top:0;padding:18px 20px;background:linear-gradient(135deg,var(--indigo-pale),var(--cream));border:1.5px solid rgba(26,58,92,0.15);border-radius:6px;"><div style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:var(--indigo);letter-spacing:0.15em;margin-bottom:14px;">📝 読みをすべて答えなさい</div><div id="blanks-grp3" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-bottom:14px;"><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">築地</div><span class="blank initial" id="bl-grp3-ついぢ" data-ans="ついぢ" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">ついぢ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">局</div><span class="blank initial" id="bl-grp3-つぼね" data-ans="つぼね" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">つぼね</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">手度</div><span class="blank initial" id="bl-grp3-てど" data-ans="てど" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">てど</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">天竺</div><span class="blank initial" id="bl-grp3-てんぢく" data-ans="てんぢく" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">てんぢく</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">読経</div><span class="blank initial" id="bl-grp3-どきゃう" data-ans="どきゃう" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">どきゃう</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">内侍</div><span class="blank initial" id="bl-grp3-ないし" data-ans="ないし" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">ないし</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">最上人</div><span class="blank initial" id="bl-grp3-さいじゃうびと" data-ans="さいじゃうびと" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">さいじゃうびと</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">物怪</div><span class="blank initial" id="bl-grp3-もののけ" data-ans="もののけ" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">もののけ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">文</div><span class="blank initial" id="bl-grp3-ふみ" data-ans="ふみ" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">ふみ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">文里</div><span class="blank initial" id="bl-grp3-ふるさと" data-ans="ふるさと" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">ふるさと</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">変化</div><span class="blank initial" id="bl-grp3-へんげ" data-ans="へんげ" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">へんげ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">御廉</div><span class="blank initial" id="bl-grp3-みす" data-ans="みす" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">みす</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">御息所</div><span class="blank initial" id="bl-grp3-みやすどころ" data-ans="みやすどころ" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">みやすどころ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">直衣</div><span class="blank initial" id="bl-grp3-なほし" data-ans="なほし" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">なほし</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">木枯</div><span class="blank initial" id="bl-grp3-こがらし" data-ans="こがらし" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">こがらし</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">山水</div><span class="blank initial" id="bl-grp3-やまみづ" data-ans="やまみづ" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">やまみづ</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">山籠</div><span class="blank initial" id="bl-grp3-やまごもり" data-ans="やまごもり" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">やまごもり</span></div><div style="background:var(--cream);border:1px solid var(--paper-md);border-radius:4px;padding:10px 8px;text-align:center;"><div style="font-family:'Zen Old Mincho',serif;font-size:17px;font-weight:700;margin-bottom:7px;">遣水</div><span class="blank initial" id="bl-grp3-やりみづ" data-ans="やりみづ" data-grp="grp3" style="font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;min-width:60px;display:inline-block;">やりみづ</span></div></div><div id="wb-wrap-grp3" style="display:none;margin-bottom:12px;padding:12px 14px;background:var(--gold-pale);border:1px solid rgba(184,134,11,0.25);border-radius:4px;"><div style="font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.15em;margin-bottom:8px;">【 語 群 】</div><div id="wb-grp3" style="display:flex;flex-wrap:wrap;gap:6px;"><div class="word-item" data-val="ついぢ" data-grp="grp3">ついぢ</div><div class="word-item" data-val="つぼね" data-grp="grp3">つぼね</div><div class="word-item" data-val="てど" data-grp="grp3">てど</div><div class="word-item" data-val="てんぢく" data-grp="grp3">てんぢく</div><div class="word-item" data-val="どきゃう" data-grp="grp3">どきゃう</div><div class="word-item" data-val="ないし" data-grp="grp3">ないし</div><div class="word-item" data-val="さいじゃうびと" data-grp="grp3">さいじゃうびと</div><div class="word-item" data-val="もののけ" data-grp="grp3">もののけ</div><div class="word-item" data-val="ふみ" data-grp="grp3">ふみ</div><div class="word-item" data-val="ふるさと" data-grp="grp3">ふるさと</div><div class="word-item" data-val="へんげ" data-grp="grp3">へんげ</div><div class="word-item" data-val="みす" data-grp="grp3">みす</div><div class="word-item" data-val="みやすどころ" data-grp="grp3">みやすどころ</div><div class="word-item" data-val="なほし" data-grp="grp3">なほし</div><div class="word-item" data-val="こがらし" data-grp="grp3">こがらし</div><div class="word-item" data-val="やまみづ" data-grp="grp3">やまみづ</div><div class="word-item" data-val="やまごもり" data-grp="grp3">やまごもり</div><div class="word-item" data-val="やりみづ" data-grp="grp3">やりみづ</div></div></div><div id="score-grp3"></div><div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;"><button class="btn btn-start" onclick="startGrp('grp3')">▶ チャレンジ開始</button><button class="btn btn-check" id="check-grp3" style="display:none;" onclick="checkGrp('grp3')">✓ 判定する</button><button class="btn btn-reset" onclick="resetGrp('grp3')">↺ リセット</button></div></div>
+</div><!-- /.wrapper -->
+
+<div id="koten-unit-nav">
+  <a class="kun-btn prev" href="koten_joshiki1.html">◀ 古文常識(1)</a>
+  <a class="kun-btn idx" href="index.html">☰ 単元一覧</a>
+  <a class="kun-btn test" href="test_joshiki2.html">📝 テストを受ける</a>
+  <a class="kun-btn nxt" href="index.html">単元一覧 ▶</a>
+</div>
+
+<div id="word-bank-fixed"><div class="bank-inner">
+  <div class="bank-title">【 語 群 】</div>
+  <div id="word-list" class="word-list"></div>
+</div></div>
+<div class="cfw" id="cfw"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+let _rec=[];
+function startTimer(){
+  clearInterval(window._ti);window._st=Date.now();
+  window._ti=setInterval(()=>{
+    const d=(Date.now()-window._st)/1000;
+    document.getElementById('timer').textContent=
+      Math.floor(d/60).toString().padStart(2,'0')+':'+(d%60).toFixed(1).padStart(4,'0');
+  },100);
+}
+function stopTimer(){
+  clearInterval(window._ti);
+  const t=document.getElementById('timer').textContent;
+  _rec.push(t);
+  ['r1','r2','r3'].forEach((id,i)=>{if(_rec[i])document.getElementById(id).textContent=_rec[i];});
+  return t;
+}
+function showToast(msg,ok=false){
+  const t=document.getElementById('toast');t.textContent=msg;
+  t.className='toast'+(ok?' ok':'');
+  requestAnimationFrame(()=>{t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1100);});
+}
+function confetti(){
+  const w=document.getElementById('cfw');w.innerHTML='';
+  const cols=['#c0392b','#b8860b','#2e7d52','#1a3a5c','#ffd700'];
+  for(let i=0;i<90;i++){
+    const p=document.createElement('div');p.className='cp';
+    const sz=(Math.random()*8+5)+'px';
+    p.style.cssText='left:'+Math.random()*100+'%;width:'+sz+';height:'+sz+
+      ';background:'+cols[i%cols.length]+';border-radius:'+(Math.random()>.5?'50%':'2px')+
+      ';animation-duration:'+(Math.random()*1.5+1)+'s;animation-delay:'+(Math.random()*.4)+'s;opacity:1;';
+    w.appendChild(p);
+  }
+  setTimeout(()=>w.innerHTML='',3500);
+}
+let _sel=null,_chal=false,_tstart=false;
+function startChallenge(){
+  _chal=true;_tstart=false;
+  const blanks=document.querySelectorAll('.blank');
+  const wl=document.getElementById('word-list');
+  const bank=document.getElementById('word-bank-fixed');
+  wl.innerHTML='';bank.style.display='block';
+  const cnt={};
+  blanks.forEach(b=>{const a=b.dataset.ans;cnt[a]=(cnt[a]||0)+1;});
+  const words=[];
+  Object.keys(cnt).forEach(w=>{for(let i=0;i<cnt[w];i++)words.push(w);});
+  words.sort(()=>Math.random()-0.5);
+  blanks.forEach(b=>{
+    b.textContent='';b.classList.remove('initial','filled','correct','wrong');
+    b.classList.add('challenge');
+    b.onclick=function(){
+      if(!_chal)return;
+      if(this.textContent!==''){
+        const txt=this.textContent;
+        document.querySelectorAll('.word-item').forEach(it=>{
+          if(it.dataset.val===txt&&it.classList.contains('used'))it.classList.remove('used');
+        });
+        this.textContent='';this.classList.remove('filled');
+      }
+      if(_sel){this.textContent=_sel.dataset.val;this.classList.add('filled');
+        _sel.classList.add('used');_sel.classList.remove('sel');_sel=null;}
+    };
+  });
+  words.forEach(w=>{
+    const item=document.createElement('div');item.className='word-item';
+    item.textContent=w;item.dataset.val=w;
+    item.onclick=function(e){
+      e.stopPropagation();if(this.classList.contains('used'))return;
+      document.querySelectorAll('.word-item').forEach(el=>el.classList.remove('sel'));
+      _sel=this;this.classList.add('sel');
+    };
+    wl.appendChild(item);
+  });
+  if(!_tstart){_tstart=true;startTimer();}
+  window.scrollTo({top:0,behavior:'smooth'});
+  showToast('チャレンジ開始！');
+}
+function checkResult(){
+  if(!_chal){showToast('チャレンジを開始してください');return;}
+  let ok=0,total=0;
+  document.querySelectorAll('.blank').forEach(b=>{
+    total++;
+    if(b.textContent.trim()===b.dataset.ans){
+      b.classList.add('correct');b.classList.remove('filled','wrong');ok++;
+    } else if(b.textContent!==''){
+      b.classList.add('wrong');b.classList.remove('filled','correct');
+    }
+  });
+  const sa=document.getElementById('score-area');
+  if(sa)sa.innerHTML='<div class="score-badge">✓ '+ok+' / '+total+' 正解</div>';
+  if(ok===total){
+    const t=stopTimer();_chal=false;
+    document.getElementById('word-bank-fixed').style.display='none';
+    confetti();showToast('🎉 全問正解！ '+t,true);
+  } else {
+    showToast(ok+'/'+total+' 正解。赤い空欄を確認して');
+  }
+}
+document.addEventListener('click',e=>{
+  if(!e.target.classList.contains('word-item')&&!e.target.classList.contains('blank')){
+    document.querySelectorAll('.word-item').forEach(el=>el.classList.remove('sel'));_sel=null;
+  }
+});
+</script>
+<script>
+// ── グループ別チャレンジ ──
+let _grpSel = {};  // グループごとの選択中アイテム
+
+function startGrp(grp) {
+  // 空欄をクリア
+  document.querySelectorAll(`#blanks-${grp} .blank`).forEach(b => {
+    b.textContent = '';
+    b.classList.remove('initial','filled','correct','wrong');
+    b.classList.add('challenge');
+    b.onclick = function() { fillBlank(this, grp); };
+  });
+  // 語群をシャッフルして表示
+  const wb = document.getElementById('wb-' + grp);
+  const wrap = document.getElementById('wb-wrap-' + grp);
+  const items = Array.from(wb.children);
+  items.sort(() => Math.random() - 0.5);
+  wb.innerHTML = '';
+  items.forEach(it => {
+    it.classList.remove('used','sel');
+    it.onclick = function() { selectGrpWord(this, grp); };
+    wb.appendChild(it);
+  });
+  wrap.style.display = 'block';
+  document.getElementById('check-' + grp).style.display = 'inline-flex';
+  document.getElementById('score-' + grp).innerHTML = '';
+  _grpSel[grp] = null;
+  if(typeof startTimer === 'function' && !window._tstarted) { startTimer(); window._tstarted = true; }
+}
+
+function selectGrpWord(el, grp) {
+  // 同グループの選択解除
+  document.querySelectorAll(`#wb-${grp} .word-item`).forEach(e => e.classList.remove('sel'));
+  if (_grpSel[grp] === el) { _grpSel[grp] = null; return; }
+  _grpSel[grp] = el;
+  el.classList.add('sel');
+}
+
+function fillBlank(blank, grp) {
+  const sel = _grpSel[grp];
+  if (!blank.classList.contains('challenge')) return;
+  // 既入力をクリアして語群に戻す
+  if (blank.textContent !== '') {
+    const old = blank.textContent;
+    document.querySelectorAll(`#wb-${grp} .word-item`).forEach(it => {
+      if (it.dataset.val === old) it.classList.remove('used');
+    });
+    blank.textContent = '';
+  }
+  if (!sel) return;
+  blank.textContent = sel.dataset.val;
+  blank.classList.add('filled');
+  sel.classList.add('used');
+  sel.classList.remove('sel');
+  _grpSel[grp] = null;
+}
+
+function checkGrp(grp) {
+  let ok = 0, total = 0;
+  document.querySelectorAll(`#blanks-${grp} .blank`).forEach(b => {
+    total++;
+    const ans = b.dataset.ans, val = b.textContent.trim();
+    b.classList.remove('filled','challenge');
+    if (val === ans) { b.classList.add('correct'); ok++; }
+    else if (val !== '') { b.classList.add('wrong'); }
+  });
+  const sa = document.getElementById('score-' + grp);
+  sa.innerHTML = `<div class="score-badge" style="margin-top:8px;">✓ ${ok} / ${total} 正解</div>`;
+  if (ok === total) {
+    if(typeof confetti==='function') confetti();
+    if(typeof showToast==='function') showToast('🎉 全問正解！', true);
+    if(typeof stopTimer==='function') stopTimer();
+  } else {
+    if(typeof showToast==='function') showToast(`${ok}/${total} 正解。赤い空欄を確認して`);
+  }
+}
+
+function resetGrp(grp) {
+  document.querySelectorAll(`#blanks-${grp} .blank`).forEach(b => {
+    b.textContent = b.dataset.ans;
+    b.classList.remove('challenge','filled','correct','wrong');
+    b.classList.add('initial');
+    b.onclick = null;
+  });
+  const wb = document.getElementById('wb-' + grp);
+  if(wb) wb.querySelectorAll('.word-item').forEach(it => it.classList.remove('used','sel'));
+  document.getElementById('wb-wrap-' + grp).style.display = 'none';
+  document.getElementById('check-' + grp).style.display = 'none';
+  document.getElementById('score-' + grp).innerHTML = '';
+  _grpSel[grp] = null;
+}
+</script>
+
+</body></html>
