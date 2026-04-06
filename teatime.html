@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ティータイム ─ 平安時代の文化と生活はどんな感じ？</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sumi:#2d2416;--verm:#c0392b;--verm-lt:#e74c3c;
+  --gold:#b8860b;--gold-lt:#d4a017;--gold-pale:#fff9e8;
+  --jade:#2e7d52;--jade-lt:#43a36b;--jade-pale:#edfaf3;
+  --indigo:#1a3a5c;--indigo-lt:#2980b9;--indigo-pale:#eef4fb;
+  --burgundy:#7b1c2e;--burgundy-lt:#a32540;
+  --paper:#faf6ef;--paper-dk:#f0e8d8;--paper-md:#e8dcc8;
+  --cream:#fdfaf4;--gray:#8a7f72;--gray-lt:#c8bfb0;
+  --shadow:rgba(90,60,20,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--paper);
+  font-family:'Noto Serif JP',serif;
+  color:var(--sumi);min-height:100vh;
+  padding-bottom:80px;
+}
+body::before{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;}
+
+/* ══ HERO ══ */
+.hero{
+  background:linear-gradient(160deg,#1a0e06 0%,#2d1a0a 40%,#3d2410 100%);
+  color:white;padding:50px 24px 40px;text-align:center;
+  position:relative;overflow:hidden;border-bottom:3px solid var(--gold);
+}
+.hero::before{
+  content:'平安';position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  font-family:'Zen Old Mincho',serif;font-size:200px;font-weight:700;
+  color:rgba(255,255,255,0.03);pointer-events:none;white-space:nowrap;
+}
+.hero-emoji{font-size:48px;margin-bottom:14px;display:block;
+  animation:floatY 3s ease-in-out infinite;}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  color:var(--gold-lt);letter-spacing:0.3em;margin-bottom:10px;}
+.hero-title{font-family:'Zen Old Mincho',serif;font-size:30px;font-weight:700;
+  letter-spacing:0.15em;margin-bottom:8px;
+  text-shadow:0 2px 20px rgba(0,0,0,0.5);}
+.hero-sub{font-family:'Noto Sans JP',sans-serif;font-size:13px;
+  color:rgba(255,255,255,0.6);line-height:1.8;max-width:500px;margin:0 auto;}
+.hero-deco{display:flex;justify-content:center;gap:20px;margin-top:20px;font-size:22px;}
+
+/* ══ NAV ══ */
+.nav-bar{background:var(--sumi);border-bottom:2px solid var(--gold);
+  position:sticky;top:0;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+.nav-inner{max-width:1000px;margin:0 auto;display:flex;
+  align-items:stretch;overflow-x:auto;}
+.nav-btn{display:inline-block;padding:12px 14px;color:rgba(255,255,255,0.6);
+  text-decoration:none;font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  font-weight:500;letter-spacing:0.03em;
+  border-right:1px solid rgba(255,255,255,0.08);
+  transition:all 0.2s;white-space:nowrap;}
+.nav-btn:hover{color:white;background:rgba(255,255,255,0.06);}
+.nav-btn.active{color:white;background:var(--gold);}
+
+/* ══ WRAPPER ══ */
+.wrapper{max-width:1000px;margin:0 auto;padding:28px 18px 60px;
+  position:relative;z-index:1;}
+
+
+/* ══ 深掘りタブ ══ */
+
+.tab-btn.shakai{background:#102030;color:rgba(255,255,255,0.55);}
+.tab-btn.shakai:hover{background:#183040;color:rgba(255,255,255,0.8);}
+.tab-btn.shakai.active{background:#1a4060;color:white;}
+.ph-shakai{background:linear-gradient(135deg,#102030,#1a4060);}
+
+.tab-btn.fukabori{background:#1a2030;color:rgba(255,255,255,0.55);}
+.tab-btn.fukabori:hover{background:#252a40;color:rgba(255,255,255,0.8);}
+.tab-btn.fukabori.active{background:#2a3560;color:white;}
+.ph-fukabori{background:linear-gradient(135deg,#1a2540,#2a3560);}
+
+/* ── 深掘りカード ── */
+.fuka-card{background:var(--cream);border:1.5px solid var(--paper-md);
+  border-radius:6px;box-shadow:0 2px 12px var(--shadow);
+  padding:22px 24px;margin-bottom:18px;
+  animation:cardIn 0.4s ease-out both;}
+.fuka-head{display:flex;align-items:center;gap:10px;
+  margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--paper-md);}
+.fuka-badge{color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;
+  font-weight:700;letter-spacing:0.12em;padding:3px 10px;border-radius:2px;
+  background:linear-gradient(135deg,#1a2540,#2a3560);}
+.fuka-title{font-family:'Zen Old Mincho',serif;font-size:16px;
+  font-weight:700;color:var(--sumi);}
+.fuka-body{font-family:'Noto Serif JP',serif;font-size:14px;
+  line-height:2.1;color:var(--sumi);}
+.fuka-body p{margin-bottom:12px;}
+.fuka-body strong{color:var(--verm);}
+.fuka-body .blue{color:var(--indigo);font-weight:700;}
+.fuka-body .gold{color:var(--gold);font-weight:700;}
+.fuka-body .jade{color:var(--jade);font-weight:700;}
+
+/* ── 比較テーブル ── */
+.hikaku-table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0;}
+.hikaku-table th{padding:9px 12px;font-family:'Noto Sans JP',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:0.08em;text-align:left;color:white;}
+.hikaku-table th.h1{background:#1a2540;}
+.hikaku-table th.h2{background:#5a3010;}
+.hikaku-table th.h3{background:#2c4a2c;}
+.hikaku-table th.h4{background:#2a2a50;}
+.hikaku-table td{padding:9px 12px;border:1px solid var(--paper-md);
+  vertical-align:top;line-height:1.75;font-family:'Noto Sans JP',sans-serif;font-size:13px;}
+.hikaku-table tr:nth-child(even) td{background:rgba(250,246,239,0.6);}
+
+/* ── 引用ボックス ── */
+.quote-box{background:linear-gradient(135deg,rgba(26,37,64,0.06),rgba(26,37,64,0.03));
+  border:1px solid rgba(26,37,64,0.15);border-left:4px solid var(--indigo);
+  border-radius:0 4px 4px 0;padding:14px 18px;margin:12px 0;
+  font-family:'Zen Old Mincho',serif;font-size:14px;line-height:2;color:var(--sumi);}
+.quote-box .q-source{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  color:var(--gray);margin-top:6px;text-align:right;}
+
+/* ── 怨霊カード ── */
+.onryo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;margin:12px 0;}
+.onryo-item{background:linear-gradient(135deg,rgba(45,20,22,0.08),rgba(45,20,22,0.03));
+  border:1px solid rgba(192,57,43,0.2);border-radius:4px;padding:14px 16px;}
+.onryo-name{font-family:'Zen Old Mincho',serif;font-size:16px;font-weight:700;
+  color:var(--verm);margin-bottom:6px;}
+.onryo-body{font-family:'Noto Sans JP',sans-serif;font-size:12.5px;
+  line-height:1.8;color:#3a2010;}
+
+/* ══ TAB BAR ══ */
+.tab-bar{display:flex;gap:0;margin-bottom:28px;
+  border-radius:6px;overflow:hidden;
+  box-shadow:0 3px 14px var(--shadow);flex-wrap:wrap;}
+.tab-btn{
+  flex:1;min-width:120px;padding:14px 8px;
+  border:none;cursor:pointer;font-family:'Zen Old Mincho',serif;
+  font-size:14px;font-weight:700;letter-spacing:0.08em;
+  transition:all 0.25s;position:relative;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+}
+.tab-btn .tab-emoji{font-size:22px;}
+.tab-btn .tab-label{font-size:13px;}
+.tab-btn.nomin {background:#4a3620;color:rgba(255,255,255,0.55);}
+.tab-btn.nomin:hover{background:#5a4428;color:rgba(255,255,255,0.8);}
+.tab-btn.heike {background:#3a2a18;color:rgba(255,255,255,0.55);}
+.tab-btn.heike:hover{background:#4a3222;color:rgba(255,255,255,0.8);}
+.tab-btn.kizoku{background:#2d1a0a;color:rgba(255,255,255,0.55);}
+.tab-btn.kizoku:hover{background:#3d2410;color:rgba(255,255,255,0.8);}
+.tab-btn.bushi {background:#1a2a1a;color:rgba(255,255,255,0.55);}
+.tab-btn.bushi:hover{background:#243224;color:rgba(255,255,255,0.8);}
+.tab-btn.soryo {background:#1a1a2d;color:rgba(255,255,255,0.55);}
+.tab-btn.soryo:hover{background:#222240;color:rgba(255,255,255,0.8);}
+.tab-btn.jikoku{background:#2d1020;color:rgba(255,255,255,0.55);}
+.tab-btn.jikoku:hover{background:#3d1830;color:rgba(255,255,255,0.8);}
+
+.tab-btn.active::after{content:'';position:absolute;bottom:0;left:0;right:0;
+  height:3px;background:var(--gold);}
+.tab-btn.nomin.active  {background:#6b4c28;color:white;}
+.tab-btn.heike.active  {background:#5a3a20;color:white;}
+.tab-btn.kizoku.active {background:#5a3010;color:white;}
+.tab-btn.bushi.active  {background:#2c4a2c;color:white;}
+.tab-btn.soryo.active  {background:#2a2a50;color:white;}
+.tab-btn.jikoku.active {background:#501828;color:white;}
+
+/* ══ CONTENT PANELS ══ */
+.panel{display:none;animation:fadeIn 0.35s ease-out;}
+.panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Panel header ── */
+.panel-header{
+  border-radius:6px;padding:24px 28px;margin-bottom:22px;
+  display:flex;align-items:center;gap:20px;
+  box-shadow:0 3px 14px var(--shadow);
+}
+.ph-emoji{font-size:52px;flex-shrink:0;}
+.ph-title{font-family:'Zen Old Mincho',serif;font-size:24px;
+  font-weight:700;letter-spacing:0.1em;margin-bottom:6px;}
+.ph-sub{font-family:'Noto Sans JP',sans-serif;font-size:13px;
+  line-height:1.8;opacity:0.85;}
+.ph-nomin {background:linear-gradient(135deg,#6b4c28,#8a6030);}
+.ph-kizoku{background:linear-gradient(135deg,#5a3010,#7a4820);}
+.ph-bushi {background:linear-gradient(135deg,#2c4a2c,#3a6040);}
+.ph-soryo {background:linear-gradient(135deg,#2a2a50,#3a3a70);}
+.ph-jikoku{background:linear-gradient(135deg,#501828,#702040);}
+.ph-nomin,.ph-kizoku,.ph-bushi,.ph-soryo,.ph-jikoku{color:white;}
+
+/* ── Section card ── */
+.sec-card{background:var(--cream);border:1.5px solid var(--paper-md);
+  border-radius:6px;box-shadow:0 2px 12px var(--shadow);
+  padding:22px 24px;margin-bottom:18px;
+  animation:cardIn 0.4s ease-out both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.sec-head{display:flex;align-items:center;gap:10px;
+  margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--paper-md);}
+.sec-badge{color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;
+  font-weight:700;letter-spacing:0.12em;padding:3px 10px;border-radius:2px;}
+.sec-title{font-family:'Zen Old Mincho',serif;font-size:16px;
+  font-weight:700;color:var(--sumi);}
+
+/* ── 時刻表 ── */
+.jikoku-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px;}
+.jikoku-table th{padding:8px 10px;font-family:'Noto Sans JP',sans-serif;
+  font-size:10px;font-weight:700;letter-spacing:0.1em;text-align:left;
+  border-bottom:2px solid var(--paper-md);}
+.jikoku-table td{padding:8px 10px;border-bottom:1px solid var(--paper-md);
+  vertical-align:top;line-height:1.7;}
+.jikoku-table tr:hover td{background:rgba(26,58,92,0.03);}
+.jikoku-table .jikan{font-family:'Zen Old Mincho',serif;font-size:14px;
+  font-weight:700;white-space:nowrap;}
+.jikoku-table .gendai{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  color:var(--gray);white-space:nowrap;}
+.jikoku-table .activity{font-family:'Noto Serif JP',serif;font-size:13px;}
+.time-dot{display:inline-block;width:8px;height:8px;border-radius:50%;
+  margin-right:6px;flex-shrink:0;}
+
+/* ── 食事カード ── */
+.meal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+@media(max-width:540px){.meal-grid{grid-template-columns:1fr;}}
+.meal-card{background:var(--paper);border:1px solid var(--paper-md);
+  border-radius:4px;padding:14px 16px;}
+.meal-title{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  font-weight:700;letter-spacing:0.12em;margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;}
+.meal-item{font-family:'Noto Serif JP',serif;font-size:13px;
+  padding:4px 0;border-bottom:1px dashed var(--paper-md);
+  display:flex;align-items:center;gap:8px;line-height:1.5;}
+.meal-item:last-child{border-bottom:none;}
+.meal-item::before{content:'・';color:var(--gold);font-weight:700;}
+
+/* ── 古文常識ポイント ── */
+.koten-point{
+  background:linear-gradient(135deg,rgba(184,134,11,0.08),rgba(184,134,11,0.04));
+  border:1px solid rgba(184,134,11,0.25);border-left:4px solid var(--gold);
+  border-radius:0 4px 4px 0;padding:14px 18px;margin-top:14px;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;line-height:1.9;
+  color:#3a2808;
+}
+.koten-point .kp-title{font-family:'Zen Old Mincho',serif;font-size:14px;
+  font-weight:700;color:var(--gold);margin-bottom:6px;
+  display:flex;align-items:center;gap:6px;}
+.koten-point strong{color:var(--verm);}
+
+/* ── 十二支時刻表 ── */
+.jissui-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+@media(max-width:500px){.jissui-grid{grid-template-columns:repeat(3,1fr);}}
+.jissui-item{background:var(--paper);border:1px solid var(--paper-md);
+  border-radius:4px;padding:10px 8px;text-align:center;}
+.jissui-kanji{font-family:'Zen Old Mincho',serif;font-size:22px;
+  font-weight:700;color:var(--sumi);display:block;}
+.jissui-yomi{font-family:'Noto Sans JP',sans-serif;font-size:10px;
+  color:var(--gray);display:block;margin:2px 0;}
+.jissui-time{font-family:'Courier New',monospace;font-size:12px;
+  color:var(--indigo);font-weight:700;display:block;}
+.jissui-dir{font-family:'Noto Sans JP',sans-serif;font-size:10px;
+  color:var(--verm);display:block;margin-top:2px;}
+
+/* ══ QUIZ SECTION ══ */
+.quiz-section{background:linear-gradient(135deg,#1a1008,#2d1a08);
+  border-radius:6px;padding:28px 24px;margin-top:32px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+.quiz-head{text-align:center;margin-bottom:24px;}
+.quiz-head-title{font-family:'Zen Old Mincho',serif;font-size:22px;
+  font-weight:700;color:var(--gold-lt);letter-spacing:0.12em;margin-bottom:6px;}
+.quiz-head-sub{font-family:'Noto Sans JP',sans-serif;font-size:12px;
+  color:rgba(255,255,255,0.55);}
+.quiz-progress-bar{height:5px;background:rgba(255,255,255,0.1);
+  border-radius:3px;overflow:hidden;margin-bottom:20px;}
+.quiz-pb-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lt));
+  border-radius:3px;transition:width 0.4s;}
+
+.q-card-quiz{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:6px;padding:20px 22px;margin-bottom:14px;}
+.q-num-quiz{font-family:'Noto Sans JP',sans-serif;font-size:10px;
+  color:var(--gold-lt);letter-spacing:0.15em;margin-bottom:8px;}
+.q-text-quiz{font-family:'Noto Serif JP',serif;font-size:15px;
+  color:white;line-height:1.8;margin-bottom:14px;padding:12px 16px;
+  background:rgba(0,0,0,0.2);border-radius:3px;border-left:3px solid var(--gold);}
+.q-opts-quiz{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:480px){.q-opts-quiz{grid-template-columns:1fr;}}
+.q-opt-quiz{padding:10px 14px;border-radius:4px;
+  border:1.5px solid rgba(255,255,255,0.15);cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;
+  color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.05);
+  transition:all 0.15s;text-align:left;line-height:1.5;}
+.q-opt-quiz:hover:not(:disabled){border-color:var(--gold-lt);
+  background:rgba(184,134,11,0.15);color:white;}
+.q-opt-quiz.correct{border-color:#43a36b!important;background:rgba(67,163,107,0.2)!important;
+  color:#7fffa0!important;font-weight:700;}
+.q-opt-quiz.wrong{border-color:#e74c3c!important;background:rgba(231,76,60,0.15)!important;
+  color:#ffaaaa!important;}
+.q-opt-quiz:disabled{cursor:default;}
+.q-kai-quiz{display:none;margin-top:12px;padding:11px 16px;
+  background:rgba(184,134,11,0.12);border-left:3px solid var(--gold-lt);
+  border-radius:0 4px 4px 0;font-family:'Noto Sans JP',sans-serif;
+  font-size:12.5px;line-height:1.85;color:rgba(255,255,255,0.8);}
+.q-kai-quiz strong{color:var(--gold-lt);}
+.q-kai-quiz.show{display:block;}
+
+/* Quiz result */
+.quiz-result{display:none;text-align:center;padding:24px 0;}
+.quiz-result.show{display:block;animation:cardIn 0.4s ease-out;}
+.qr-emoji{font-size:54px;margin-bottom:12px;}
+.qr-title{font-family:'Zen Old Mincho',serif;font-size:22px;
+  color:var(--gold-lt);font-weight:700;margin-bottom:8px;}
+.qr-score{font-family:'Noto Sans JP',sans-serif;font-size:14px;
+  color:rgba(255,255,255,0.7);margin-bottom:16px;}
+.qr-btn{padding:11px 28px;border-radius:3px;border:none;cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;
+  background:var(--gold);color:white;margin:4px;transition:all 0.2s;}
+.qr-btn:hover{background:var(--gold-lt);}
+
+/* Toast */
+.toast{position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0.85);
+  background:var(--sumi);color:white;padding:14px 30px;border-radius:8px;
+  font-family:'Zen Old Mincho',serif;font-size:19px;
+  z-index:99999;opacity:0;pointer-events:none;transition:all 0.25s;
+  box-shadow:0 8px 30px rgba(0,0,0,0.4);border:2px solid var(--gold);}
+.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.toast.ok{border-color:var(--jade);}
+
+/* Confetti */
+.cfw{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden;}
+.cp{position:absolute;top:-12px;animation:cf linear forwards;}
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+/* Unit nav */
+#koten-unit-nav{display:flex;justify-content:center;align-items:center;gap:10px;
+  padding:12px 18px;background:var(--sumi);border-top:2px solid var(--gold);
+  position:fixed;bottom:0;left:0;width:100%;z-index:500;flex-wrap:wrap;}
+.kun-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;
+  border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:0.08em;cursor:pointer;
+  transition:all 0.2s;text-decoration:none;border:none;}
+.kun-btn.prev{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);
+  border:1px solid rgba(255,255,255,0.2);}
+.kun-btn.idx{background:var(--gold);color:white;}
+.kun-btn.nxt{background:var(--verm);color:white;}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <span class="hero-emoji">🍵</span>
+  <div class="hero-label">TEA TIME ／ 古文常識</div>
+  <h1 class="hero-title">平安時代の文化と生活はどんな感じ？</h1>
+  <p class="hero-sub">農民・貴族・武士・僧侶の一日と食事を学びながら、古文の世界をイメージしよう</p>
+  <div class="hero-deco">🌸 🏯 📜 🎶 🌙</div>
+</div>
+
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-btn">単元一覧</a>
+    <a href="teatime.html" class="nav-btn active">🍵 ティータイム</a>
+  </div>
+</nav>
+
+<div class="wrapper">
+
+  <!-- ══ TAB BAR ══ -->
+  <div class="tab-bar">
+    <button class="tab-btn nomin active" onclick="showTab('nomin')">
+      <span class="tab-emoji">🌾</span>
+      <span class="tab-label">農民の一日</span>
+    </button>
+    <button class="tab-btn kizoku" onclick="showTab('kizoku')">
+      <span class="tab-emoji">👘</span>
+      <span class="tab-label">貴族の一日</span>
+    </button>
+    <button class="tab-btn bushi" onclick="showTab('bushi')">
+      <span class="tab-emoji">⚔️</span>
+      <span class="tab-label">武士の一日</span>
+    </button>
+    <button class="tab-btn soryo" onclick="showTab('soryo')">
+      <span class="tab-emoji">🙏</span>
+      <span class="tab-label">僧侶の一日</span>
+    </button>
+    <button class="tab-btn jikoku" onclick="showTab('jikoku')">
+      <span class="tab-emoji">🕐</span>
+      <span class="tab-label">十二支時刻</span>
+    </button>
+    <button class="tab-btn fukabori" onclick="showTab('fukabori')">
+      <span class="tab-emoji">🔍</span>
+      <span class="tab-label">生活は？</span>
+    </button>
+    <button class="tab-btn shakai" onclick="showTab('shakai')">
+      <span class="tab-emoji">🏛️</span>
+      <span class="tab-label">どんな社会？</span>
+    </button>
+  </div>
+
+  <!-- ══ 農民パネル ══ -->
+  <div class="panel active" id="panel-nomin">
+    <div class="panel-header ph-nomin">
+      <div class="ph-emoji">🌾</div>
+      <div>
+        <div class="ph-title">農民の一日</div>
+        <div class="ph-sub">平安時代の農民（田堵・名主など）の生活。税として米を朝廷に納め、粟・稗で暮らす。</div>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge" style="background:linear-gradient(135deg,#6b4c28,#8a6030);">一日の流れ</span>
+        <span class="sec-title">農民の時刻表</span>
+      </div>
+      <div style="overflow-x:auto;">
+      <table class="jikoku-table">
+        <thead><tr>
+          <th style="width:90px;">時刻</th>
+          <th style="width:90px;">現代時刻</th>
+          <th>生活・行動</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="jikan">寅の刻</span><br><span class="gendai">（とら）</span></td><td class="gendai">3〜5時</td><td class="activity">🐓 起床。鶏の声で目覚める。家族で早朝の準備</td></tr>
+          <tr><td><span class="jikan">卯の刻</span><br><span class="gendai">（う）</span></td><td class="gendai">5〜7時</td><td class="activity">🌅 田畑へ。朝の農作業開始。田植え・草むしり</td></tr>
+          <tr><td><span class="jikan">辰〜巳</span><br><span class="gendai">（たつ・み）</span></td><td class="gendai">7〜11時</td><td class="activity">🌾 農作業の中心時間。稲作・麦作・野菜栽培</td></tr>
+          <tr><td><span class="jikan">午の刻</span><br><span class="gendai">（うま）</span></td><td class="gendai">11〜13時</td><td class="activity">🥣 昼食・休憩。木陰で粥や握り飯を食べる</td></tr>
+          <tr><td><span class="jikan">未〜申</span><br><span class="gendai">（ひつじ・さる）</span></td><td class="gendai">13〜17時</td><td class="activity">🌿 午後の農作業。薪割り・水汲み・農具修理</td></tr>
+          <tr><td><span class="jikan">酉の刻</span><br><span class="gendai">（とり）</span></td><td class="gendai">17〜19時</td><td class="activity">🏡 帰宅・夕食準備。囲炉裏に火を起こす</td></tr>
+          <tr><td><span class="jikan">戌の刻</span><br><span class="gendai">（いぬ）</span></td><td class="gendai">19〜21時</td><td class="activity">💤 夕食後すぐ就寝。翌朝に備える</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge" style="background:linear-gradient(135deg,#6b4c28,#8a6030);">食事</span>
+        <span class="sec-title">農民の食事（1日2食）</span>
+      </div>
+      <div class="meal-grid">
+        <div class="meal-card">
+          <div class="meal-title" style="color:#6b4c28;">🌅 朝食（巳の刻ごろ）</div>
+          <div class="meal-item">粟（あわ）・稗（ひえ）の粥</div>
+          <div class="meal-item">漬物・塩</div>
+          <div class="meal-item">野草・山菜のおひたし</div>
+          <div class="meal-item">川の水・湯</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-title" style="color:#6b4c28;">🌇 夕食（酉の刻ごろ）</div>
+          <div class="meal-item">雑穀飯または粥</div>
+          <div class="meal-item">大根・芋などの煮物</div>
+          <div class="meal-item">川魚（運が良ければ）</div>
+          <div class="meal-item">塩を溶かした汁</div>
+        </div>
+      </div>
+      <div class="koten-point">
+        <div class="kp-title">📖 古文常識ポイント</div>
+        農民は<strong>米をほとんど食べられませんでした</strong>。米は税（租）として朝廷に納めるものでした。「飯（いい）」とは白米のことで農民には高嶺の花。<br>
+        農民は<strong>「田堵（たと）」「名主（みょうしゅ）」「作人（さくにん）」</strong>など身分が分かれていました。<br>
+        また、農民は<strong>「荘園（しょうえん）」</strong>という貴族・寺社の私有地を耕して生活しました。
+      </div>
+    </div>
+  </div><!-- /#panel-nomin -->
+
+  <!-- ══ 貴族パネル ══ -->
+  <div class="panel" id="panel-kizoku">
+    <div class="panel-header ph-kizoku">
+      <div class="ph-emoji">👘</div>
+      <div>
+        <div class="ph-title">貴族の一日</div>
+        <div class="ph-sub">平安貴族（公家）の優雅な生活。「もののあわれ」を尊び、和歌・管弦・物語に心を尽くした。</div>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge" style="background:linear-gradient(135deg,#5a3010,#7a4820);">一日の流れ</span>
+        <span class="sec-title">貴族の時刻表</span>
+      </div>
+      <div style="overflow-x:auto;">
+      <table class="jikoku-table">
+        <thead><tr>
+          <th style="width:90px;">時刻</th>
+          <th style="width:90px;">現代時刻</th>
+          <th>生活・行動</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="jikan">寅の刻</span></td><td class="gendai">3〜5時</td><td class="activity">🙏 起床。まず仏前に礼拝・読経。加持祈祷を受ける</td></tr>
+          <tr><td><span class="jikan">卯の刻</span></td><td class="gendai">5〜7時</td><td class="activity">👘 身支度・装束を整える。十二単・束帯は時間がかかる</td></tr>
+          <tr><td><span class="jikan">辰の刻</span></td><td class="gendai">7〜9時</td><td class="activity">📜 朝食・漢籍の学習・和歌の稽古</td></tr>
+          <tr><td><span class="jikan">巳の刻</span></td><td class="gendai">9〜11時</td><td class="activity">🏯 参内（宮中へ出仕）・政務・儀式への参加</td></tr>
+          <tr><td><span class="jikan">午の刻</span></td><td class="gendai">11〜13時</td><td class="activity">🍱 昼食・昼寝。女房は几帳（きちょう）の内で休む</td></tr>
+          <tr><td><span class="jikan">未〜申</span></td><td class="gendai">13〜17時</td><td class="activity">🎶 和歌・管弦（琴・笛・琵琶）・読書・文通（恋文）</td></tr>
+          <tr><td><span class="jikan">戌の刻</span></td><td class="gendai">19〜21時</td><td class="activity">🌙 夕食・管弦の遊び・月見・歌会</td></tr>
+          <tr><td><span class="jikan">亥〜子</span></td><td class="gendai">21〜1時</td><td class="activity">📝 就寝（夜が深い方が「雅（みやび）」とされた）</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge" style="background:linear-gradient(135deg,#5a3010,#7a4820);">食事</span>
+        <span class="sec-title">貴族の食事（1日2食）</span>
+      </div>
+      <div class="meal-grid">
+        <div class="meal-card">
+          <div class="meal-title" style="color:#5a3010;">🌅 朝食（辰の刻）</div>
+          <div class="meal-item">白米の強飯（こわいい）または粥</div>
+          <div class="meal-item">干し鮑（あわび）・干し魚</div>
+          <div class="meal-item">漬物・梅干し・昆布</div>
+          <div class="meal-item">塩辛・塩</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-title" style="color:#5a3010;">🌇 夕食（戌の刻）</div>
+          <div class="meal-item">白米・強飯</div>
+          <div class="meal-item">鯛・鯉・鮎の焼き魚・煮魚</div>
+          <div class="meal-item">蛤（はまぐり）・蜆（しじみ）</div>
+          <div class="meal-item">根菜の煮物・海藻</div>
+        </div>
+      </div>
+      <div class="meal-card" style="margin-bottom:12px;">
+        <div class="meal-title" style="color:#7a4820;">🎊 特別な日のごちそう</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <div class="meal-item" style="min-width:180px;">鶴・雁・鴨などの鳥料理</div>
+          <div class="meal-item" style="min-width:180px;">蘇（そ）…チーズに近い乳製品</div>
+          <div class="meal-item" style="min-width:180px;">甘葛（あまづら）…砂糖の代わりの甘味</div>
+          <div class="meal-item" style="min-width:180px;">唐菓子（からくだもの）</div>
+        </div>
+      </div>
+      <div class="koten-point">
+        <div class="kp-title">📖 古文常識ポイント</div>
+        貴族は<strong>「もののあわれ」</strong>を大切にし、食事の見た目・盛り付けも重視しました。<br>
+        貴族は<strong>肉食を忌避</strong>する傾向があり（仏教・神道の影響）、魚介類が主なたんぱく源でした。<br>
+        <strong>「方違え（かたたがえ）」「物忌み（ものいみ）」</strong>など陰陽道の吉凶に従って行動を決めました。<br>
+        女性は<strong>「十二単（じゅうにひとえ）」</strong>、男性は<strong>「束帯（そくたい）」「直衣（のうし）」</strong>を着用。
+      </div>
+    </div>
+  </div><!-- /#panel-kizoku -->
+
+  <!-- ══ 武士パネル ══ -->
+  <div class="panel" id="panel-bushi">
+    <div class="panel-header ph-bushi">
+      <div class="ph-emoji">⚔️</div>
+      <div>
+        <div class="ph-title">武士の一日</div>
+        <div class="ph-sub">平安後期（10〜12世紀）の武士（源氏・平氏）の生活。「弓馬の道」を本分とする。</div>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge" style="background:linear-gradient(135deg,#2c4a2c,#3a6040);">一日の流れ</span>
+        <span class="sec-title">武士の時刻表</span>
+      </div>
+      <div style="overflow-x:auto;">
+      <table class="jikoku-table">
+        <thead><tr>
+          <th style="width:90px;">時刻</th>
+          <th style="width:90px;">現代時刻</th>
+          <th>生活・行動</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="jikan">丑の刻</span></td><td class="gendai">1〜3時</td><td class="activity">🌙 夜警・見回り。屋敷や主君の警護</td></tr>
+          <tr><td><span class="jikan">寅の刻</span></td><td class="gendai">3〜5時</td><td class="activity">⚔️ 起床・武装確認。馬の世話</td></tr>
+          <tr><td><span class="jikan">卯の刻</span></td><td class="gendai">5〜7時</td><td class="activity">🏹 弓馬の稽古。騎射・流鏑馬（やぶさめ）の訓練</td></tr>
+          <tr><td><span class="jikan">巳の刻</span></td><td class="gendai">9〜11時</td><td class="activity">🏯 朝食・主君への出仕・警護任務</td></tr>
+          <tr><td><span class="jikan">午〜未</span></td><td class="gendai">11〜15時</td><td class="activity">🐎 警護・巡回。戦場では戦闘・「名乗り」を上げる</td></tr>
+          <tr><td><span class="jikan">申〜酉</span></td><td class="gendai">15〜19時</td><td class="activity">🔧 帰宅・武具の手入れ・兵法の学習</td></tr>
+          <tr><td><span class="jikan">戌の刻</span></td><td class="gendai">19〜21時</td><td class="activity">🍚 夕食・早めに就寝</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge" style="background:linear-gradient(135deg,#2c4a2c,#3a6040);">食事</span>
+        <span class="sec-title">武士の食事</span>
+      </div>
+      <div class="meal-grid">
+        <div class="meal-card">
+          <div class="meal-title" style="color:#2c4a2c;">🌅 朝食（巳の刻）</div>
+          <div class="meal-item">玄米・雑穀飯（白米は貴重）</div>
+          <div class="meal-item">味噌汁・漬物</div>
+          <div class="meal-item">干し魚・塩</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-title" style="color:#2c4a2c;">⚔️ 戦場食（携帯食）</div>
+          <div class="meal-item">干し飯（ほしいい）…水で戻す</div>
+          <div class="meal-item">梅干し・塩・味噌</div>
+          <div class="meal-item">干し魚・干し肉（鹿・猪）</div>
+          <div class="meal-item">山菜・木の実</div>
+        </div>
+      </div>
+      <div class="koten-point">
+        <div class="kp-title">📖 古文常識ポイント</div>
+        武士は<strong>「弓馬の道」</strong>を本分とし、武芸（弓術・馬術・刀術）の稽古を欠かしませんでした。<br>
+        平安末期の源平合戦では<strong>「名乗り（なのり）」</strong>を上げてから戦うのが作法でした。「我こそは〜」という一節は古文頻出！<br>
+        武士の台頭で<strong>「武者（むしゃ）」「兵（つわもの）」</strong>が文学にも登場するようになりました。<br>
+        <strong>「平家物語」冒頭</strong>「祇園精舎の鐘の声、諸行無常の響きあり」は鎌倉時代の武士文学の代表。
+      </div>
+    </div>
+  </div><!-- /#panel-bushi -->
+
+  <!-- ══ 僧侶パネル ══ -->
+  <div class="panel" id="panel-soryo">
+    <div class="panel-header ph-soryo">
+      <div class="ph-emoji">🙏</div>
+      <div>
+        <div class="ph-title">僧侶の一日</div>
+        <div class="ph-sub">延暦寺（天台宗）・東寺（真言宗）など大寺院の僧侶の修行生活。不殺生・精進料理が基本。</div>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge" style="background:linear-gradient(135deg,#2a2a50,#3a3a70);">一日の流れ</span>
+        <span class="sec-title">僧侶の時刻表</span>
+      </div>
+      <div style="overflow-x:auto;">
+      <table class="jikoku-table">
+        <thead><tr>
+          <th style="width:90px;">時刻</th>
+          <th style="width:90px;">現代時刻</th>
+          <th>生活・行動</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="jikan">丑の刻</span></td><td class="gendai">1〜3時</td><td class="activity">🕯️ 深夜の勤行（ごんぎょう）・写経・座禅</td></tr>
+          <tr><td><span class="jikan">寅の刻</span></td><td class="gendai">3〜5時</td><td class="activity">📿 朝課（ちょうか）…朝の勤行・読経</td></tr>
+          <tr><td><span class="jikan">卯の刻</span></td><td class="gendai">5〜7時</td><td class="activity">🪣 托鉢（たくはつ）・境内の掃除</td></tr>
+          <tr><td><span class="jikan">辰の刻</span></td><td class="gendai">7〜9時</td><td class="activity">🥣 朝食・経典の学習・写経</td></tr>
+          <tr><td><span class="jikan">午の刻</span></td><td class="gendai">11〜13時</td><td class="activity">🍱 昼課・昼食（最も重要な食事）</td></tr>
+          <tr><td><span class="jikan">申の刻</span></td><td class="gendai">15〜17時</td><td class="activity">🙏 夕課（ゆうか）・勤行・法話</td></tr>
+          <tr><td><span class="jikan">戌〜亥</span></td><td class="gendai">19〜23時</td><td class="activity">📜 夜課・写経・学習・就寝</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge" style="background:linear-gradient(135deg,#2a2a50,#3a3a70);">食事</span>
+        <span class="sec-title">僧侶の精進料理（1日2〜3食）</span>
+      </div>
+      <div class="meal-grid">
+        <div class="meal-card">
+          <div class="meal-title" style="color:#2a2a50;">🌅 朝食（辰の刻）</div>
+          <div class="meal-item">粥（白米または雑穀）</div>
+          <div class="meal-item">漬物・塩昆布</div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-title" style="color:#2a2a50;">🍱 昼食（午の刻・最重要）</div>
+          <div class="meal-item">飯（白米または麦飯）</div>
+          <div class="meal-item">豆腐・湯葉・高野豆腐</div>
+          <div class="meal-item">根菜の煮物（ごぼう・里芋）</div>
+          <div class="meal-item">胡麻豆腐・精進だし汁</div>
+        </div>
+      </div>
+      <div class="koten-point">
+        <div class="kp-title">📖 古文常識ポイント</div>
+        僧侶は<strong>「不殺生」</strong>の戒律から肉・魚を食べない<strong>精進料理</strong>が原則でした。<br>
+        高位の僧（<strong>僧正・僧都・法師</strong>）は貴族と交流し、政治にも深く関わりました。<br>
+        貴族の子弟が仏門に入る<strong>「出家（しゅっけ）」</strong>は古文の重要テーマです。<br>
+        <strong>「法師（ほうし）」「入道（にゅうどう）」「尼（あま）」</strong>は古文に頻出の人物呼称。<br>
+        平安仏教の二大宗派：<strong>最澄（さいちょう）の天台宗（延暦寺）</strong>と<strong>空海（くうかい）の真言宗（東寺）</strong>。
+      </div>
+    </div>
+  </div><!-- /#panel-soryo -->
+
+  <!-- ══ 十二支時刻パネル ══ -->
+  <div class="panel" id="panel-jikoku">
+    <div class="panel-header ph-jikoku">
+      <div class="ph-emoji">🕐</div>
+      <div>
+        <div class="ph-title">十二支の時刻・方角</div>
+        <div class="ph-sub">平安時代は十二支で時刻と方角を表した。現代の2時間が「一刻（いっとき）」。</div>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge" style="background:linear-gradient(135deg,#501828,#702040);">十二支</span>
+        <span class="sec-title">時刻・方角一覧</span>
+      </div>
+      <div class="jissui-grid">
+        <div class="jissui-item" style="border-top:3px solid #2980b9;">
+          <span class="jissui-kanji">子</span>
+          <span class="jissui-yomi">ね</span>
+          <span class="jissui-time">23〜1時</span>
+          <span class="jissui-dir">北</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #7a5020;">
+          <span class="jissui-kanji">丑</span>
+          <span class="jissui-yomi">うし</span>
+          <span class="jissui-time">1〜3時</span>
+          <span class="jissui-dir">北北東</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #c0392b;">
+          <span class="jissui-kanji">寅</span>
+          <span class="jissui-yomi">とら</span>
+          <span class="jissui-time">3〜5時</span>
+          <span class="jissui-dir">東北東</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #43a36b;">
+          <span class="jissui-kanji">卯</span>
+          <span class="jissui-yomi">う</span>
+          <span class="jissui-time">5〜7時</span>
+          <span class="jissui-dir">東</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #8b6914;">
+          <span class="jissui-kanji">辰</span>
+          <span class="jissui-yomi">たつ</span>
+          <span class="jissui-time">7〜9時</span>
+          <span class="jissui-dir">東南東</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #c0392b;">
+          <span class="jissui-kanji">巳</span>
+          <span class="jissui-yomi">み</span>
+          <span class="jissui-time">9〜11時</span>
+          <span class="jissui-dir">南南東</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #e74c3c;">
+          <span class="jissui-kanji">午</span>
+          <span class="jissui-yomi">うま</span>
+          <span class="jissui-time">11〜13時</span>
+          <span class="jissui-dir">南</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #d4a017;">
+          <span class="jissui-kanji">未</span>
+          <span class="jissui-yomi">ひつじ</span>
+          <span class="jissui-time">13〜15時</span>
+          <span class="jissui-dir">南南西</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #7a6020;">
+          <span class="jissui-kanji">申</span>
+          <span class="jissui-yomi">さる</span>
+          <span class="jissui-time">15〜17時</span>
+          <span class="jissui-dir">西南西</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #e67e22;">
+          <span class="jissui-kanji">酉</span>
+          <span class="jissui-yomi">とり</span>
+          <span class="jissui-time">17〜19時</span>
+          <span class="jissui-dir">西</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #1a3a5c;">
+          <span class="jissui-kanji">戌</span>
+          <span class="jissui-yomi">いぬ</span>
+          <span class="jissui-time">19〜21時</span>
+          <span class="jissui-dir">西北西</span>
+        </div>
+        <div class="jissui-item" style="border-top:3px solid #2d1a5c;">
+          <span class="jissui-kanji">亥</span>
+          <span class="jissui-yomi">い</span>
+          <span class="jissui-time">21〜23時</span>
+          <span class="jissui-dir">北北西</span>
+        </div>
+      </div>
+      <div class="koten-point">
+        <div class="kp-title">📖 古文常識ポイント</div>
+        <strong>「丑三つ時（うしみつどき）」</strong>…丑の刻（1〜3時）を4分割した3番目＝深夜2時頃。怪異・呪いの時間とされた。<br>
+        <strong>「方違え（かたたがえ）」</strong>…陰陽道で凶方位に行くのを避けるため、別の方向に一泊してから目的地へ向かう風習。<br>
+        <strong>「鬼門（きもん）」</strong>…北東（丑寅の方角）。鬼が出入りする方角とされ、忌み嫌われた。<br>
+        <strong>「正午（しょうご）」</strong>…午の刻の正中（12時）。現代語「正午」の語源。
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <span class="sec-badge" style="background:linear-gradient(135deg,#501828,#702040);">豆知識</span>
+        <span class="sec-title">平安時代の暦・季節感覚</span>
+      </div>
+      <div style="font-family:'Noto Serif JP',serif;font-size:14px;line-height:2.2;color:var(--sumi);">
+        <p style="margin-bottom:12px;">
+          平安時代は<strong>太陰暦（旧暦）</strong>を使っていました。現代より約1〜2ヶ月遅れる季節感覚です。
+        </p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="meal-card">
+            <div class="meal-title" style="color:var(--verm);">🌸 春（1〜3月・旧暦）</div>
+            <div class="meal-item">現代の2〜4月頃に相当</div>
+            <div class="meal-item">「春立つ」＝立春（2月頃）</div>
+            <div class="meal-item">花見（桜・梅）・蛙の声</div>
+          </div>
+          <div class="meal-card">
+            <div class="meal-title" style="color:#1a6a4a;">🌿 夏（4〜6月・旧暦）</div>
+            <div class="meal-item">現代の5〜7月頃に相当</div>
+            <div class="meal-item">五月雨（さみだれ）＝梅雨</div>
+            <div class="meal-item">蛍・時鳥（ほととぎす）</div>
+          </div>
+          <div class="meal-card">
+            <div class="meal-title" style="color:#8b6914;">🍂 秋（7〜9月・旧暦）</div>
+            <div class="meal-item">現代の8〜10月頃に相当</div>
+            <div class="meal-item">月見（十五夜）・紅葉</div>
+            <div class="meal-item">虫の音・野分（台風）</div>
+          </div>
+          <div class="meal-card">
+            <div class="meal-title" style="color:#2980b9;">❄️ 冬（10〜12月・旧暦）</div>
+            <div class="meal-item">現代の11月〜1月頃</div>
+            <div class="meal-item">雪・霜・氷・枯れ野</div>
+            <div class="meal-item">除夜・年越しの行事</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /#panel-jikoku -->
+
+
+  <!-- ══ 深掘りパネル ══ -->
+  <div class="panel" id="panel-fukabori">
+    <div class="panel-header ph-fukabori">
+      <div class="ph-emoji">🔍</div>
+      <div>
+        <div class="ph-title">生活は？ ─ 平安の死生観・信仰・慣習</div>
+        <div class="ph-sub">十二支の起源・方違えの理由・お墓・怨霊・武士の死生観を詳しく解説します。</div>
+      </div>
+    </div>
+
+    <!-- ① 十二支の起源 -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge">🐾 深掘り 1</span>
+        <span class="fuka-title">十二支はどのようにして決められたか</span>
+      </div>
+      <div class="fuka-body">
+        <p>十二支は<strong>古代中国（殷〜周の時代、紀元前1000年頃）</strong>に生まれ、日本には<strong>飛鳥時代（6〜7世紀）</strong>に伝わりました。</p>
+        <p>もともと十二支は動物ではなく、<strong>植物の成長サイクル</strong>（種が芽吹き→育ち→実り→枯れる）を12段階で表したものでした。難しい漢字を庶民が覚えられないため、身近な動物を後から当てはめたのが起源です。</p>
+        <div class="koten-point" style="margin-bottom:12px;">
+          <div class="kp-title">💡 「ネコは十二支に入れなかった」は作り話？</div>
+          「神様が動物を呼んだとき、ネコはネズミに騙されて遅刻した」という話は<strong>後世の民間伝承</strong>で、中国の原典には存在しません。日本や東南アジアで広まった物語です。
+        </div>
+        <p><strong class="gold">古文で特に覚えるべき十二支：</strong></p>
+      </div>
+      <div style="overflow-x:auto;">
+      <table class="hikaku-table">
+        <thead><tr>
+          <th class="h1">十二支</th>
+          <th class="h1">時刻</th>
+          <th class="h1">方角</th>
+          <th class="h1">覚える理由</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="font-family:'Zen Old Mincho',serif;font-size:15px;font-weight:700;">子（ね）</td><td>23〜1時</td><td>北</td><td>深夜の基準・正北。「子の刻」</td></tr>
+          <tr><td style="font-family:'Zen Old Mincho',serif;font-size:15px;font-weight:700;color:var(--verm);">丑（うし）</td><td>1〜3時</td><td>北北東</td><td><strong>「丑三つ時」</strong>怪異・呪いの時間。丑の刻参り</td></tr>
+          <tr><td style="font-family:'Zen Old Mincho',serif;font-size:15px;font-weight:700;color:var(--verm);">寅（とら）</td><td>3〜5時</td><td>東北東</td><td><strong>「鬼門」は丑寅の方角</strong>。鬼が出入りする</td></tr>
+          <tr><td style="font-family:'Zen Old Mincho',serif;font-size:15px;font-weight:700;">卯（う）</td><td>5〜7時</td><td>東</td><td>夜明け・正東。「卯の花」</td></tr>
+          <tr><td style="font-family:'Zen Old Mincho',serif;font-size:15px;font-weight:700;color:var(--gold);">午（うま）</td><td>11〜13時</td><td>南</td><td><strong>「正午」の語源</strong>。現代語に残る</td></tr>
+          <tr><td style="font-family:'Zen Old Mincho',serif;font-size:15px;font-weight:700;">酉（とり）</td><td>17〜19時</td><td>西</td><td>日暮れ・帰宅時間</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- ② 方違えの理由 -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge">🧭 深掘り 2</span>
+        <span class="fuka-title">なぜ「方違え（かたたがえ）」が行われたか</span>
+      </div>
+      <div class="fuka-body">
+        <p><strong>陰陽道（おんみょうどう）</strong>という呪術・占いの体系に基づく風習です。天体の動きと方角が常に変化し、特定の日・特定の方角が「凶（大凶）」になると信じられていました。これを<strong>「塞がり（ふたがり）」</strong>といいます。</p>
+        <p>特に恐れられた凶神：<strong>金神（こんじん）</strong>…最も凶暴な神。いる方角に向かうと死・病・災厄が起きる。</p>
+        <div class="quote-box">
+          【方違えの手順】<br>
+          ① 陰陽師に占ってもらい「今日の凶方位」を確認<br>
+          ② 目的地が凶方位にある場合→まず<strong>別の吉方位の家に一泊</strong><br>
+          ③ 翌日、そこから目的地へ向かう（出発点が変わるので方角が変わる）
+          <div class="q-source">例：東が凶方位→まず北の親戚宅に一泊→翌日「北から東」へ向かう</div>
+        </div>
+        <p>これを<strong>真剣に信じていた</strong>のが平安貴族です。『源氏物語』『枕草子』にも方違えの場面が多数登場します。</p>
+        <p><strong class="blue">なぜそこまで信じたか：</strong>平安時代は医学が未発達で、病気・死・天災の原因がわかりませんでした。不幸の原因を「祟り・呪い・方角の凶」に求めるのが自然でした。<strong>陰陽師（安倍晴明など）</strong>は宮廷で絶大な権力を持ちました。</p>
+      </div>
+    </div>
+
+    <!-- ③ お墓・遺体 -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge">⛰️ 深掘り 3</span>
+        <span class="fuka-title">お墓はどうしていたか ─ 衝撃の遺体処理</span>
+      </div>
+      <div class="fuka-body">
+        <p>身分によって大きく異なります。</p>
+        <p><strong>農民・庶民：</strong>村はずれや野原に土葬。墓標は木の杭や石ころ程度でした。</p>
+        <p><strong>貴族：</strong>貴族は<strong>死を極度に忌み嫌い</strong>、遺体処理は現代からは想像できないほど粗末でした。</p>
+        <div class="onryo-grid">
+          <div class="onryo-item" style="border-color:rgba(90,60,20,0.3);background:rgba(90,60,20,0.04);">
+            <div class="onryo-name" style="color:var(--sumi);">🪦 風葬（ふうそう）</div>
+            <div class="onryo-body">遺体をそのまま野外に放置して自然に朽ちさせる。烏や野犬に食べられることも多かった。</div>
+          </div>
+          <div class="onryo-item" style="border-color:rgba(90,60,20,0.3);background:rgba(90,60,20,0.04);">
+            <div class="onryo-name" style="color:var(--sumi);">📍 三大遺棄場所（京都）</div>
+            <div class="onryo-body"><strong>鳥辺野（とりべの）</strong>・<strong>化野（あだしの）</strong>・<strong>蓮台野（れんだいの）</strong>…京都郊外の遺体遺棄場所。</div>
+          </div>
+        </div>
+        <p><strong class="blue">なぜそうしたか：</strong></p>
+        <p>死は<strong>「穢れ（けがれ）」</strong>の最たるものとされました。死に触れた者は<strong>「死穢（しえ）」</strong>を受け、一定期間外出・参内・神事への参加が禁じられました。死体を家に長く置くことが許容されなかったのです。</p>
+        <p>平安中期以降、仏教が普及すると<strong>卒塔婆（そとば）</strong>を立てたり<strong>火葬</strong>が広まり、少しずつ丁寧に弔われるようになっていきました。</p>
+        <div class="koten-point">
+          <div class="kp-title">📖 古文常識ポイント</div>
+          <strong>『源氏物語』「夕顔」の巻</strong>では、夕顔が物の怪に取り殺された後、源氏が遺体の処理に困り、夜中に密かに運ぶ描写があります。貴族にとって「死体が自分の邸にある」こと自体が大変な穢れとされました。
+        </div>
+      </div>
+    </div>
+
+    <!-- ④ 怨霊・殺人への恐れ -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge">👻 深掘り 4</span>
+        <span class="fuka-title">貴族・僧侶が「殺人」を末代まで恐れた理由</span>
+      </div>
+      <div class="fuka-body">
+        <p>平安時代最大の恐怖は<strong>「怨霊（おんりょう）」</strong>でした。不当に命を奪われた者・怨みを持って死んだ者の霊が、<strong>殺した者とその子孫を末代まで祟る</strong>と信じられていたのです。</p>
+        <p><strong class="gold">代表的な怨霊：</strong></p>
+        <div class="onryo-grid">
+          <div class="onryo-item">
+            <div class="onryo-name">菅原道真（すがわらのみちざね）</div>
+            <div class="onryo-body">政治的に失脚・大宰府に左遷・憤死。その後、雷・洪水・疫病が頻発し宮廷人が相次いで死亡。<strong>北野天満宮</strong>を建てて神として祀り鎮めた。</div>
+          </div>
+          <div class="onryo-item">
+            <div class="onryo-name">崇徳院（すとくいん）</div>
+            <div class="onryo-body">保元の乱で敗れ讃岐に流された。「日本最大の怨霊」と恐れられ、<strong>白峯神宮</strong>で祀られた。</div>
+          </div>
+          <div class="onryo-item">
+            <div class="onryo-name">早良親王（さわらしんのう）</div>
+            <div class="onryo-body">無実の罪で幽閉・絶食死。桓武天皇の周辺で皇后・皇太子が相次いで死亡。長岡京から平安京への遷都の原因ともなった。</div>
+          </div>
+        </div>
+        <p><strong class="blue">なぜ「末代まで」祟られると恐れたか：</strong>怨霊は個人だけでなく<strong>子孫・一族全体</strong>に祟ると信じられました。道真の怨霊を鎮めるために神として祀る<strong>「御霊信仰（ごりょうしんこう）」</strong>が生まれ、これが現在の<strong>天神様信仰</strong>の起源です。</p>
+        <p><strong>僧侶が特に恐れた理由：</strong>仏教の戒律<strong>「不殺生（ふせっしょう）」</strong>は最も重い戒律で、殺生により<strong>来世で地獄に落ちる</strong>と信じました。高位の僧が殺人に関わると<strong>破戒僧（はかいそう）</strong>として失脚しました。</p>
+      </div>
+    </div>
+
+    <!-- ⑤ 武士の死生観 -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge">⚔️ 深掘り 5</span>
+        <span class="fuka-title">武士はなぜ「怨霊・殺人」を気にしなかったか</span>
+      </div>
+      <div class="fuka-body">
+        <p>武士は貴族・僧侶とは<strong>根本的に異なる死生観</strong>を持っていました。</p>
+        <div style="overflow-x:auto;">
+        <table class="hikaku-table">
+          <thead><tr>
+            <th class="h1">身分</th>
+            <th class="h1">死・殺人への態度</th>
+            <th class="h1">根拠・信仰</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700;">👘 貴族</td>
+              <td>極度に忌避。遺体を野に捨てた</td>
+              <td>神道の「穢れ」・怨霊信仰</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">🙏 僧侶</td>
+              <td>不殺生の戒律で最も厳しく禁じた</td>
+              <td>仏教戒律・来世への恐怖</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">⚔️ 武士</td>
+              <td>殺すことが本分。比較的割り切っていた</td>
+              <td>実用主義・浄土宗・禅宗</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;">🌾 農民</td>
+              <td>身近に死があり比較的淡々と受け入れた</td>
+              <td>日常的な死の経験</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <p><strong class="gold">武士が怨霊を恐れなかった4つの理由：</strong></p>
+        <p>① <strong>実用主義</strong>：戦場で怨霊を恐れていては戦えません。「死んだ者は死んだ」という現実主義が根底にありました。</p>
+        <p>② <strong>浄土宗・禅宗との相性</strong>：平安末期〜鎌倉時代、武士は<strong>「南無阿弥陀仏」</strong>と唱えれば極楽浄土に行けるという<strong>浄土宗（法然）</strong>や<strong>禅宗（栄西・道元）</strong>に惹かれました。シンプルな教えが武士の気質に合いました。</p>
+        <p>③ <strong>「武功（ぶこう）」という名誉</strong>：敵を多く倒した武士は「強者（つわもの）」として称えられました。恨みを買っても武名が上がることの方が重要でした。</p>
+        <p>④ <strong>「成仏させてやる」という感覚</strong>：武士は倒した敵の首をきちんと弔うことで「成仏させた」と考えました。丁寧に弔えばよいという実際的な解決策で対処しました。</p>
+        <div class="koten-point">
+          <div class="kp-title">📖 古文常識ポイント ─ 武士文学のキーワード</div>
+          <strong>「武者は犬死にせず」</strong>…戦場で死ぬことは名誉。逃げて生き延びることを恥とした。<br>
+          <strong>「名乗り（なのり）」</strong>…「我こそは〜国の〜」と出自を述べてから戦闘を開始。<br>
+          <strong>「平家物語」冒頭</strong>「祇園精舎の鐘の声、諸行無常の響きあり」─ 武士の世界でも仏教的無常観は生きていた。<br>
+          <strong>「兵（つわもの）どもが夢の跡」</strong>（松尾芭蕉）─ 奥州平泉で詠んだ句。武士の栄枯盛衰を詠む。
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /#panel-fukabori -->
+
+
+  <!-- ══ 社会・政治パネル ══ -->
+  <div class="panel" id="panel-shakai">
+    <div class="panel-header ph-shakai">
+      <div class="ph-emoji">🏛️</div>
+      <div>
+        <div class="ph-title">どんな社会？ ─ 平安の社会・政治・文化</div>
+        <div class="ph-sub">人口・役人の数・治安・識字率・渡来人・藤原氏の権力について詳しく解説します。</div>
+      </div>
+    </div>
+
+    <!-- ① 人口 -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge" style="background:linear-gradient(135deg,#102030,#1a4060);">👥 社会 1</span>
+        <span class="fuka-title">平安時代の人口はどのくらいだったか</span>
+      </div>
+      <div class="fuka-body">
+        <p>平安時代の人口は研究者によって推計が異なりますが、概ね次のようにまとめられます。</p>
+        <div style="overflow-x:auto;">
+        <table class="hikaku-table">
+          <thead><tr>
+            <th class="h1">時期</th>
+            <th class="h1">全国推計人口</th>
+            <th class="h1">平安京の人口</th>
+            <th class="h1">根拠</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>平安初期（800年頃）</td><td>約<strong>550万人</strong></td><td>約<strong>10〜12万人</strong></td><td>耕地面積・役所の記録から推計（鬼頭宏）</td></tr>
+            <tr><td>平安中期（900〜1000年頃）</td><td>約<strong>500〜600万人</strong></td><td>約<strong>10〜20万人</strong></td><td>『和名類聚抄』の田積数を基に計算</td></tr>
+            <tr><td>平安末期（1150年頃）</td><td>約<strong>570〜700万人</strong></td><td>約<strong>15〜18万人</strong></td><td>歴史学者ファリス・鬼頭宏の研究</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>これを現代（1億2千万人）と比べると、平安時代は現代の<strong>約20〜25分の1</strong>の人口でした。東京都（約1400万人）の2〜3分の1程度が日本全体の人口だったことになります。</p>
+        <div class="koten-point">
+          <div class="kp-title">📖 古文常識ポイント</div>
+          歴史学者・本郷和人氏によれば、<strong>「平安時代の総人口約1000万人に対して、貴族はわずか約500人」</strong>という極端な格差社会でした。500人の貴族が1000万人を統治していたのです。平安文学はその500人の世界を描いた文学といえます。
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 役人の数と生活 -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge" style="background:linear-gradient(135deg,#102030,#1a4060);">📋 社会 2</span>
+        <span class="fuka-title">役人は何人いたか ─ 貴族の身分格差と生活</span>
+      </div>
+      <div class="fuka-body">
+        <p>律令制度の下、<strong>全国に1万人以上の律令官僚</strong>がいましたが、その内訳は極端なピラミッド構造でした。</p>
+        <div style="overflow-x:auto;">
+        <table class="hikaku-table">
+          <thead><tr>
+            <th class="h1">位階</th><th class="h1">人数</th>
+            <th class="h1">役職例</th><th class="h1">生活の実態</th>
+          </tr></thead>
+          <tbody>
+            <tr style="background:rgba(184,134,11,0.06);">
+              <td><strong>三位以上</strong>（高級貴族・公卿）</td>
+              <td style="color:var(--verm);font-weight:700;">わずか10〜20人</td>
+              <td>太政大臣・左右大臣・大納言</td>
+              <td>莫大な所領・荘園を持ち裕福。政治の中枢</td>
+            </tr>
+            <tr>
+              <td><strong>四・五位</strong>（中級貴族）</td>
+              <td style="font-weight:700;">約150〜200人</td>
+              <td>中納言・参議・殿上人</td>
+              <td>殿上人として宮中に昇れる。比較的安定</td>
+            </tr>
+            <tr>
+              <td><strong>六位以下</strong>（下級官人）</td>
+              <td style="font-weight:700;">数千人以上</td>
+              <td>地方官・書記・警備</td>
+              <td><strong>非常勤・給与なしも多い。生活困窮者も</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <p><strong class="blue">役職に就けない貴族は深刻な貧困に陥りました。</strong></p>
+        <p>五位以下の貴族は摂関期になると役職に就けない者が多く、<strong>非常勤・無給</strong>同然の状態が続きました。位階に伴う給与（位禄・季禄）も形骸化し、<strong>官職に就いて禄をもらわなければ食べていけない</strong>状況でした。</p>
+        <p>役職に就けない没落貴族の中には、地方に下って荘園を開いたり、武士団に加わる者も出ました。これが武士の台頭につながっていきます。</p>
+        <div class="koten-point">
+          <div class="kp-title">📖 古文常識ポイント</div>
+          <strong>「受領（ずりょう）」</strong>…地方に赴任した筆頭国司。現地で税を集めて私腹を肥やすことができたため、「受領は倒るるところに土をつかめ」（何があっても利益を得ようとする）という言葉が残るほど羨まれた役職でした。<br>
+          <strong>「殿上人（てんじょうびと）」</strong>…清涼殿の殿上の間に昇ることを許された四〜五位以上の貴族。この資格があるかどうかが社会的地位の大きな境目でした。
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 治安 -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge" style="background:linear-gradient(135deg,#102030,#1a4060);">🏯 社会 3</span>
+        <span class="fuka-title">平安京に壁がない ─ 治安はどうだったか</span>
+      </div>
+      <div class="fuka-body">
+        <p><strong>平安京には城壁（羅城）がありませんでした</strong>。中国の長安は高さ数メートルの巨大な城壁で囲まれていましたが、平安京はほぼ「道路で区画しただけ」の都市でした。</p>
+        <p><strong class="blue">なぜ壁を作らなかったか：</strong></p>
+        <p>① 当時の日本には、城壁が必要なほどの外敵（外国軍）が存在しなかった。<br>② 島国という地理的条件から、大陸のような軍事侵攻リスクがなかった。<br>③ 財政・技術的な理由でそこまでの大工事が困難だった。</p>
+        <p><strong>治安の実態：</strong></p>
+        <div class="onryo-grid">
+          <div class="onryo-item" style="border-color:rgba(100,60,20,0.3);background:rgba(100,60,20,0.04);">
+            <div class="onryo-name" style="color:#6b3010;">🔥 夜盗・強盗の横行</div>
+            <div class="onryo-body">夜間の平安京は非常に危険でした。盗賊・山賊が横行し、貴族の邸宅も狙われました。『今昔物語集』には盗賊・強盗の話が多数収録されています。</div>
+          </div>
+          <div class="onryo-item" style="border-color:rgba(100,60,20,0.3);background:rgba(100,60,20,0.04);">
+            <div class="onryo-name" style="color:#6b3010;">🌆 西京の荒廃</div>
+            <div class="onryo-body">平安京の西半分（右京）は湿地帯で人が住みにくく、早くから荒廃しました。廃屋・野ざらしの遺体・盗賊の巣となり、<strong>実質的に東半分（左京）だけが都市</strong>として機能しました。</div>
+          </div>
+          <div class="onryo-item" style="border-color:rgba(100,60,20,0.3);background:rgba(100,60,20,0.04);">
+            <div class="onryo-name" style="color:#6b3010;">👮 検非違使（けびいし）</div>
+            <div class="onryo-body">平安京の治安を担った警察・裁判機関。律令にない令外官として設置され、盗賊逮捕・治安維持にあたりました。</div>
+          </div>
+          <div class="onryo-item" style="border-color:rgba(100,60,20,0.3);background:rgba(100,60,20,0.04);">
+            <div class="onryo-name" style="color:#6b3010;">⚔️ 地方の反乱</div>
+            <div class="onryo-body">平将門の乱（939年・関東）、藤原純友の乱（939年・瀬戸内）など地方では大反乱が起き、<strong>朝廷だけでは鎮圧できず武士に頼った</strong>ことが武士台頭の契機となりました。</div>
+          </div>
+        </div>
+        <div class="koten-point">
+          <div class="kp-title">📖 古文常識ポイント</div>
+          <strong>「羅生門（らしょうもん）」</strong>は平安京の南端の正門。荒廃して盗賊・死体の捨て場となっていました。芥川龍之介の小説『羅生門』はこの史実を背景にしています。<br>
+          <strong>「検非違使」</strong>は古文頻出の官職。「けびいし」と読み、現代の警察・裁判所に相当しました。
+        </div>
+      </div>
+    </div>
+
+    <!-- ④ 識字率 -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge" style="background:linear-gradient(135deg,#102030,#1a4060);">📝 社会 4</span>
+        <span class="fuka-title">識字率はどうだったか ─ 文字と文化の格差</span>
+      </div>
+      <div class="fuka-body">
+        <p>平安時代の識字率は身分によって<strong>極端な格差</strong>がありました。</p>
+        <div style="overflow-x:auto;">
+        <table class="hikaku-table">
+          <thead><tr>
+            <th class="h1">身分</th>
+            <th class="h1">識字能力</th>
+            <th class="h1">使用文字</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><strong>高級貴族（男性）</strong></td>
+              <td style="color:var(--jade);font-weight:700;">漢文・仮名 両方</td>
+              <td>漢字・漢文（公の文書）＋ひらがな（私的文書・和歌）</td>
+            </tr>
+            <tr><td><strong>中・下級貴族（男性）</strong></td>
+              <td>漢字・仮名</td>
+              <td>漢字は読めるが作文は苦手な者も。ひらがなは全員使用</td>
+            </tr>
+            <tr><td><strong>貴族女性</strong></td>
+              <td>仮名中心</td>
+              <td><strong>ひらがなが主体</strong>。漢文は「男の文字」とされた。紫式部・清少納言は例外的に漢文も深く習得</td>
+            </tr>
+            <tr><td><strong>農民・庶民</strong></td>
+              <td style="color:var(--verm);font-weight:700;">ほぼ文盲</td>
+              <td>文字を読み書きできない。口伝え・民謡・語り部で文化を伝えた</td>
+            </tr>
+            <tr><td><strong>僧侶</strong></td>
+              <td>漢文・梵字</td>
+              <td>経典（漢文）を読む。梵字（サンスクリット）も学んだ</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <p>全体の識字率は<strong>数%以下</strong>だったと推定されます。文字文化は貴族・僧侶の独占物でした。</p>
+        <p><strong class="blue">ひらがなの発明が文化革命をもたらした：</strong></p>
+        <p>漢字から発達したひらがな・カタカナの普及により、<strong>貴族女性が日本語で自由に書けるようになりました</strong>。これが『源氏物語』『枕草子』という世界的文学を生んだ背景です。「女手（おんなで）」と呼ばれたひらがなは、逆に女性文学の開花をもたらしました。</p>
+        <div class="koten-point">
+          <div class="kp-title">📖 古文常識ポイント</div>
+          <strong>紫式部の日記</strong>には、漢文を読む自分を隠していた記述があります。「女が漢文を読むのははしたない」という当時の価値観の中で、紫式部・清少納言のような才女は例外的存在でした。<br>
+          <strong>「仮名文字（かなもじ）」</strong>の発明は平安時代最大の文化革新のひとつです。
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑤ 渡来人と漢文 -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge" style="background:linear-gradient(135deg,#102030,#1a4060);">🌏 社会 5</span>
+        <span class="fuka-title">渡来人と漢文 ─ 中国語が話せた人たちは誰か</span>
+      </div>
+      <div class="fuka-body">
+        <p><strong>渡来人（とらいじん）の子孫</strong>が漢文・中国語に堪能な人々の多くを占めていました。</p>
+        <p><strong>主な渡来系氏族と役割：</strong></p>
+        <div class="onryo-grid">
+          <div class="onryo-item" style="border-color:rgba(26,58,92,0.25);background:var(--indigo-pale);">
+            <div class="onryo-name" style="color:var(--indigo);">📚 文氏（ふみのうじ）・西文氏（かわちのふみのうじ）</div>
+            <div class="onryo-body">百済（朝鮮半島）からの渡来系。朝廷の文書・記録を担当。「文（ふみ）」つまり書記・文章を専門とした一族。</div>
+          </div>
+          <div class="onryo-item" style="border-color:rgba(26,58,92,0.25);background:var(--indigo-pale);">
+            <div class="onryo-name" style="color:var(--indigo);">🎨 秦氏（はたのうじ）</div>
+            <div class="onryo-body">中国・朝鮮系渡来人の最大集団。機織り・土木・農業技術を伝えた。伏見稲荷大社を建てた一族。平安京の基礎整備に貢献。</div>
+          </div>
+          <div class="onryo-item" style="border-color:rgba(26,58,92,0.25);background:var(--indigo-pale);">
+            <div class="onryo-name" style="color:var(--indigo);">🔭 陰陽寮の技術者</div>
+            <div class="onryo-body">天文・暦・陰陽道の知識は中国から渡来した技術者が伝えた。安倍氏・賀茂氏は陰陽道を家業とした。</div>
+          </div>
+          <div class="onryo-item" style="border-color:rgba(26,58,92,0.25);background:var(--indigo-pale);">
+            <div class="onryo-name" style="color:var(--indigo);">🎵 雅楽・楽師</div>
+            <div class="onryo-body">宮廷音楽（雅楽）の演奏者も渡来系。楽器（琵琶・笛など）の技術を伝えた。</div>
+          </div>
+        </div>
+        <p>ただし<strong>「中国語を話す」</strong>という意味では少し補足が必要です。平安時代の宮廷では<strong>漢文（書き言葉としての中国語）</strong>は読み書きできましたが、<strong>口語の中国語を日常的に話せた人はほとんどいなかった</strong>と考えられています。遣唐使の時代（〜894年）には会話が必要でしたが、遣唐使廃止後は書き言葉としての漢文のみが残りました。</p>
+      </div>
+    </div>
+
+    <!-- ⑥ 藤原氏の突出 -->
+    <div class="fuka-card">
+      <div class="fuka-head">
+        <span class="fuka-badge" style="background:linear-gradient(135deg,#102030,#1a4060);">👑 社会 6</span>
+        <span class="fuka-title">藤原氏は突出していたか ─ 摂関政治の実態</span>
+      </div>
+      <div class="fuka-body">
+        <p>結論からいえば、<strong>「突出」どころか「独占」に近い支配</strong>でした。</p>
+        <p><strong class="gold">藤原氏が権力を握った2つの方法：</strong></p>
+        <p>① <strong>他氏排斥（たしはいせき）</strong>：承和の変・応天門の変・安和の変などで、政治的ライバルを次々と追放・失脚させました。菅原道真もその犠牲者のひとりです。</p>
+        <p>② <strong>外戚政策（がいせきせいさく）</strong>：娘を天皇に嫁がせ→生まれた皇子が天皇に即位→幼い天皇の祖父として「摂政」に就任→天皇成人後も「関白」として政治を支配。</p>
+        <div class="quote-box">
+          「この世をば わが世とぞ思ふ 望月の 欠けたることも なしと思へば」<br>
+          <div class="q-source">─ 藤原道長（1018年、三人の娘が皇后・皇太子・東宮妃となった夜に詠んだ歌）</div>
+        </div>
+        <p>10世紀には高位の貴族はほぼ藤原氏だけとなり、<strong>藤原氏以外は役職に就けない</strong>状況になりました。役職に就けない貴族の中には地方に移住する者も出ました。</p>
+        <p><strong class="blue">藤原氏と渡来人の関係：</strong></p>
+        <p>藤原氏の祖・<strong>中臣鎌足（なかとみのかまたり）</strong>は渡来系ではなく、古来の神祇氏族（中臣氏）の出身です。ただし藤原氏が権力を維持できた背景には、文書行政・漢文能力を持つ渡来系官人を巧みに活用したことがあります。</p>
+        <div style="overflow-x:auto;">
+        <table class="hikaku-table">
+          <thead><tr>
+            <th class="h1">人物</th><th class="h1">業績</th><th class="h1">時期</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><strong>藤原鎌足</strong></td><td>大化の改新。「藤原」の氏を賜る</td><td>645年〜</td></tr>
+            <tr><td><strong>藤原不比等</strong></td><td>律令制定・平城京建設に貢献</td><td>700年頃</td></tr>
+            <tr><td><strong>藤原良房</strong></td><td>皇族以外で初の摂政就任</td><td>858年</td></tr>
+            <tr><td><strong>藤原基経</strong></td><td>初の関白就任</td><td>884年</td></tr>
+            <tr><td style="color:var(--gold);font-weight:700;">藤原道長</td><td>三人の娘を后に。摂関政治の絶頂期</td><td>995〜1027年</td></tr>
+            <tr><td><strong>藤原頼通</strong></td><td>道長の子。平等院鳳凰堂建立</td><td>992〜1074年</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="koten-point">
+          <div class="kp-title">📖 古文常識ポイント</div>
+          <strong>「摂政（せっしょう）」</strong>…天皇が幼少・女性の時に代わって政務を行う。<br>
+          <strong>「関白（かんぱく）」</strong>…天皇が成人した後も政務を補佐する。<br>
+          <strong>「内覧（ないらん）」</strong>…天皇への上奏文を事前に閲覧する権限。道長は関白にならず内覧として実権を握った。<br>
+          <strong>「この世をば〜」</strong>の歌は古文試験頻出。道長が詠んだ状況（三人の娘が后になった夜）もセットで覚えよう。
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /#panel-shakai -->
+
+  <!-- ══ 古文常識クイズ ══ -->
+  <div class="quiz-section">
+    <div class="quiz-head">
+      <div class="quiz-head-title">🍵 古文常識クイズ</div>
+      <div class="quiz-head-sub">平安時代の文化・生活に関する問題です。全20問</div>
+    </div>
+    <div class="quiz-progress-bar">
+      <div class="quiz-pb-fill" id="qpb" style="width:0%"></div>
+    </div>
+
+    <div id="quiz-content">
+      <!-- 問題1 -->
+      <div class="q-card-quiz" id="qq1">
+        <div class="q-num-quiz">QUESTION 1 / 20</div>
+        <div class="q-text-quiz">平安時代の農民がほとんど食べられなかった主食は何か？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(1,0,1)">粟（あわ）</button>
+          <button class="q-opt-quiz" onclick="ansQ(1,1,1)">白米</button>
+          <button class="q-opt-quiz" onclick="ansQ(1,2,1)">稗（ひえ）</button>
+          <button class="q-opt-quiz" onclick="ansQ(1,3,1)">麦</button>
+        </div>
+        <div class="q-kai-quiz" id="kai1">米は<strong>租（税）</strong>として朝廷に納めるものでした。農民は粟・稗・雑穀を主食とし、白米は高嶺の花でした。</div>
+      </div>
+
+      <!-- 問題2 -->
+      <div class="q-card-quiz" id="qq2">
+        <div class="q-num-quiz">QUESTION 2 / 20</div>
+        <div class="q-text-quiz">平安貴族が陰陽道の凶方位を避けるため、別の方向に一泊してから目的地へ向かう風習を何というか？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(2,0,0)">方違え（かたたがえ）</button>
+          <button class="q-opt-quiz" onclick="ansQ(2,1,0)">物忌み（ものいみ）</button>
+          <button class="q-opt-quiz" onclick="ansQ(2,2,0)">鬼門（きもん）</button>
+          <button class="q-opt-quiz" onclick="ansQ(2,3,0)">加持祈祷（かじきとう）</button>
+        </div>
+        <div class="q-kai-quiz" id="kai2"><strong>方違え</strong>は陰陽道の風習。凶方位への移動を避けるため吉方位に一泊してから向かいました。「物忌み」は外出を避けて家にこもること。</div>
+      </div>
+
+      <!-- 問題3 -->
+      <div class="q-card-quiz" id="qq3">
+        <div class="q-num-quiz">QUESTION 3 / 20</div>
+        <div class="q-text-quiz">「丑三つ時（うしみつどき）」は現代時刻のいつ頃か？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(3,0,2)">午前0時頃</button>
+          <button class="q-opt-quiz" onclick="ansQ(3,1,2)">午前1時頃</button>
+          <button class="q-opt-quiz" onclick="ansQ(3,2,2)">午前2時頃</button>
+          <button class="q-opt-quiz" onclick="ansQ(3,3,2)">午前4時頃</button>
+        </div>
+        <div class="q-kai-quiz" id="kai3">丑の刻（1〜3時）を4分割した3番目＝<strong>午前2時頃</strong>。怪異・呪いの時間とされ、「丑の刻参り」などの風習が生まれました。</div>
+      </div>
+
+      <!-- 問題4 -->
+      <div class="q-card-quiz" id="qq4">
+        <div class="q-num-quiz">QUESTION 4 / 20</div>
+        <div class="q-text-quiz">平安時代の僧侶が守った食事の制約は何か？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(4,0,1)">甘いものを食べない</button>
+          <button class="q-opt-quiz" onclick="ansQ(4,1,1)">肉・魚を食べない精進料理</button>
+          <button class="q-opt-quiz" onclick="ansQ(4,2,1)">1日1食のみ</button>
+          <button class="q-opt-quiz" onclick="ansQ(4,3,1)">生ものを食べない</button>
+        </div>
+        <div class="q-kai-quiz" id="kai4"><strong>不殺生</strong>の戒律から肉・魚を食べない<strong>精進料理</strong>が基本でした。豆腐・湯葉・根菜などが主な食材でした。</div>
+      </div>
+
+      <!-- 問題5 -->
+      <div class="q-card-quiz" id="qq5">
+        <div class="q-num-quiz">QUESTION 5 / 20</div>
+        <div class="q-text-quiz">天台宗（延暦寺）を開いたのは誰か？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(5,0,0)">最澄（さいちょう）</button>
+          <button class="q-opt-quiz" onclick="ansQ(5,1,0)">空海（くうかい）</button>
+          <button class="q-opt-quiz" onclick="ansQ(5,2,0)">行基（ぎょうき）</button>
+          <button class="q-opt-quiz" onclick="ansQ(5,3,0)">法然（ほうねん）</button>
+        </div>
+        <div class="q-kai-quiz" id="kai5"><strong>最澄</strong>が天台宗（延暦寺・比叡山）を開き、<strong>空海</strong>が真言宗（東寺・高野山）を開きました。二人は同時代の人物です。</div>
+      </div>
+
+      <!-- 問題6 -->
+      <div class="q-card-quiz" id="qq6">
+        <div class="q-num-quiz">QUESTION 6 / 20</div>
+        <div class="q-text-quiz">平安時代、武士が戦いの前に行った作法は何か？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(6,0,1)">祈祷（きとう）</button>
+          <button class="q-opt-quiz" onclick="ansQ(6,1,1)">名乗り（なのり）</button>
+          <button class="q-opt-quiz" onclick="ansQ(6,2,1)">断食（だんじき）</button>
+          <button class="q-opt-quiz" onclick="ansQ(6,3,1)">方違え（かたたがえ）</button>
+        </div>
+        <div class="q-kai-quiz" id="kai6"><strong>名乗り</strong>を上げてから戦うのが作法でした。「我こそは〜国の〜」と自らの出自・功績を述べてから戦闘を開始しました。</div>
+      </div>
+
+      <!-- 問題7 -->
+      <div class="q-card-quiz" id="qq7">
+        <div class="q-num-quiz">QUESTION 7 / 20</div>
+        <div class="q-text-quiz">平安貴族の女性の正装「十二単」の正式名称は？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(7,0,3)">直衣（のうし）</button>
+          <button class="q-opt-quiz" onclick="ansQ(7,1,3)">束帯（そくたい）</button>
+          <button class="q-opt-quiz" onclick="ansQ(7,2,3)">狩衣（かりぎぬ）</button>
+          <button class="q-opt-quiz" onclick="ansQ(7,3,3)">袿（うちき）・唐衣裳（からぎぬも）</button>
+        </div>
+        <div class="q-kai-quiz" id="kai7">「十二単」は通称で、正式には<strong>「唐衣裳（からぎぬも）」</strong>といいます。男性貴族の正装は<strong>束帯</strong>、略装は<strong>直衣</strong>、武官は<strong>狩衣</strong>を着用しました。</div>
+      </div>
+
+      <!-- 問題8 -->
+      <div class="q-card-quiz" id="qq8">
+        <div class="q-num-quiz">QUESTION 8 / 20</div>
+        <div class="q-text-quiz">平安時代の暦について正しいのは？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(8,0,1)">現代と同じ太陽暦を使っていた</button>
+          <button class="q-opt-quiz" onclick="ansQ(8,1,1)">太陰暦（旧暦）で現代より1〜2ヶ月遅い季節感</button>
+          <button class="q-opt-quiz" onclick="ansQ(8,2,1)">独自の暦で現代と全く異なる</button>
+          <button class="q-opt-quiz" onclick="ansQ(8,3,1)">中国の暦をそのまま使っていた</button>
+        </div>
+        <div class="q-kai-quiz" id="kai8"><strong>太陰暦（旧暦）</strong>を使っており、現代より約1〜2ヶ月遅い季節感覚でした。「春立つ」（立春）は現代の2月頃、「五月雨」は梅雨（現代の6〜7月）にあたります。</div>
+      </div>
+
+      <!-- 問題9 -->
+      <div class="q-card-quiz" id="qq9">
+        <div class="q-num-quiz">QUESTION 9 / 20</div>
+        <div class="q-text-quiz">平安時代の「鬼門（きもん）」とはどの方角か？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(9,0,1)">南西（申酉の方角）</button>
+          <button class="q-opt-quiz" onclick="ansQ(9,1,1)">北東（丑寅の方角）</button>
+          <button class="q-opt-quiz" onclick="ansQ(9,2,1)">東南（辰巳の方角）</button>
+          <button class="q-opt-quiz" onclick="ansQ(9,3,1)">北西（戌亥の方角）</button>
+        </div>
+        <div class="q-kai-quiz" id="kai9"><strong>北東（丑寅の方角）</strong>が鬼門。鬼が出入りする方角として忌み嫌われました。現代でも「鬼門」は縁起の悪い方角・場所の意味で使われます。</div>
+      </div>
+
+      <!-- 問題10 -->
+      <div class="q-card-quiz" id="qq10">
+        <div class="q-num-quiz">QUESTION 10 / 20</div>
+        <div class="q-text-quiz">平安時代の貴族が砂糖の代わりに使った甘味料は何か？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(10,0,2)">蜂蜜</button>
+          <button class="q-opt-quiz" onclick="ansQ(10,1,2)">黒糖</button>
+          <button class="q-opt-quiz" onclick="ansQ(10,2,2)">甘葛（あまづら）</button>
+          <button class="q-opt-quiz" onclick="ansQ(10,3,2)">水飴</button>
+        </div>
+        <div class="q-kai-quiz" id="kai10"><strong>甘葛（あまづら）</strong>はツタ科の植物から採った甘い汁で、砂糖の代わりに使われました。砂糖は奈良時代に伝わりましたが非常に高価で、甘葛が一般的な甘味料でした。</div>
+      </div>
+
+      <!-- 問題11 -->
+      <div class="q-card-quiz" id="qq11">
+        <div class="q-num-quiz">QUESTION 11 / 20</div>
+        <div class="q-text-quiz">平安貴族が「穢れ（けがれ）」を避けるため、近親者が死亡した際に一定期間外出・参内を自粛することを何というか？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(11,0,1)">方違え（かたたがえ）</button>
+          <button class="q-opt-quiz" onclick="ansQ(11,1,1)">服忌（ぶっき）</button>
+          <button class="q-opt-quiz" onclick="ansQ(11,2,1)">精進潔斎（しょうじんけっさい）</button>
+          <button class="q-opt-quiz" onclick="ansQ(11,3,1)">加持祈祷（かじきとう）</button>
+        </div>
+        <div class="q-kai-quiz" id="kai11">近親者の死により「死穢（しえ）」を受けた期間、宮中への出仕などを自粛することを<strong>「服忌（ぶっき）」</strong>といいます。忌みの期間は故人との関係によって異なりました。</div>
+      </div>
+
+      <!-- 問題12 -->
+      <div class="q-card-quiz" id="qq12">
+        <div class="q-num-quiz">QUESTION 12 / 20</div>
+        <div class="q-text-quiz">平安時代の警察・裁判を担った「検非違使（けびいし）」はどのような機関か？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(12,0,2)">律令に定められた正式な官庁</button>
+          <button class="q-opt-quiz" onclick="ansQ(12,1,2)">遣唐使を管理する機関</button>
+          <button class="q-opt-quiz" onclick="ansQ(12,2,2)">律令にない令外官として設置された治安機関</button>
+          <button class="q-opt-quiz" onclick="ansQ(12,3,2)">荘園を管理する貴族の家政機関</button>
+        </div>
+        <div class="q-kai-quiz" id="kai12">検非違使は律令に規定のない<strong>「令外官（りょうげのかん）」</strong>として設置された治安・裁判機関。平安京の警備・盗賊逮捕・裁判を担いました。古文に頻出の官職名です。</div>
+      </div>
+
+      <!-- 問題13 -->
+      <div class="q-card-quiz" id="qq13">
+        <div class="q-num-quiz">QUESTION 13 / 20</div>
+        <div class="q-text-quiz">平安時代の食事回数は原則何食だったか？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(13,0,1)">1日1食</button>
+          <button class="q-opt-quiz" onclick="ansQ(13,1,1)">1日2食</button>
+          <button class="q-opt-quiz" onclick="ansQ(13,2,1)">1日3食</button>
+          <button class="q-opt-quiz" onclick="ansQ(13,3,1)">身分によって異なり記録なし</button>
+        </div>
+        <div class="q-kai-quiz" id="kai13">平安時代は貴族も農民も原則<strong>1日2食</strong>（朝食と夕食）が基本でした。1日3食が一般化するのは江戸時代以降です。</div>
+      </div>
+
+      <!-- 問題14 -->
+      <div class="q-card-quiz" id="qq14">
+        <div class="q-num-quiz">QUESTION 14 / 20</div>
+        <div class="q-text-quiz">平安貴族の男性正装「束帯（そくたい）」のうち、天皇への参内など公の場で着る最も格式の高い装束はどれか？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(14,0,0)">束帯（そくたい）</button>
+          <button class="q-opt-quiz" onclick="ansQ(14,1,0)">直衣（のうし）</button>
+          <button class="q-opt-quiz" onclick="ansQ(14,2,0)">狩衣（かりぎぬ）</button>
+          <button class="q-opt-quiz" onclick="ansQ(14,3,0)">水干（すいかん）</button>
+        </div>
+        <div class="q-kai-quiz" id="kai14"><strong>束帯</strong>は男性貴族の最高正装。<strong>直衣</strong>は天皇や上位貴族が私的な場で着る略装。<strong>狩衣</strong>は武官や外出時の装束。<strong>水干</strong>は庶民・下級武士の装束でした。</div>
+      </div>
+
+      <!-- 問題15 -->
+      <div class="q-card-quiz" id="qq15">
+        <div class="q-num-quiz">QUESTION 15 / 20</div>
+        <div class="q-text-quiz">「殿上人（てんじょうびと）」とはどのような人々か？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(15,0,2)">天皇の護衛武士のこと</button>
+          <button class="q-opt-quiz" onclick="ansQ(15,1,2)">宮中の下働きをする女房のこと</button>
+          <button class="q-opt-quiz" onclick="ansQ(15,2,2)">清涼殿の殿上の間への昇殿を許された四〜五位以上の貴族</button>
+          <button class="q-opt-quiz" onclick="ansQ(15,3,2)">地方に赴任した国司のこと</button>
+        </div>
+        <div class="q-kai-quiz" id="kai15"><strong>殿上人</strong>は清涼殿の「殿上の間」に昇ることを許された貴族。この資格があるかどうかが社会的地位の大きな境目でした。昇殿を許されない六位以下は「地下（じげ）」と呼ばれました。</div>
+      </div>
+
+      <!-- 問題16 -->
+      <div class="q-card-quiz" id="qq16">
+        <div class="q-num-quiz">QUESTION 16 / 20</div>
+        <div class="q-text-quiz">菅原道真が太宰府に左遷された後、朝廷では何が続いたとされるか？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(16,0,1)">豊作と繁栄が続いた</button>
+          <button class="q-opt-quiz" onclick="ansQ(16,1,1)">雷・洪水・疫病、宮廷人の相次ぐ死</button>
+          <button class="q-opt-quiz" onclick="ansQ(16,2,1)">武士が宮中に乱入した</button>
+          <button class="q-opt-quiz" onclick="ansQ(16,3,1)">天皇が次々と即位した</button>
+        </div>
+        <div class="q-kai-quiz" id="kai16">道真の死後、<strong>雷・洪水・疫病</strong>が頻発し宮廷人が相次いで死亡しました。これが道真の怨霊の祟りとされ、鎮めるために<strong>北野天満宮</strong>を建立。道真は「天神様」として祀られました。</div>
+      </div>
+
+      <!-- 問題17 -->
+      <div class="q-card-quiz" id="qq17">
+        <div class="q-num-quiz">QUESTION 17 / 20</div>
+        <div class="q-text-quiz">平安時代の貴族社会で、地方に赴任した筆頭国司（税を集める権限を持つ）を何というか？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(17,0,3)">摂政（せっしょう）</button>
+          <button class="q-opt-quiz" onclick="ansQ(17,1,3)">関白（かんぱく）</button>
+          <button class="q-opt-quiz" onclick="ansQ(17,2,3)">検非違使（けびいし）</button>
+          <button class="q-opt-quiz" onclick="ansQ(17,3,3)">受領（ずりょう）</button>
+        </div>
+        <div class="q-kai-quiz" id="kai17"><strong>受領</strong>は地方に赴任した筆頭国司。現地で税を集めて私腹を肥やすことができたため羨まれた役職でした。「受領は倒るるところに土をつかめ」という言葉が残るほどです。</div>
+      </div>
+
+      <!-- 問題18 -->
+      <div class="q-card-quiz" id="qq18">
+        <div class="q-num-quiz">QUESTION 18 / 20</div>
+        <div class="q-text-quiz">「五月雨（さみだれ）」は現代のいつ頃にあたるか？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(18,0,2)">3〜4月頃（春雨）</button>
+          <button class="q-opt-quiz" onclick="ansQ(18,1,2)">4〜5月頃（花の季節）</button>
+          <button class="q-opt-quiz" onclick="ansQ(18,2,2)">6〜7月頃（梅雨）</button>
+          <button class="q-opt-quiz" onclick="ansQ(18,3,2)">9〜10月頃（秋雨）</button>
+        </div>
+        <div class="q-kai-quiz" id="kai18">平安時代は<strong>太陰暦（旧暦）</strong>を使用。旧暦5月は現代の<strong>6〜7月頃</strong>にあたるため、「五月雨」＝梅雨の雨のことです。「五月雨をあつめて早し最上川」（松尾芭蕉）も梅雨の増水を詠んでいます。</div>
+      </div>
+
+      <!-- 問題19 -->
+      <div class="q-card-quiz" id="qq19">
+        <div class="q-num-quiz">QUESTION 19 / 20</div>
+        <div class="q-text-quiz">藤原道長が「この世をば わが世とぞ思ふ 望月の…」と詠んだのはどのような状況だったか？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(19,0,3)">源氏物語が完成したお祝いの宴で</button>
+          <button class="q-opt-quiz" onclick="ansQ(19,1,3)">摂政に就任した直後の儀式で</button>
+          <button class="q-opt-quiz" onclick="ansQ(19,2,3)">菅原道真を太宰府に左遷した夜に</button>
+          <button class="q-opt-quiz" onclick="ansQ(19,3,3)">三人の娘が皇后・皇太子妃・東宮妃となった夜の宴で</button>
+        </div>
+        <div class="q-kai-quiz" id="kai19">1018年、道長の三人の娘が同時に<strong>皇后・皇太子妃・東宮妃</strong>となった祝いの宴で詠まれました。「満月に欠けるものがないように、自分の世にも欠けるものはない」という最高の自賛の歌です。古文試験頻出！</div>
+      </div>
+
+      <!-- 問題20 -->
+      <div class="q-card-quiz" id="qq20">
+        <div class="q-num-quiz">QUESTION 20 / 20</div>
+        <div class="q-text-quiz">平安時代の「陰陽師（おんみょうじ）」として最も有名な人物は誰か？</div>
+        <div class="q-opts-quiz">
+          <button class="q-opt-quiz" onclick="ansQ(20,0,1)">菅原道真（すがわらのみちざね）</button>
+          <button class="q-opt-quiz" onclick="ansQ(20,1,1)">安倍晴明（あべのせいめい）</button>
+          <button class="q-opt-quiz" onclick="ansQ(20,2,1)">紀貫之（きのつらゆき）</button>
+          <button class="q-opt-quiz" onclick="ansQ(20,3,1)">最澄（さいちょう）</button>
+        </div>
+        <div class="q-kai-quiz" id="kai20"><strong>安倍晴明</strong>（921〜1005年）は平安中期最大の陰陽師。天文・占い・呪術を駆使し、宮廷で絶大な信頼を得ました。現代でも映画・小説・ゲームに多数登場する人気の歴史的人物です。</div>
+      </div>
+
+    </div><!-- /#quiz-content -->
+
+    <!-- 結果表示 -->
+    <div class="quiz-result" id="quiz-result">
+      <div class="qr-emoji" id="qr-emoji"></div>
+      <div class="qr-title" id="qr-title"></div>
+      <div class="qr-score" id="qr-score"></div>
+      <button class="qr-btn" onclick="retryQuiz()">↺ もう一度</button>
+      <button class="qr-btn" style="background:var(--jade);" onclick="showAllKai()">📖 全解説を見る</button>
+    </div>
+  </div><!-- /.quiz-section -->
+
+</div><!-- /.wrapper -->
+
+<!-- Unit nav -->
+<div id="koten-unit-nav">
+  <a class="kun-btn prev" href="index.html">◀ 単元一覧</a>
+  <a class="kun-btn idx" href="index.html">☰ 単元一覧</a>
+  <a class="kun-btn nxt" href="kotenbun6.html">動詞の活用形 ▶</a>
+</div>
+
+<div class="cfw" id="cfw"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── タブ切り替え ──
+function showTab(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.querySelector('.tab-btn.'+name).classList.add('active');
+  window.scrollTo({top:document.querySelector('.tab-bar').offsetTop-80,behavior:'smooth'});
+}
+
+// ── クイズ ──
+let qAnswered={}, qScore=0, qTimer=false;
+
+function ansQ(n, chosen, correct){
+  if(qAnswered[n]!==undefined) return;
+  const card=document.getElementById('qq'+n);
+  const opts=card.querySelectorAll('.q-opt-quiz');
+  opts.forEach(o=>o.disabled=true);
+  if(chosen===correct){
+    opts[chosen].classList.add('correct');
+    qAnswered[n]=true; qScore++;
+    showToast(['正解！','その通り！','すごい！'][Math.floor(Math.random()*3)],true);
+  } else {
+    opts[chosen].classList.add('wrong');
+    opts[correct].classList.add('correct');
+    qAnswered[n]=false;
+    showToast(['惜しい！','もう少し！'][Math.floor(Math.random()*2)]);
+  }
+  document.getElementById('kai'+n).classList.add('show');
+  const done=Object.keys(qAnswered).length;
+  document.getElementById('qpb').style.width=(done/20*100)+'%';
+  if(done===10) setTimeout(showQuizResult,700);
+}
+
+function showQuizResult(){
+  const pct=Math.round(qScore/20*100);
+  const result=document.getElementById('quiz-result');
+  result.classList.add('show');
+  result.scrollIntoView({behavior:'smooth',block:'start'});
+  let emoji,title;
+  if(pct>=80){emoji='🎉';title='素晴らしい！古文常識マスター！';confetti();}
+  else if(pct>=60){emoji='😊';title='よく覚えています！';} 
+  else if(pct>=40){emoji='📖';title='もう少し復習しましょう';}
+  else{emoji='🍵';title='ティータイムをもっと楽しんで！';}
+  document.getElementById('qr-emoji').textContent=emoji;
+  document.getElementById('qr-title').textContent=title;
+  document.getElementById('qr-score').textContent=qScore+' / 20 正解（'+pct+'%）';
+}
+
+function showAllKai(){
+  for(let i=1;i<=20;i++) document.getElementById('kai'+i).classList.add('show');
+}
+function retryQuiz(){location.reload();}
+
+// ── Toast ──
+function showToast(msg,ok=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast'+(ok?' ok':'');
+  requestAnimationFrame(()=>{t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1000);});
+}
+
+// ── Confetti ──
+function confetti(){
+  const w=document.getElementById('cfw');w.innerHTML='';
+  const cols=['#c0392b','#b8860b','#2e7d52','#1a3a5c','#ffd700','#e74c3c','#43a36b','#ff69b4'];
+  for(let i=0;i<100;i++){
+    const p=document.createElement('div');p.className='cp';
+    const sz=(Math.random()*10+5)+'px';
+    p.style.cssText='left:'+Math.random()*100+'%;width:'+sz+';height:'+sz+
+      ';background:'+cols[i%cols.length]+';border-radius:'+(Math.random()>.5?'50%':'2px')+
+      ';animation-duration:'+(Math.random()*2+1)+'s;animation-delay:'+(Math.random()*.5)+'s;opacity:1;';
+    w.appendChild(p);
+  }
+  setTimeout(()=>w.innerHTML='',4000);
+}
+</script>
+</body>
+</html>
