@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>古典文法 単元一覧</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sumi:#2d2416; --verm:#c0392b; --verm-lt:#e74c3c;
+  --gold:#b8860b; --gold-lt:#d4a017; --gold-pale:#fff8e7;
+  --jade:#2e7d52; --jade-lt:#43a36b; --jade-pale:#edfaf3;
+  --indigo:#1a3a5c; --indigo-lt:#2980b9; --indigo-pale:#eef4fb;
+  --sky:#5b9bd5; --rose:#c0392b;
+  --paper:#faf6ef; --paper-dk:#f0e8d8; --paper-md:#e8dcc8;
+  --cream:#fdfaf4; --gray:#8a7f72; --gray-lt:#bbb0a0;
+  --shadow:rgba(90,60,20,0.13);
+  /* ランク色 */
+  --rank-a:#2e7d52; --rank-b:#b8860b; --rank-c:#c0392b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);font-family:'Noto Serif JP',serif;color:var(--sumi);min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;}
+
+/* ══ HERO ══ */
+.hero{background:linear-gradient(160deg,var(--sumi) 0%,#1a1008 60%,#2d1a06 100%);
+  color:white;padding:44px 30px 36px;text-align:center;position:relative;overflow:hidden;border-bottom:4px solid var(--gold);}
+.hero::before{content:'古典文法';position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  font-family:'Zen Old Mincho',serif;font-size:140px;font-weight:700;
+  color:rgba(255,255,255,0.03);white-space:nowrap;pointer-events:none;letter-spacing:0.1em;}
+.hero-title{font-family:'Zen Old Mincho',serif;font-size:32px;font-weight:700;letter-spacing:0.15em;
+  text-shadow:0 2px 20px rgba(0,0,0,0.4);margin-bottom:8px;}
+.hero-sub{font-family:'Noto Sans JP',sans-serif;font-size:13px;color:rgba(255,255,255,0.6);letter-spacing:0.15em;}
+
+/* ── Stats bar ── */
+.stats-bar{background:linear-gradient(90deg,#1a1a0a,#0f2010,#1a1008);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:10px 30px;display:flex;justify-content:center;gap:28px;flex-wrap:wrap;}
+.stat-item{display:flex;align-items:center;gap:8px;font-family:'Noto Sans JP',sans-serif;font-size:12px;}
+.stat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.stat-dot.a{background:var(--rank-a);}
+.stat-dot.b{background:var(--rank-b);}
+.stat-dot.c{background:var(--rank-c);}
+.stat-dot.none{background:rgba(255,255,255,0.2);}
+.stat-label{color:rgba(255,255,255,0.6);}
+.stat-val{color:white;font-weight:700;font-family:monospace;font-size:14px;}
+
+/* ══ WRAPPER ══ */
+.wrapper{max-width:960px;margin:0 auto;padding:32px 18px 60px;position:relative;z-index:1;}
+
+/* ── Section title ── */
+.chapter-head{display:flex;align-items:center;gap:12px;margin-bottom:20px;margin-top:32px;}
+.chapter-head:first-child{margin-top:0;}
+.ch-num{background:var(--sumi);color:white;font-family:'Noto Sans JP',sans-serif;
+  font-size:10px;font-weight:700;letter-spacing:0.12em;padding:4px 12px;border-radius:2px;}
+.ch-title{font-family:'Zen Old Mincho',serif;font-size:19px;font-weight:700;color:var(--sumi);}
+.ch-line{flex:1;height:1px;background:var(--paper-md);}
+
+/* ── Unit cards grid ── */
+.unit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+
+/* ── Unit card ── */
+.unit-card{background:var(--cream);border:1.5px solid var(--paper-md);border-radius:6px;
+  box-shadow:0 2px 12px var(--shadow);overflow:hidden;transition:all 0.2s;position:relative;
+  animation:cardIn 0.4s ease-out both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.unit-card:hover{box-shadow:0 6px 22px var(--shadow);transform:translateY(-2px);}
+
+/* rank border left */
+.unit-card.rank-a{border-left:5px solid var(--rank-a);}
+.unit-card.rank-b{border-left:5px solid var(--rank-b);}
+.unit-card.rank-c{border-left:5px solid var(--rank-c);}
+.unit-card.rank-none{border-left:5px solid var(--paper-md);}
+
+/* rank background tint */
+.unit-card.rank-a .card-body{background:linear-gradient(135deg,var(--jade-pale),var(--cream));}
+.unit-card.rank-b .card-body{background:linear-gradient(135deg,var(--gold-pale),var(--cream));}
+.unit-card.rank-c .card-body{background:linear-gradient(135deg,rgba(192,57,43,0.05),var(--cream));}
+
+.card-header{padding:14px 16px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.card-unit-num{font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;
+  color:var(--gray);letter-spacing:0.1em;margin-bottom:4px;}
+.card-title{font-family:'Zen Old Mincho',serif;font-size:16px;font-weight:700;color:var(--sumi);line-height:1.3;}
+.rank-badge{flex-shrink:0;width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;margin-top:2px;}
+.rank-badge.a{background:var(--rank-a);color:white;}
+.rank-badge.b{background:var(--rank-b);color:white;}
+.rank-badge.c{background:var(--rank-c);color:white;}
+.rank-badge.none{background:var(--paper-md);color:var(--gray);}
+
+.card-body{padding:0 16px 12px;}
+.card-desc{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:var(--gray);line-height:1.7;margin-bottom:12px;}
+
+/* ── Rank selector ── */
+.rank-selector{display:flex;gap:6px;margin-bottom:10px;}
+.rank-btn{flex:1;padding:5px 4px;border-radius:3px;border:1.5px solid;cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.06em;
+  transition:all 0.15s;text-align:center;}
+.rank-btn.btn-a{border-color:var(--rank-a);color:var(--rank-a);}
+.rank-btn.btn-a:hover,.rank-btn.btn-a.active{background:var(--rank-a);color:white;}
+.rank-btn.btn-b{border-color:var(--rank-b);color:var(--rank-b);}
+.rank-btn.btn-b:hover,.rank-btn.btn-b.active{background:var(--rank-b);color:white;}
+.rank-btn.btn-c{border-color:var(--rank-c);color:var(--rank-c);}
+.rank-btn.btn-c:hover,.rank-btn.btn-c.active{background:var(--rank-c);color:white;}
+
+/* ── Go button ── */
+.go-btn{display:block;width:100%;padding:9px;background:linear-gradient(135deg,var(--indigo),#0f2840);
+  color:white;border:none;border-radius:3px;font-family:'Noto Sans JP',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;cursor:pointer;transition:all 0.2s;
+  text-decoration:none;text-align:center;}
+.go-btn:hover{background:linear-gradient(135deg,var(--indigo-lt),var(--indigo));box-shadow:0 3px 10px rgba(26,58,92,0.3);}
+
+/* ── Rank count bar ── */
+.rank-count-bar{display:flex;gap:6px;margin-bottom:8px;}
+.rc{display:flex;align-items:center;gap:3px;font-family:'Noto Sans JP',sans-serif;font-size:11px;}
+.rc-dot{width:8px;height:8px;border-radius:50%;}
+.rc-dot.a{background:var(--rank-a);}
+.rc-dot.b{background:var(--rank-b);}
+.rc-dot.c{background:var(--rank-c);}
+.rc-num{font-weight:700;font-size:12px;}
+
+/* ══ NAV FOOTER (前・次・目次) ══ */
+.unit-nav{display:flex;justify-content:center;align-items:center;gap:10px;
+  padding:14px 18px;background:var(--sumi);border-top:2px solid var(--gold);
+  position:sticky;bottom:0;z-index:500;flex-wrap:wrap;}
+.unav-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;
+  border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-decoration:none;border:none;}
+.unav-btn.prev{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);border:1px solid rgba(255,255,255,0.2);}
+.unav-btn.prev:hover{background:rgba(255,255,255,0.18);color:white;}
+.unav-btn.index{background:var(--gold);color:white;}
+.unav-btn.index:hover{background:var(--gold-lt);}
+.unav-btn.next{background:var(--verm);color:white;}
+.unav-btn.next:hover{background:var(--verm-lt);}
+.unav-btn:disabled,.unav-btn.disabled{opacity:0.3;cursor:default;pointer-events:none;}
+
+/* ══ FLASH CARD MODAL ══ */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9000;
+  align-items:center;justify-content:center;padding:20px;}
+.modal-bg.open{display:flex;}
+.flash-modal{background:var(--cream);border-radius:8px;width:100%;max-width:560px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);overflow:hidden;}
+.flash-header{background:var(--sumi);color:white;padding:14px 20px;display:flex;
+  align-items:center;justify-content:space-between;border-bottom:2px solid var(--gold);}
+.flash-title{font-family:'Zen Old Mincho',serif;font-size:16px;font-weight:700;}
+.flash-close{background:none;border:none;color:rgba(255,255,255,0.6);font-size:20px;cursor:pointer;padding:0 4px;}
+.flash-close:hover{color:white;}
+.flash-body{padding:28px 24px;}
+.flash-progress{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gray);
+  text-align:center;margin-bottom:16px;}
+.flash-card-wrap{perspective:800px;}
+.flash-card{width:100%;min-height:180px;position:relative;cursor:pointer;
+  transform-style:preserve-3d;transition:transform 0.5s;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-front,.flash-back{position:absolute;inset:0;backface-visibility:hidden;
+  border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;border:2px solid var(--paper-md);}
+.flash-front{background:white;min-height:180px;position:relative;}
+.flash-back{background:linear-gradient(135deg,var(--indigo-pale),white);
+  transform:rotateY(180deg);min-height:180px;position:relative;}
+.flash-word{font-family:'Zen Old Mincho',serif;font-size:36px;font-weight:700;color:var(--sumi);
+  text-align:center;margin-bottom:8px;}
+.flash-hint{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gray);letter-spacing:0.1em;}
+.flash-answer{font-family:'Noto Sans JP',sans-serif;font-size:15px;color:var(--indigo);
+  text-align:center;line-height:1.8;font-weight:700;}
+.flash-note{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:var(--gray);
+  text-align:center;margin-top:10px;line-height:1.7;}
+.flash-tap{font-family:'Noto Sans JP',sans-serif;font-size:10px;color:var(--gray-lt);
+  text-align:center;margin-top:12px;letter-spacing:0.08em;}
+.flash-controls{display:flex;justify-content:center;gap:12px;margin-top:20px;}
+.flash-btn{padding:9px 22px;border-radius:3px;border:none;cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;transition:all 0.2s;}
+.flash-btn.prev{background:var(--paper-dk);color:var(--sumi);}
+.flash-btn.next{background:var(--indigo);color:white;}
+.flash-btn.open-modal{background:var(--jade);color:white;}
+.flash-btn:hover{opacity:0.85;}
+
+/* ── タイマー速度ボタン ── */
+/* ── Flash auto-play styles ── */
+.speed-bar{display:flex;justify-content:center;align-items:center;gap:6px;
+  margin-bottom:10px;flex-wrap:wrap;}
+.speed-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gray);}
+.spd-btn{padding:5px 13px;border-radius:3px;border:1.5px solid var(--paper-md);
+  cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;
+  color:var(--gray);background:white;transition:all 0.15s;}
+.spd-btn:hover{border-color:var(--indigo-lt);color:var(--indigo);}
+.spd-btn.active{background:var(--indigo);color:white;border-color:var(--indigo);}
+.spd-btn.stop-btn{border-color:var(--verm);color:var(--verm);}
+.spd-btn.stop-btn.active{background:var(--verm);color:white;}
+/* タイマーバー */
+.timer-bar-wrap{height:5px;background:var(--paper-md);border-radius:3px;
+  margin-bottom:8px;display:none;overflow:hidden;}
+.timer-bar-fill{height:100%;background:var(--verm);border-radius:3px;width:100%;}
+/* フェーズ・ラップ表示 */
+.phase-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  color:var(--indigo);text-align:center;min-height:18px;margin-bottom:6px;font-weight:700;}
+.lap-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  color:var(--gray);text-align:center;margin-bottom:4px;letter-spacing:0.08em;}
+/* 操作ボタン行 */
+.flash-play-row{display:flex;justify-content:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.flash-play-btn{padding:8px 20px;border-radius:3px;border:none;cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;
+  transition:all 0.2s;letter-spacing:0.08em;}
+.flash-play-btn.start{background:linear-gradient(135deg,var(--jade-lt),#27694a);color:white;}
+.flash-play-btn.stop{background:linear-gradient(135deg,var(--verm),#8b1a11);color:white;}
+.flash-play-btn.resume{background:linear-gradient(135deg,var(--gold),#7a5a00);color:white;}
+.flash-play-btn:disabled{opacity:0.35;cursor:default;}
+/* 完了メッセージ */
+.flash-complete{display:none;text-align:center;padding:14px;
+  font-family:'Zen Old Mincho',serif;font-size:18px;font-weight:700;
+  color:var(--jade);letter-spacing:0.1em;}
+.flash-complete.show{display:block;animation:popIn 0.4s ease-out;}
+@keyframes popIn{0%{transform:scale(0.85);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.speed-bar{display:flex;justify-content:center;align-items:center;gap:7px;
+  margin-bottom:14px;flex-wrap:wrap;}
+.speed-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gray);
+  letter-spacing:0.08em;margin-right:4px;}
+.spd-btn{padding:5px 13px;border-radius:3px;border:1.5px solid var(--paper-md);
+  cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;
+  background:white;color:var(--gray);transition:all 0.15s;}
+.spd-btn:hover{border-color:var(--indigo-lt);color:var(--indigo);}
+.spd-btn.active{background:var(--indigo);color:white;border-color:var(--indigo);}
+.spd-btn.stop-btn{border-color:var(--verm);color:var(--verm);}
+.spd-btn.stop-btn.active{background:var(--verm);color:white;}
+
+/* タイマーバー */
+.timer-bar-wrap{height:4px;background:var(--paper-md);border-radius:2px;
+  margin-bottom:14px;overflow:hidden;display:none;}
+.timer-bar-fill{height:100%;background:var(--verm);border-radius:2px;
+  transition:none;width:100%;}
+
+/* フェーズ表示 */
+.phase-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  text-align:center;margin-bottom:8px;height:16px;color:var(--indigo);
+  font-weight:700;letter-spacing:0.1em;}
+
+/* ══ QUIZ MODAL ══ */
+.quiz-modal{background:var(--cream);border-radius:8px;width:100%;max-width:600px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);overflow:hidden;max-height:90vh;overflow-y:auto;}
+.quiz-header{background:linear-gradient(135deg,var(--verm),#8b1a11);color:white;
+  padding:14px 20px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:2px solid rgba(255,255,255,0.2);position:sticky;top:0;}
+.quiz-title{font-family:'Zen Old Mincho',serif;font-size:16px;font-weight:700;}
+.quiz-body{padding:24px;}
+.quiz-progress{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.qp-bar{flex:1;height:6px;background:var(--paper-md);border-radius:3px;overflow:hidden;}
+.qp-fill{height:100%;background:var(--verm);border-radius:3px;transition:width 0.4s;}
+.qp-text{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gray);white-space:nowrap;}
+.quiz-q{font-family:'Noto Serif JP',serif;font-size:15px;line-height:1.8;margin-bottom:18px;
+  padding:14px 18px;background:var(--paper);border-radius:4px;border-left:4px solid var(--verm);}
+.quiz-options{display:flex;flex-direction:column;gap:8px;}
+.q-opt{padding:11px 16px;border-radius:4px;border:1.5px solid var(--paper-md);cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;transition:all 0.15s;background:white;
+  text-align:left;}
+.q-opt:hover:not(:disabled){border-color:var(--indigo-lt);background:var(--indigo-pale);}
+.q-opt.correct{border-color:var(--jade);background:var(--jade-pale);color:var(--jade);}
+.q-opt.wrong{border-color:var(--verm);background:rgba(192,57,43,0.06);color:var(--verm);}
+.q-opt:disabled{cursor:default;}
+.quiz-result{display:none;text-align:center;padding:20px 0;}
+.result-emoji{font-size:48px;margin-bottom:12px;}
+.result-msg{font-family:'Zen Old Mincho',serif;font-size:22px;font-weight:700;margin-bottom:8px;}
+.result-score{font-family:'Noto Sans JP',sans-serif;font-size:15px;color:var(--gray);margin-bottom:16px;}
+.result-rank{display:inline-block;padding:6px 20px;border-radius:20px;font-family:'Noto Sans JP',sans-serif;
+  font-size:14px;font-weight:700;margin-bottom:18px;}
+.result-rank.a{background:var(--rank-a);color:white;}
+.result-rank.b{background:var(--rank-b);color:white;}
+.result-rank.c{background:var(--rank-c);color:white;}
+.quiz-next-btn{padding:11px 28px;border-radius:3px;border:none;cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;
+  background:var(--verm);color:white;margin:4px;}
+.quiz-next-btn.green{background:var(--jade);}
+
+/* ── confetti ── */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden;}
+.confetti-piece{position:absolute;width:10px;height:10px;top:-10px;
+  animation:confettiFall linear forwards;}
+@keyframes confettiFall{
+  0%{transform:translateY(-10px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0;}
+}
+
+/* comment toast */
+.comment-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.8);
+  background:var(--sumi);color:white;padding:18px 36px;border-radius:8px;
+  font-family:'Zen Old Mincho',serif;font-size:22px;z-index:99999;opacity:0;
+  pointer-events:none;transition:all 0.3s;box-shadow:0 8px 30px rgba(0,0,0,0.4);
+  border:2px solid var(--gold);white-space:nowrap;}
+.comment-toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-title">古典文法　学習単元一覧</div>
+  <div class="hero-sub">Classical Japanese Grammar ／ Unit Index</div>
+</div>
+
+<!-- ── Stats bar ── -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-dot a"></div><span class="stat-label">A OK</span><span class="stat-val" id="cnt-a">0</span><span class="stat-label">単元</span></div>
+  <div class="stat-item"><div class="stat-dot b"></div><span class="stat-label">B 要復習</span><span class="stat-val" id="cnt-b">0</span><span class="stat-label">単元</span></div>
+  <div class="stat-item"><div class="stat-dot c"></div><span class="stat-label">C 何度も復習</span><span class="stat-val" id="cnt-c">0</span><span class="stat-label">単元</span></div>
+  <div class="stat-item"><div class="stat-dot none"></div><span class="stat-label">未実施</span><span class="stat-val" id="cnt-n">0</span><span class="stat-label">単元</span></div>
+</div>
+
+<div class="wrapper">
+
+  <!-- ══ 第１章 動詞 ══ -->
+  <div class="chapter-head">
+    <span class="ch-num">第１章</span>
+    <span class="ch-title">動詞</span>
+    <div class="ch-line"></div>
+  </div>
+
+    <div class="unit-grid">
+
+    <!-- 単元1 -->
+    <div class="unit-card rank-none" id="card-1" data-unit="1">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 1</div><div class="card-title">歴史的仮名遣い</div></div>
+        <div class="rank-badge none" id="badge-1">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">ワ行・ハ行の転呼、語頭以外のハ行、au→おう など現代仮名遣いへの変換ルール8つを学ぶ。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(1,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(1,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(1,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(1)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun1.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;">📝 テストを受ける →</a>
+        <a href="kotenbunpou1.html" class="go-btn" style="margin-top:6px;">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- 単元2 -->
+    <div class="unit-card rank-none" id="card-2" data-unit="2">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 2</div><div class="card-title">いろは歌</div></div>
+        <div class="rank-badge none" id="badge-2">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">いろは歌の内容・47文字・七五調・無常観。歴史的仮名遣い（ゐ・ゑ・けふ）を実文で練習。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(2,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(2,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(2,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(2)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun2.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;">📝 テストを受ける →</a>
+        <a href="kotenbunpou1-2.html" class="go-btn" style="margin-top:6px;">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- 単元3 -->
+    <div class="unit-card rank-none" id="card-3" data-unit="3">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 3</div><div class="card-title">五十音図</div></div>
+        <div class="rank-badge none" id="badge-3">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">五十音図の構造。ヤ行（や・ゆ・よ）・ワ行（わ・ゐ・う・ゑ・を）・ハ行の特殊な仮名を覚える。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(3,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(3,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(3,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(3)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun3.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;">📝 テストを受ける →</a>
+        <a href="kotenbunpou1-3.html" class="go-btn" style="margin-top:6px;">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- 単元4 -->
+    <div class="unit-card rank-none" id="card-4" data-unit="4">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 4</div><div class="card-title">歴史的仮名遣い【演習】</div></div>
+        <div class="rank-badge none" id="badge-4">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">歴史的仮名遣いの演習問題。古語の読み方・傍線部を現代仮名遣いに直す練習問題。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(4,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(4,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(4,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(4)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun1.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;">📝 テストを受ける →</a>
+        <a href="kotenbunpou1-1.html" class="go-btn" style="margin-top:6px;">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- 単元5 -->
+    <div class="unit-card rank-none" id="card-5" data-unit="5">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 5</div><div class="card-title">品詞の分類</div></div>
+        <div class="rank-badge none" id="badge-5">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">文節・単語・自立語・付属語・用言・体言。品詞10種の全体像と分類のしくみを学ぶ。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(5,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(5,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(5,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(5)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun4.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;">📝 テストを受ける →</a>
+        <a href="kotenbun3.html" class="go-btn" style="margin-top:6px;">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- 単元6 -->
+    <div class="unit-card rank-none" id="card-6" data-unit="6">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 6</div><div class="card-title">品詞分類図【演習】</div></div>
+        <div class="rank-badge none" id="badge-6">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">品詞分類の樹形図演習。述語・主語・動詞・形容詞・名詞・副詞など10品詞を図で確認。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(6,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(6,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(6,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(6)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun4.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;">📝 テストを受ける →</a>
+        <a href="kotenbun4.html" class="go-btn" style="margin-top:6px;">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- 単元7 -->
+    <div class="unit-card rank-none" id="card-7" data-unit="7">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 7</div><div class="card-title">品詞識別の実践</div></div>
+        <div class="rank-badge none" id="badge-7">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">枕草子の文中の傍線部の品詞を答える実践演習。助詞・助動詞・副詞・接続詞などを識別。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(7,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(7,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(7,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(7)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun5.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;">📝 テストを受ける →</a>
+        <a href="kotenbun5.html" class="go-btn" style="margin-top:6px;">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- 単元8 -->
+    <div class="unit-card rank-none" id="card-8" data-unit="8">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 8</div><div class="card-title">動詞の活用形</div></div>
+        <div class="rank-badge none" id="badge-8">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">未然形・連用形・終止形・連体形・已然形・命令形の６種類。意味・語源・接続する代表語。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(8,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(8,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(8,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(8)">🃏 フラッシュカード</button>
+        </div>
+        <div class="go-btn" style="background:#e8dcc8;color:#8a7f72;cursor:default;text-align:center;">📝 テスト（準備中）</div>
+        <a href="kotenbun6.html" class="go-btn" style="margin-top:6px;">📖 単元を学習する →</a>
+      </div>
+    </div>
+  </div><!-- /.unit-grid UNIT1-8 -->
+
+  <!-- ══ 第１章（続き）動詞 活用の種類・自他動詞 ══ -->
+  <div class="chapter-head" style="margin-top:32px;">
+    <span class="ch-num">第１章（続き）</span>
+    <span class="ch-title">動詞 ─ 活用の種類・自動詞と他動詞</span>
+    <div class="ch-line"></div>
+  </div>
+  <div class="unit-grid">
+
+    <!-- UNIT9 四段活用 -->
+    <div class="unit-card rank-none" id="card-9" data-unit="9">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 9</div><div class="card-title">四段活用</div></div>
+        <div class="rank-badge none" id="badge-9">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">ア・イ・ウ・エの4段で変化。古典最多の活用種類。「ズ」をつけてア段ならば四段活用。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(9,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(9,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(9,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(9)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun6.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;margin-bottom:6px;">📝 テストを受ける →</a>
+        <a href="kotenbun7.html" class="go-btn">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- UNIT10 上一段・下一段活用 -->
+    <div class="unit-card rank-none" id="card-10" data-unit="10">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 10</div><div class="card-title">上一段・下一段活用</div></div>
+        <div class="rank-badge none" id="badge-10">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">上一段はイ段のみ変化。「ひいきにいゐる」で暗記。下一段は「蹴る」一語のみ。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(10,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(10,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(10,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(10)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun7.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;margin-bottom:6px;">📝 テストを受ける →</a>
+        <a href="kotenbun8.html" class="go-btn">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- UNIT11 上二段・下二段活用 -->
+    <div class="unit-card rank-none" id="card-11" data-unit="11">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 11</div><div class="card-title">上二段・下二段活用</div></div>
+        <div class="rank-badge none" id="badge-11">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">上二段はイ・ウ段（起く・過ぐ）、下二段はウ・エ段（受く・得・寝）。連体形に「る」が付く。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(11,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(11,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(11,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(11)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun8.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;margin-bottom:6px;">📝 テストを受ける →</a>
+        <a href="kotenbun9.html" class="go-btn">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- UNIT12 変格活用 -->
+    <div class="unit-card rank-none" id="card-12" data-unit="12">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 12</div><div class="card-title">変格活用</div></div>
+        <div class="rank-badge none" id="badge-12">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">カ変（来）・サ変（す・おはす）・ナ変（死ぬ・往ぬ）・ラ変（あり・をり・はべり・いまそかり）。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(12,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(12,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(12,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(12)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun9.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;margin-bottom:6px;">📝 テストを受ける →</a>
+        <a href="kotenbun10.html" class="go-btn">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+    <!-- UNIT13 自動詞・他動詞 -->
+    <div class="unit-card rank-none" id="card-13" data-unit="13">
+      <div class="card-header">
+        <div><div class="card-unit-num">UNIT 13</div><div class="card-title">自動詞・他動詞</div></div>
+        <div class="rank-badge none" id="badge-13">―</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">「〜を＋動詞」で成立→他動詞。切る・入る・漬つ・頼むは自他で活用の種類が変わる重要ペア。</div>
+        <div class="rank-selector">
+          <button class="rank-btn btn-a" onclick="setRank(13,'A')">A OK</button>
+          <button class="rank-btn btn-b" onclick="setRank(13,'B')">B 要復習</button>
+          <button class="rank-btn btn-c" onclick="setRank(13,'C')">C 何度も</button>
+        </div>
+        <div style="margin-bottom:8px;">
+          <button class="go-btn" style="background:linear-gradient(135deg,#43a36b,#27694a);" onclick="openFlash(13)">🃏 フラッシュカード</button>
+        </div>
+        <a href="test_kotenbun10.html" class="go-btn" style="background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;text-decoration:none;display:block;text-align:center;margin-bottom:6px;">📝 テストを受ける →</a>
+        <a href="kotenbun11.html" class="go-btn">📖 単元を学習する →</a>
+      </div>
+    </div>
+
+  </div><!-- /.unit-grid UNIT9-13 -->
+
+</div><!-- /.wrapper -->
+
+<!-- ══ BOTTOM NAV（前・目次・次）── このページはindex自身なので目次ボタンのみ示す ══ -->
+<div class="unit-nav" id="unit-nav-bar" style="display:none;">
+  <a class="unav-btn prev" id="nav-prev" href="#">◀ 前の単元</a>
+  <a class="unav-btn index" href="index.html">☰ 単元一覧</a>
+  <a class="unav-btn next" id="nav-next" href="#">次の単元 ▶</a>
+</div>
+
+<!-- ══ FLASH CARD MODAL ══ -->
+<div class="modal-bg" id="flash-modal">
+  <div class="flash-modal">
+    <div class="flash-header">
+      <span class="flash-title" id="flash-unit-title">フラッシュカード</span>
+      <button class="flash-close" onclick="closeFlash()">✕</button>
+    </div>
+    <div class="flash-body">
+
+      <!-- 進捗・周回 -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div class="flash-progress" id="flash-progress" style="margin-bottom:0;">1 / 1</div>
+        <div class="lap-label" id="lap-label">1周目 / 全3周</div>
+      </div>
+
+      <!-- タイマーバー -->
+      <div class="timer-bar-wrap" id="timer-bar-wrap">
+        <div class="timer-bar-fill" id="timer-bar-fill"></div>
+      </div>
+      <!-- フェーズ表示 -->
+      <div class="phase-label" id="phase-label"></div>
+
+      <!-- フラッシュカード本体 -->
+      <div class="flash-card-wrap">
+        <div class="flash-card" id="flash-card" onclick="flipCard()">
+          <div class="flash-front">
+            <div class="flash-word" id="flash-front-word"></div>
+            <div class="flash-hint" id="flash-front-hint"></div>
+            <div class="flash-tap">▼ タップして答えを見る</div>
+          </div>
+          <div class="flash-back">
+            <div class="flash-answer" id="flash-back-answer"></div>
+            <div class="flash-note" id="flash-back-note"></div>
+            <div class="flash-tap">▼ タップして表に戻る</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 完了メッセージ -->
+      <div class="flash-complete" id="flash-complete">🎉 3周完了！おつかれさまでした</div>
+
+      <!-- 速度選択 -->
+      <div class="speed-bar" style="margin-top:12px;">
+        <span class="speed-label">⏱ 表示時間：</span>
+        <button class="spd-btn" id="spd1" onclick="setSpeed(1)">1秒</button>
+        <button class="spd-btn" id="spd2" onclick="setSpeed(2)">2秒</button>
+        <button class="spd-btn" id="spd3" onclick="setSpeed(3)">3秒</button>
+        <button class="spd-btn stop-btn" id="spd0" onclick="setSpeed(0)">制限なし</button>
+      </div>
+
+      <!-- 操作ボタン -->
+      <div class="flash-play-row">
+        <button class="flash-play-btn start" id="btn-start" onclick="flashStart()">▶ スタート</button>
+        <button class="flash-play-btn stop"  id="btn-stop"   onclick="flashStop()"  style="display:none;">■ ストップ</button>
+        <button class="flash-play-btn resume" id="btn-resume" onclick="flashResume()" style="display:none;">▶ 継続</button>
+      </div>
+
+      <!-- 手動操作ボタン -->
+      <div class="flash-controls">
+        <button class="flash-btn prev" onclick="flashPrev()">◀ 前へ</button>
+        <button class="flash-btn next" onclick="flashNext()">次へ ▶</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ QUIZ MODAL ══ -->
+<div class="modal-bg" id="quiz-modal">
+  <div class="quiz-modal">
+    <div class="quiz-header">
+      <span class="quiz-title" id="quiz-unit-title">テスト</span>
+      <button class="flash-close" onclick="closeQuiz()">✕</button>
+    </div>
+    <div class="quiz-body">
+      <div class="quiz-progress">
+        <div class="qp-bar"><div class="qp-fill" id="qp-fill" style="width:0%"></div></div>
+        <span class="qp-text" id="qp-text">0 / 0</span>
+      </div>
+      <div id="quiz-content"></div>
+      <div class="quiz-result" id="quiz-result">
+        <div class="result-emoji" id="result-emoji"></div>
+        <div class="result-msg" id="result-msg"></div>
+        <div class="result-score" id="result-score"></div>
+        <div class="result-rank" id="result-rank"></div>
+        <br>
+        <button class="quiz-next-btn" onclick="retryMiniQuiz()">もう一度</button>
+        <button class="quiz-next-btn green" onclick="closeQuiz()">単元一覧へ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- confetti -->
+<div class="confetti-wrap" id="confetti-wrap"></div>
+<!-- comment toast -->
+<div class="comment-toast" id="comment-toast"></div>
+
+<script>
+// ══ DATA ══════════════════════════════════════════════
+
+// フラッシュカードデータ
+const FLASH_DATA = {
+  1: {title:'歴史的仮名遣い',cards:[{front:'語頭以外のハ行',hint:'現代語では？',answer:'ハ→ワ・ヒ→イ・フ→ウ・ヘ→エ・ホ→オ',note:'例：あはれ→あわれ、言ひて→言いて'},{front:'au（あ＋う）の読み',hint:'長音化すると？',answer:'おう',note:'例：あふ→おう、かふ→こう'},{front:'iu（い＋う）の読み',hint:'長音化すると？',answer:'ゆう',note:'例：いふ→ゆう、きふ→きゅう'},{front:'eu（え＋う）の読み',hint:'長音化すると？',answer:'よう',note:'例：えうなし→ようなし'},{front:'「ゐ」の読み',hint:'現代仮名遣いでは？',answer:'い',note:'例：をり（居り）→おり、ゐる→いる'},{front:'「ゑ」の読み',hint:'現代仮名遣いでは？',answer:'え',note:'例：ゑみ（笑み）→えみ'},{front:'「を」の読み（助詞以外）',hint:'現代仮名遣いでは？',answer:'お',note:'例：をかし→おかし'},{front:'「おほかた」の現代仮名遣い',hint:'ほ→？',answer:'おおかた',note:'語頭以外のホ→オ'}]},
+  2: {title:'いろは歌',cards:[{front:'いろは歌の文字数',hint:'何文字？',answer:'47文字',note:'五十音の清音をすべて一回ずつ使った歌'},{front:'いろは歌の作者（伝承）',hint:'平安時代の人物',answer:'弘法大師（空海）',note:'実際の作者は不明。平安中期成立'},{front:'いろは歌の詩形',hint:'音数は？',answer:'七五調',note:'いろはにほへと（7）ちりぬるを（5）'},{front:'いろは歌のテーマ',hint:'仏教思想',answer:'無常観（すべては移ろい消える）',note:'色はにほへど散りぬるを…'},{front:'「ゐのおくやま」の意味',hint:'有為の奥山',answer:'この世の苦しみ・迷いの奥深い山',note:'ゐ→い（現代仮名遣い）'},{front:'「けふこえて」の「けふ」',hint:'現代仮名遣いは？',answer:'きょう（今日）',note:'えう→よう の変化規則'},{front:'「ゑひもせず」の「ゑ」',hint:'現代仮名遣いは？',answer:'え（酔い）',note:'ゑ→え に転換'}]},
+  3: {title:'五十音図',cards:[{front:'ヤ行の固有文字',hint:'3文字は？',answer:'や・ゆ・よ',note:'イ段・エ段はア行と共通のため固有は3字'},{front:'ワ行の5文字（古典）',hint:'わ・ゐ・う・ゑ・を',answer:'わ・ゐ・う・ゑ・を',note:'現代語ではわ・をのみ使用'},{front:'「ゐ」はワ行何段？',hint:'段を答えよ',answer:'イ段',note:'現代語の「い」と同音。「居る→いる」'},{front:'「ゑ」はワ行何段？',hint:'段を答えよ',answer:'エ段',note:'現代語の「え」と同音。「笑み→えみ」'},{front:'タ行の5文字',hint:'た・？・？・て・と',answer:'た・ち・つ・て・と',note:'イ段「ち」ウ段「つ」に注意'},{front:'ナ行の5文字',hint:'な・？・？・ね・の',answer:'な・に・ぬ・ね・の',note:'ナ変「死ぬ・往ぬ」はナ行の変格活用'}]},
+  4: {title:'歴史的仮名遣い【演習】',cards:[{front:'「にほひ」の現代仮名遣い',hint:'ほ・ひ→？',answer:'におい',note:'語頭以外ホ→オ、ヒ→イ'},{front:'「あはれ」の現代仮名遣い',hint:'は→？',answer:'あわれ',note:'語頭以外ハ→ワ'},{front:'「言ひて」の現代仮名遣い',hint:'ひ→？',answer:'言いて',note:'語頭以外ヒ→イ'},{front:'「あふ」の現代仮名遣い',hint:'au→？',answer:'おう',note:'a+u→おう'},{front:'「をかし」の現代仮名遣い',hint:'を→？',answer:'おかし',note:'助詞以外のを→お'}]},
+  5: {title:'品詞の分類',cards:[{front:'自立語とは',hint:'付属語との違い',answer:'それだけで意味をなす語',note:'文節の最初に来る。8品詞が該当'},{front:'付属語とは',hint:'2種類は？',answer:'助詞・助動詞',note:'単独では意味をなさず自立語に付く'},{front:'用言とは',hint:'活用する自立語',answer:'動詞・形容詞・形容動詞',note:'述語になれる。活用する'},{front:'体言とは',hint:'活用しない自立語',answer:'名詞・代名詞',note:'主語になれる。活用しない'},{front:'形容詞の終止形',hint:'語尾は？',answer:'〜し',note:'例：白し・をかし（ク活用・シク活用）'},{front:'形容動詞の終止形',hint:'語尾は？',answer:'〜なり・〜たり',note:'例：静かなり・堂々たり'}]},
+  6: {title:'品詞分類図',cards:[{front:'述語になる用言の品詞',hint:'3種類',answer:'動詞・形容詞・形容動詞',note:'活用する自立語。言い切りが「ウ段・し・なり/たり」'},{front:'主語になる体言の品詞',hint:'2種類',answer:'名詞・代名詞',note:'活用しない自立語'},{front:'用言を修飾する品詞',hint:'活用しない自立語',answer:'副詞',note:'例：いと・いみじ・をかし（形容詞と混同注意）'},{front:'体言を修飾する品詞',hint:'活用しない自立語',answer:'連体詞',note:'例：この・その・ある'},{front:'文をつなぐ品詞',hint:'活用しない自立語',answer:'接続詞',note:'例：また・しかし・されど'},{front:'活用する付属語',hint:'付属語2種のうち',answer:'助動詞',note:'例：ず・たり・なり・き・けり'}]},
+  7: {title:'品詞識別の実践',cards:[{front:'「の」の主格用法',hint:'訳し方は？',answer:'〜が（主語を示す）',note:'「雪の降りたる」→「雪が降っている」'},{front:'「いと」の品詞',hint:'たいそう・非常に',answer:'副詞',note:'用言（形容詞など）を修飾する'},{front:'「また」の品詞（接続用法）',hint:'そのうえ・さらに',answer:'接続詞',note:'文と文をつなぐ自立語'},{front:'「たり（たる）」の品詞',hint:'完了・存続',answer:'助動詞',note:'動詞連用形に接続。〜た・〜ている'},{front:'「つきづきし」の品詞',hint:'語尾「し」',answer:'形容詞（ク活用）',note:'似つかわしい・ふさわしい'},{front:'「ず」の品詞',hint:'〜ない',answer:'助動詞（打消）',note:'動詞未然形に接続。「あらず」→ない'}]},
+  8: {title:'動詞の活用形',cards:[{front:'未然形',hint:'接続する代表語は？',answer:'〜ズ（打消）・〜ム（推量）・〜バ（仮定）',note:'未（いま）だ然らざる＝まだそうなっていない形'},{front:'連用形',hint:'接続する代表語は？',answer:'〜タリ（完了）・〜テ（接続）・中止法',note:'用言に連なる形。橋渡しの働き'},{front:'終止形',hint:'接続する代表語は？',answer:'言い切り',note:'文が終止する形。辞書の見出し語'},{front:'連体形',hint:'接続する代表語は？',answer:'〜トキ・〜コト・〜モノ（体言）',note:'体言（名詞・代名詞）に連なる形'},{front:'已然形',hint:'接続する代表語は？',answer:'〜ドモ（逆接）・〜バ（確定条件）',note:'已（すで）に然り＝すでにそうなっている形'},{front:'命令形',hint:'意味は？',answer:'命令の言い切り',note:'文末のみ。それだけで命令文になる'},{front:'已然形＋ば',hint:'意味は？',answer:'確定条件（〜すると必ず・〜したので）',note:'未然形＋ば＝仮定条件と区別！'},{front:'中止法',hint:'なぜ連用形？',answer:'連用形のまま文を止めて次へ続ける省略表現',note:'「登りて」→「て」省略→「登り、」'}]},
+  9: {title:'四段活用',cards:[
+    {front:'四段活用とは',hint:'活用する音の段は？',answer:'ア・イ・ウ・エの4段で変化',note:'古典で最も動詞の数が多い活用種類'},
+    {front:'四段活用の見分け方',hint:'ズをつけると？',answer:'〜ア段＋ず（〜aず）',note:'「書かず・読まず・立たず」→ア段→四段'},
+    {front:'「書く」の活用語尾（全形）',hint:'未〜命の順',answer:'か・き・く・く・け・け',note:'a・i・u・u・e・e の4段の音'},
+    {front:'「書く」未然形',hint:'〜ずと接続',answer:'書か（か）',note:'「書かず」ア段のか'},
+    {front:'「書く」連用形',hint:'〜たりと接続',answer:'書き（き）',note:'「書きたり」イ段のき'},
+    {front:'「書く」已然形',hint:'〜どもと接続',answer:'書け（け）',note:'「書けども」エ段のけ'},
+    {front:'四段活用の特徴',hint:'同形になる活用形は？',answer:'終止形＝連体形、已然形＝命令形',note:'「く・く」「け・け」のように同形になる'},
+    {front:'「思ふ」の活用行',hint:'ハ行四段',answer:'ハ行四段活用',note:'語尾：は・ひ・ふ・ふ・へ・へ'},
+    {front:'「知る」の活用語尾',hint:'ラ行四段',answer:'ら・り・る・る・れ・れ',note:'「知らず」→ア段ら→四段活用'},
+  ]},
+  10: {title:'上一段・下一段活用',cards:[
+    {front:'上一段活用とは',hint:'活用する段は？',answer:'イ段の音だけで変化',note:'終止形が「〜いる・ひる・みる」など'},
+    {front:'上一段の暗記法',hint:'ひいきに…',answer:'ひ（干）い（射・鋳・沃）き（着）に（似・煮）い（居・率）ゐる',note:'荻野式：「ひいきにいゐる」で10語暗記'},
+    {front:'下一段活用とは',hint:'何語のみ？',answer:'「蹴る」一語のみ（カ行）',note:'エ段の音だけで変化。け・け・ける・ける・けれ・けよ'},
+    {front:'「見る」の活用語尾（全形）',hint:'未〜命',answer:'み・み・みる・みる・みれ・みよ',note:'語幹なし（×）。未然形＝連用形（み＝み）'},
+    {front:'上一段の特徴',hint:'同形になる活用形は？',answer:'未然形＝連用形（同形）',note:'「み・み」「き・き」のように未然と連用が同じ'},
+    {front:'「着る」の活用行',hint:'カ行上一段',answer:'カ行上一段活用',note:'き・き・きる・きる・きれ・きよ'},
+    {front:'「居る（ゐる）」の活用行',hint:'ワ行かラ行か',answer:'ワ行上一段活用',note:'ゐ・ゐ・ゐる・ゐる・ゐれ・ゐよ。ラ変の「をり」と混同注意！'},
+  ]},
+  11: {title:'上二段・下二段活用',cards:[
+    {front:'上二段活用とは',hint:'活用する段は？',answer:'イ段とウ段の2段で変化',note:'「ズ」をつけるとイ段。終止形はウ段'},
+    {front:'下二段活用とは',hint:'活用する段は？',answer:'ウ段とエ段の2段で変化',note:'「ズ」をつけるとエ段。終止形はウ段'},
+    {front:'上二段・下二段の共通点',hint:'連体形の形は？',answer:'未然形＝連用形、連体形に「る」が付く',note:'「くる・ぐる・つる・うる」など連体形に「る」'},
+    {front:'「起く」（上二段）の活用語尾',hint:'き・き・く…',answer:'き・き・く・くる・くれ・きよ',note:'イ段（き）とウ段（く）の2段'},
+    {front:'「受く」（下二段）の活用語尾',hint:'け・け・く…',answer:'け・け・く・くる・くれ・けよ',note:'エ段（け）とウ段（く）の2段'},
+    {front:'「得（う）」の活用',hint:'ア行下二段',answer:'え・え・う・うる・うれ・えよ',note:'語幹なし（×）の1字動詞。ア行下二段活用'},
+    {front:'「寝（ぬ）」の活用',hint:'ナ行下二段',answer:'ね・ね・ぬ・ぬる・ぬれ・ねよ',note:'ナ変「死ぬ」と混同注意！こちらは下二段'},
+    {front:'上二段か下二段かの見分け',hint:'ズをつけると',answer:'イ段→上二段、エ段→下二段',note:'「起きず」→イ段→上二段 / 「受けず」→エ段→下二段'},
+  ]},
+  12: {title:'変格活用',cards:[
+    {front:'変格活用とは',hint:'正格活用との違い',answer:'正格活用にあてはまらない不規則な活用',note:'語数が少ないので動詞をすべて暗記する'},
+    {front:'カ行変格活用',hint:'何語？',answer:'「来（く）」一語のみ',note:'こ・き・く・くる・くれ・こ（こよ）'},
+    {front:'サ行変格活用',hint:'何語？',answer:'「す」「おはす」の2語',note:'音読み＋す（奏す・具す・死す）もサ変複合'},
+    {front:'ナ行変格活用',hint:'何語？',answer:'「死ぬ」「往（い）ぬ」の2語',note:'な・に・ぬ・ぬる・ぬれ・ね'},
+    {front:'ラ行変格活用',hint:'何語？',answer:'あり・をり・はべり・いまそかり の4語',note:'終止形が「り」（i段）で終わる。ら・り・り・る・れ・れ'},
+    {front:'「来（く）」の活用語尾',hint:'こ・き…',answer:'こ・き・く・くる・くれ・こよ',note:'未然形「こ」、命令形「こよ」に注意'},
+    {front:'「はべり」の意味',hint:'ラ変の敬語',answer:'「あり」の丁寧語（ございます）',note:'「いまそかり」は「あり」の尊敬語（おいでになる）'},
+    {front:'ラ変の終止形の特徴',hint:'四段との違い',answer:'終止形が「り」（イ段）で終わる',note:'四段はウ段（く・む・ぬ）で終わる。ここが重要な違い'},
+    {front:'サ変複合動詞の見分け方',hint:'音読み＋す',answer:'音読み＋「す」→サ変、訓読み＋「す」→四段',note:'奏す・具す→サ変 / 乱す・崩す→四段'},
+  ]},
+  13: {title:'自動詞・他動詞',cards:[
+    {front:'自動詞とは',hint:'主語の動作',answer:'主語自身の動作・状態を表す動詞',note:'「花が咲く」→花自身が咲く。「が」で主語'},
+    {front:'他動詞とは',hint:'目的語が必要',answer:'他に働きかける動作を示す動詞',note:'「花を見る」→「を」で目的語を取る'},
+    {front:'自他の見分け方',hint:'何を使う？',answer:'「〜を＋動詞」で自然ならば他動詞',note:'「花を見る」→成立→他動詞 / 「花が見る」→不自然→自動詞'},
+    {front:'切る（自）vs 切る（他）',hint:'活用の種類が違う',answer:'自→ラ行四段活用 / 他→ラ行下二段活用',note:'自動詞「〜が切れる」vs 他動詞「〜を切る」'},
+    {front:'頼む（自）vs 頼む（他）',hint:'未然形の母音で判断',answer:'自→マ行四段（頼まず） / 他→マ行下二段（頼めず）',note:'頼まず（ア段）→四段→自→頼りにする / 頼めず（エ段）→下二段→他→当てにさせる'},
+    {front:'漬（ひ）つの自他',hint:'ぬれる vs ぬらす',answer:'自→タ行上二段（ぬれる） / 他→タ行下二段（ぬらす）',note:'袖ひちて（自・ぬれて）/ 袖をひてて（他・ぬらして）'},
+    {front:'「見ゆ」の意味',hint:'「見る」との違い',answer:'見える・見られる・現れる',note:'ヤ行下二段活用。「見す」は「見せる」の意'},
+  ]}
+};
+
+// クイズデータ
+const QUIZ_DATA = {
+  1: [{q:'「あはれ」を現代仮名遣いに直すと？',opts:['あはれ', 'あわれ', 'あうれ', 'あをれ'],ans:1},{q:'「あふ（逢ふ）」を現代仮名遣いに直すと？',opts:['あう', 'おう', 'あふ', 'おふ'],ans:1},{q:'「いふ」を現代仮名遣いに直すと？',opts:['いう', 'ゆう', 'いふ', 'ゆふ'],ans:1},{q:'「えうなし」を現代仮名遣いに直すと？',opts:['えうなし', 'ようなし', 'いうなし', 'おうなし'],ans:1},{q:'「をり」を現代仮名遣いに直すと？',opts:['うり', 'おり', 'をり', 'ゐり'],ans:1},{q:'「ゐる」を現代仮名遣いに直すと？',opts:['ゐる', 'うる', 'いる', 'ゆる'],ans:2}],
+  2: [{q:'いろは歌は何文字？',opts:['46文字', '47文字', '48文字', '50文字'],ans:1},{q:'いろは歌の詩形は？',opts:['五七五七七', '七五調', '五七調', '四行詩'],ans:1},{q:'いろは歌のテーマは？',opts:['春の美しさ', '無常観', '恋の喜び', '旅の感慨'],ans:1},{q:'「ゐのおくやま」の「ゐ」を現代仮名遣いに直すと？',opts:['ゆ', 'い', 'う', 'え'],ans:1},{q:'「けふ」を現代仮名遣いに直すと？',opts:['けう', 'きょう', 'こう', 'けお'],ans:1}],
+  3: [{q:'ヤ行の固有文字（3字）は？',opts:['や・ゆ・よ', 'や・い・ゆ・え・よ', 'や・ゆ・え・よ', 'い・ゆ・え'],ans:0},{q:'「ゐ」はワ行何段の文字か？',opts:['ア段', 'イ段', 'ウ段', 'エ段'],ans:1},{q:'「ゑ」はワ行何段の文字か？',opts:['ア段', 'イ段', 'ウ段', 'エ段'],ans:3},{q:'「をかし」の現代仮名遣いは？',opts:['をかし', 'おかし', 'うかし', 'わかし'],ans:1},{q:'五十音図に「ん」は含まれるか？',opts:['含まれる（ナ行）', '含まれる（独立）', '含まれない', '含まれる（ワ行）'],ans:2}],
+  4: [{q:'「いと（たいそう）」の品詞は？',opts:['形容詞', '副詞', '接続詞', '助詞'],ans:1},{q:'付属語の2種類は？',opts:['助詞・感動詞', '動詞・助詞', '助詞・助動詞', '副詞・助動詞'],ans:2},{q:'用言とは？',opts:['体言', '動詞・形容詞・形容動詞', '付属語', '名詞・代名詞'],ans:1},{q:'体言とは？',opts:['用言', '付属語', '名詞・代名詞', '動詞・形容詞'],ans:2},{q:'「また（そのうえ）」の品詞は？',opts:['副詞', '感動詞', '接続詞', '助詞'],ans:2},{q:'体言を修飾する自立語の品詞は？',opts:['副詞', '連体詞', '接続詞', '感動詞'],ans:1}],
+  5: [{q:'「述語になる活用する自立語」の総称は？',opts:['体言', '用言', '付属語', '助動詞'],ans:1},{q:'「主語になれる活用しない自立語」の総称は？',opts:['用言', '付属語', '体言', '感動詞'],ans:2},{q:'「体言を修飾する活用しない自立語」の品詞は？',opts:['副詞', '連体詞', '接続詞', '感動詞'],ans:1},{q:'「用言を修飾する活用しない自立語」の品詞は？',opts:['副詞', '連体詞', '接続詞', '感動詞'],ans:0},{q:'付属語で活用する品詞は？',opts:['助詞', '助動詞', '副詞', '感動詞'],ans:1}],
+  6: [{q:'「述語になる」→「言い切りがウ段」の品詞は？',opts:['形容詞', '形容動詞', '動詞', '名詞'],ans:2},{q:'「述語になる」→「言い切りがし」の品詞は？',opts:['動詞', '形容詞', '形容動詞', '副詞'],ans:1},{q:'「述語になる」→「言い切りがなり・たり」の品詞は？',opts:['動詞', '形容詞', '形容動詞', '名詞'],ans:2},{q:'「活用する付属語」の品詞は？',opts:['助詞', '名詞', '助動詞', '副詞'],ans:2},{q:'「活用しない付属語」の品詞は？',opts:['助動詞', '助詞', '動詞', '形容詞'],ans:1}],
+  7: [{q:'「雪の降りたる」の「の」は主格を表す何か？',opts:['動詞', '形容詞', '格助詞', '助動詞'],ans:2},{q:'「いと白きも」の「いと」の品詞は？',opts:['形容詞', '副詞', '接続詞', '感動詞'],ans:1},{q:'「またさらでも」の「また」の品詞は？',opts:['副詞', '形容詞', '接続詞', '助詞'],ans:2},{q:'「降りたる」の「たる」の品詞は？',opts:['動詞', '形容詞', '助詞', '助動詞'],ans:3},{q:'「つきづきし」の品詞は？',opts:['動詞', '副詞', '形容詞', '形容動詞'],ans:2},{q:'「炭」の品詞は？',opts:['動詞', '形容詞', '名詞', '副詞'],ans:2}],
+  8: [{q:'「書かず」の「書か」の活用形は？',opts:['未然形', '連用形', '終止形', '已然形'],ans:0},{q:'「書きたり」の「書き」の活用形は？',opts:['未然形', '連用形', '終止形', '命令形'],ans:1},{q:'「入る人」の「入る」の活用形は？',opts:['終止形', '連体形', '已然形', '命令形'],ans:1},{q:'「降れども」の「降れ」の活用形は？',opts:['連用形', '終止形', '已然形', '命令形'],ans:2},{q:'「参れ（命令）」の活用形は？',opts:['終止形', '連体形', '已然形', '命令形'],ans:3},{q:'「已然形＋ば」の意味は？',opts:['仮定条件', '確定条件', '逆接', '打消'],ans:1}]
+};
+
+// ══ RANK MANAGEMENT ════════════════════════════════════
+function getRanks(){
+  try{ return JSON.parse(localStorage.getItem('kotenbun_ranks')||'{}'); }
+  catch(e){ return {}; }
+}
+function saveRanks(r){ localStorage.setItem('kotenbun_ranks',JSON.stringify(r)); }
+
+function setRank(unit, rank){
+  const ranks = getRanks();
+  ranks[unit] = rank;
+  saveRanks(ranks);
+  applyRank(unit, rank);
+  updateStats();
+}
+
+function applyRank(unit, rank){
+  const card = document.getElementById('card-'+unit);
+  const badge = document.getElementById('badge-'+unit);
+  if(!card) return;
+  card.className = 'unit-card ' + (rank ? 'rank-'+rank.toLowerCase() : 'rank-none');
+  // active rank btn
+  card.querySelectorAll('.rank-btn').forEach(b=>{
+    b.classList.toggle('active', b.classList.contains('btn-'+rank.toLowerCase()));
+  });
+  if(badge){
+    badge.className = 'rank-badge ' + (rank ? rank.toLowerCase() : 'none');
+    badge.textContent = rank || '―';
+  }
+}
+
+function updateStats(){
+  const ranks = getRanks();
+  let a=0,b=0,c=0,n=0;
+  for(let i=1;i<=13;i++){
+    const r=ranks[i];
+    if(r==='A') a++;
+    else if(r==='B') b++;
+    else if(r==='C') c++;
+    else n++;
+  }
+  document.getElementById('cnt-a').textContent=a;
+  document.getElementById('cnt-b').textContent=b;
+  document.getElementById('cnt-c').textContent=c;
+  document.getElementById('cnt-n').textContent=n;
+}
+
+function initRanks(){
+  const ranks = getRanks();
+  for(let i=1;i<=13;i++){
+    if(ranks[i]) applyRank(i, ranks[i]);
+  }
+  updateStats();
+}
+
+// ══ FLASH CARDS ════════════════════════════════════════
+let flashUnit=1, flashIdx=0;
+let flashSpeed=0;        // 0=制限なし, 1/2/3=秒数
+let flashTimerID=null;
+let flashPhase='front';  // 'front' or 'back'
+let flashLap=1;          // 現在の周回数（1〜3）
+let flashRunning=false;  // 自動再生中か
+
+function openFlash(unit){
+  flashUnit=unit; flashIdx=0;
+  flashSpeed=0; flashPhase='front';
+  flashLap=1; flashRunning=false;
+  clearFlashTimer();
+  const data=FLASH_DATA[unit];
+  if(!data) return;
+  document.getElementById('flash-unit-title').textContent='🃏 '+data.title;
+  document.getElementById('flash-modal').classList.add('open');
+  // UI初期化
+  document.querySelectorAll('.spd-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('timer-bar-wrap').style.display='none';
+  document.getElementById('phase-label').textContent='';
+  document.getElementById('flash-complete').classList.remove('show');
+  setPlayBtns('idle');
+  renderFlashCard();
+}
+
+function closeFlash(){
+  clearFlashTimer();
+  flashRunning=false;
+  document.getElementById('flash-modal').classList.remove('open');
+}
+
+function renderFlashCard(){
+  const data=FLASH_DATA[flashUnit];
+  const card=data.cards[flashIdx];
+  const el=document.getElementById('flash-card');
+  el.classList.remove('flipped');
+  flashPhase='front';
+  document.getElementById('flash-front-word').textContent=card.front;
+  document.getElementById('flash-front-hint').textContent=card.hint;
+  document.getElementById('flash-back-answer').textContent=card.answer;
+  document.getElementById('flash-back-note').textContent=card.note||'';
+  document.getElementById('flash-progress').textContent=(flashIdx+1)+' / '+data.cards.length;
+  document.getElementById('lap-label').textContent=flashLap+'周目 / 全3周';
+  document.getElementById('flash-complete').classList.remove('show');
+}
+
+function flipCard(){
+  if(flashRunning) return; // 自動再生中は手動フリップ無効
+  document.getElementById('flash-card').classList.toggle('flipped');
+}
+function flashNext(){
+  clearFlashTimer();
+  flashRunning=false;
+  const len=FLASH_DATA[flashUnit].cards.length;
+  flashIdx=(flashIdx+1)%len;
+  renderFlashCard();
+  setPlayBtns('idle');
+}
+function flashPrev(){
+  clearFlashTimer();
+  flashRunning=false;
+  const len=FLASH_DATA[flashUnit].cards.length;
+  flashIdx=(flashIdx-1+len)%len;
+  renderFlashCard();
+  setPlayBtns('idle');
+}
+
+// ── 速度設定 ──
+function setSpeed(sec){
+  flashSpeed=sec;
+  document.querySelectorAll('.spd-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('spd'+sec).classList.add('active');
+  if(sec===0){
+    document.getElementById('timer-bar-wrap').style.display='none';
+  } else {
+    document.getElementById('timer-bar-wrap').style.display='block';
+  }
+}
+
+// ── スタート ──
+function flashStart(){
+  if(flashSpeed===0){ alert('先に表示時間（1秒・2秒・3秒）を選んでください。'); return; }
+  flashIdx=0; flashLap=1; flashPhase='front';
+  flashRunning=true;
+  document.getElementById('flash-complete').classList.remove('show');
+  renderFlashCard();
+  setPlayBtns('running');
+  updatePhaseLabel('front');
+  startFlashTimer();
+}
+
+// ── ストップ ──
+function flashStop(){
+  clearFlashTimer();
+  flashRunning=false;
+  setPlayBtns('paused');
+  document.getElementById('phase-label').textContent='⏸ 一時停止中';
+}
+
+// ── 継続 ──
+function flashResume(){
+  flashRunning=true;
+  setPlayBtns('running');
+  // 今のフェーズから再開
+  if(flashPhase==='back'){
+    // 裏面を表示中だったので、裏確認フェーズのタイマーを再開
+    document.getElementById('flash-card').classList.add('flipped');
+    updatePhaseLabel('back');
+  } else {
+    document.getElementById('flash-card').classList.remove('flipped');
+    updatePhaseLabel('front');
+  }
+  startFlashTimer();
+}
+
+// ── タイマー本体 ──
+function startFlashTimer(){
+  if(!flashRunning || flashSpeed===0) return;
+  const ms=flashSpeed*1000;
+  animateBar(ms);
+  flashTimerID=setTimeout(()=>{
+    if(!flashRunning) return;
+    if(flashPhase==='front'){
+      // 表→裏へ
+      document.getElementById('flash-card').classList.add('flipped');
+      flashPhase='back';
+      updatePhaseLabel('back');
+      startFlashTimer();
+    } else {
+      // 裏→次のカードへ
+      const len=FLASH_DATA[flashUnit].cards.length;
+      const nextIdx=flashIdx+1;
+      if(nextIdx>=len){
+        // 1周終了
+        if(flashLap>=3){
+          // 3周完了
+          flashRunning=false;
+          clearFlashTimer();
+          setPlayBtns('done');
+          document.getElementById('flash-complete').classList.add('show');
+          document.getElementById('phase-label').textContent='';
+          document.getElementById('timer-bar-wrap').style.display='none';
+          return;
+        } else {
+          // 次の周へ
+          flashLap++;
+          flashIdx=0;
+        }
+      } else {
+        flashIdx=nextIdx;
+      }
+      renderFlashCard();
+      updatePhaseLabel('front');
+      startFlashTimer();
+    }
+  },ms);
+}
+
+function clearFlashTimer(){
+  if(flashTimerID){ clearTimeout(flashTimerID); flashTimerID=null; }
+  const fill=document.getElementById('timer-bar-fill');
+  if(fill){ fill.style.transition='none'; fill.style.width='100%'; }
+}
+
+function animateBar(ms){
+  const fill=document.getElementById('timer-bar-fill');
+  if(!fill) return;
+  fill.style.transition='none';
+  fill.style.width='100%';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    fill.style.transition='width '+ms+'ms linear';
+    fill.style.width='0%';
+  }));
+}
+
+// ── ボタン状態管理 ──
+// state: 'idle'=初期, 'running'=再生中, 'paused'=停止中, 'done'=完了
+function setPlayBtns(state){
+  const bs=document.getElementById('btn-start');
+  const bo=document.getElementById('btn-stop');
+  const br=document.getElementById('btn-resume');
+  bs.style.display='none'; bo.style.display='none'; br.style.display='none';
+  if(state==='idle'){   bs.style.display='inline-flex'; }
+  if(state==='running'){ bo.style.display='inline-flex'; }
+  if(state==='paused'){ br.style.display='inline-flex'; bs.style.display='inline-flex'; bs.textContent='↺ 最初から'; }
+  if(state==='done'){   bs.style.display='inline-flex'; bs.textContent='↺ もう一度'; }
+  if(state!=='paused' && state!=='done') bs.textContent='▶ スタート';
+}
+
+function updatePhaseLabel(phase){
+  const el=document.getElementById('phase-label');
+  if(!el) return;
+  el.textContent=phase==='front'?'【 表を確認 】':'【 答えを確認 】';
+}
+
+// ══ QUIZ ═══════════════════════════════════════════════
+let quizUnit=1, quizIdx=0, quizScore=0, quizAnswered=false, quizQuestions=[];
+
+function openMiniQuiz(unit){
+  quizUnit=unit;
+  const data=QUIZ_DATA[unit];
+  if(!data) return;
+  document.getElementById('quiz-unit-title').textContent='📝 '+data.title;
+  quizQuestions=[...data.questions].sort(()=>Math.random()-0.5);
+  quizIdx=0; quizScore=0;
+  document.getElementById('quiz-result').style.display='none';
+  document.getElementById('quiz-modal').classList.add('open');
+  renderQuiz();
+}
+function closeQuiz(){ document.getElementById('quiz-modal').classList.remove('open'); }
+function retryMiniQuiz(){ openMiniQuiz(quizUnit); }
+
+function renderQuiz(){
+  const total=quizQuestions.length;
+  document.getElementById('qp-fill').style.width=((quizIdx/total)*100)+'%';
+  document.getElementById('qp-text').textContent=quizIdx+' / '+total;
+
+  if(quizIdx>=total){ showResult(); return; }
+  const q=quizQuestions[quizIdx];
+  quizAnswered=false;
+
+  // shuffle options keeping track of correct
+  const idxMap=q.opts.map((_,i)=>i).sort(()=>Math.random()-0.5);
+  const shuffled=idxMap.map(i=>q.opts[i]);
+  const correctShuffled=idxMap.indexOf(q.ans);
+
+  let html=`<div class="quiz-q">${q.q}</div><div class="quiz-options">`;
+  shuffled.forEach((opt,i)=>{
+    html+=`<button class="q-opt" onclick="answerQuiz(${i},${correctShuffled},this)">${opt}</button>`;
+  });
+  html+=`</div>`;
+  document.getElementById('quiz-content').innerHTML=html;
+}
+
+function answerQuiz(chosen, correct, btn){
+  if(quizAnswered) return;
+  quizAnswered=true;
+  const opts=document.querySelectorAll('.q-opt');
+  opts.forEach(o=>o.disabled=true);
+  if(chosen===correct){
+    btn.classList.add('correct');
+    quizScore++;
+    showComment(['正解！','よし！','その通り！','完璧！'][Math.floor(Math.random()*4)], true);
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    showComment(['惜しい！','もう少し！','復習しよう','ここが大事！'][Math.floor(Math.random()*4)], false);
+  }
+  setTimeout(()=>{ quizIdx++; renderQuiz(); }, 1200);
+}
+
+function showResult(){
+  document.getElementById('qp-fill').style.width='100%';
+  document.getElementById('quiz-content').innerHTML='';
+  const total=quizQuestions.length;
+  const pct=Math.round(quizScore/total*100);
+  const resultEl=document.getElementById('quiz-result');
+  resultEl.style.display='block';
+
+  let emoji,msg,rankText,rankClass;
+  if(pct>=80){
+    emoji='🎉'; msg='合格！すばらしい！'; rankText='A OK'; rankClass='a';
+    launchConfetti();
+    setRank(quizUnit,'A');
+  } else if(pct>=50){
+    emoji='😊'; msg='もう少し！要復習'; rankText='B 要復習'; rankClass='b';
+    setRank(quizUnit,'B');
+  } else {
+    emoji='📖'; msg='何度も復習しよう'; rankText='C 何度も復習'; rankClass='c';
+    setRank(quizUnit,'C');
+  }
+  document.getElementById('result-emoji').textContent=emoji;
+  document.getElementById('result-msg').textContent=msg;
+  document.getElementById('result-score').textContent=`${quizScore} / ${total} 正解（${pct}%）`;
+  const rankEl=document.getElementById('result-rank');
+  rankEl.textContent=rankText;
+  rankEl.className='result-rank '+rankClass;
+}
+
+// ══ COMMENT TOAST ══════════════════════════════════════
+function showComment(msg, ok){
+  const t=document.getElementById('comment-toast');
+  t.textContent=msg;
+  t.style.borderColor=ok?'var(--jade)':'var(--gold)';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),900);
+}
+
+// ══ CONFETTI ═══════════════════════════════════════════
+function launchConfetti(){
+  const wrap=document.getElementById('confetti-wrap');
+  wrap.innerHTML='';
+  const colors=['#c0392b','#b8860b','#2e7d52','#1a3a5c','#e74c3c','#d4a017','#43a36b','#ffd700'];
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    const size=(Math.random()*8+6)+'px';
+    p.style.cssText=`
+      left:${Math.random()*100}%;
+      width:${size};height:${size};
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      animation-duration:${Math.random()*1.5+1}s;
+      animation-delay:${Math.random()*0.5}s;
+    `;
+    wrap.appendChild(p);
+  }
+  setTimeout(()=>wrap.innerHTML='',3000);
+}
+
+// ══ INIT ═══════════════════════════════════════════════
+initRanks();
+
+// close modal on bg click
+document.getElementById('flash-modal').addEventListener('click',function(e){
+  if(e.target===this) closeFlash();
+});
+document.getElementById('quiz-modal').addEventListener('click',function(e){
+  if(e.target===this) closeQuiz();
+});
+</script>
+</body>
+</html>
