@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>変格活用 テスト</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root{--sumi:#2d2416;--verm:#c0392b;--verm-lt:#e74c3c;--gold:#b8860b;--gold-lt:#d4a017;
+  --jade:#2e7d52;--jade-lt:#43a36b;--jade-pale:#edfaf3;--indigo:#1a3a5c;--indigo-lt:#2980b9;
+  --indigo-pale:#eef4fb;--paper:#faf6ef;--paper-dk:#f0e8d8;--paper-md:#e8dcc8;
+  --cream:#fdfaf4;--gray:#8a7f72;--shadow:rgba(90,60,20,0.13);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);font-family:'Noto Serif JP',serif;color:var(--sumi);
+  min-height:100vh;padding-bottom:80px;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;}
+.timer-header{background:linear-gradient(135deg,#2d2416 0%,#1a1008 100%);color:white;
+  padding:12px 28px;display:flex;justify-content:space-between;align-items:center;
+  border-bottom:2px solid #b8860b;}
+.timer-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:#d4a017;
+  letter-spacing:0.15em;margin-right:8px;}
+.timer-main{font-family:'Courier New',monospace;font-size:26px;color:#ffd700;
+  font-weight:bold;text-shadow:0 0 20px rgba(255,215,0,0.4);}
+.records-box{font-family:'Noto Sans JP',sans-serif;font-size:12px;
+  color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:10px;}
+.rec-item{display:flex;align-items:center;gap:4px;}
+.rec-num{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);
+  border-radius:3px;padding:2px 6px;font-size:11px;}
+.rec-val{color:#ffd700;font-weight:bold;font-family:monospace;}
+.wrapper{max-width:780px;margin:30px auto;padding:0 18px;position:relative;z-index:1;}
+.page-header{margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #e8dcc8;position:relative;}
+.page-header::after{content:'';position:absolute;bottom:-1px;left:0;width:80px;height:3px;background:#c0392b;}
+.breadcrumb{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:#8a7f72;letter-spacing:0.1em;margin-bottom:8px;}
+.page-title{font-family:'Zen Old Mincho',serif;font-size:24px;font-weight:700;color:#2d2416;letter-spacing:0.1em;}
+.page-sub{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:#8a7f72;margin-top:5px;}
+.progress-wrap{background:#fdfaf4;border:1px solid #e8dcc8;border-radius:4px;
+  padding:14px 18px;margin-bottom:20px;box-shadow:0 2px 8px rgba(90,60,20,0.13);}
+.progress-row{display:flex;align-items:center;gap:12px;}
+.p-bar{flex:1;height:8px;background:#e8dcc8;border-radius:4px;overflow:hidden;}
+.p-fill{height:100%;background:linear-gradient(90deg,#c0392b,#e74c3c);border-radius:4px;transition:width 0.4s;}
+.p-text{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:#8a7f72;white-space:nowrap;min-width:60px;text-align:right;}
+.score-live{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:#2e7d52;font-weight:700;white-space:nowrap;}
+.q-card{background:#fdfaf4;border:1.5px solid #e8dcc8;border-radius:6px;
+  box-shadow:0 2px 14px rgba(90,60,20,0.13);margin-bottom:18px;overflow:hidden;
+  animation:cardIn 0.35s ease-out both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.q-head{background:linear-gradient(135deg,#2d2416,#1a1008);color:white;
+  padding:10px 18px;display:flex;align-items:center;gap:10px;}
+.q-num{background:#c0392b;color:white;width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;flex-shrink:0;}
+.q-type{font-family:'Noto Sans JP',sans-serif;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.1em;}
+.q-body{padding:18px 20px;}
+.q-text{font-family:'Noto Serif JP',serif;font-size:14.5px;line-height:1.9;
+  margin-bottom:14px;padding:12px 16px;background:#faf6ef;border-radius:3px;border-left:4px solid #c0392b;}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:500px){.opts{grid-template-columns:1fr;}}
+.opt-btn{padding:10px 14px;border-radius:4px;border:1.5px solid #e8dcc8;cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;transition:all 0.15s;background:white;text-align:left;line-height:1.5;}
+.opt-btn:hover:not(:disabled){border-color:#2980b9;background:#eef4fb;}
+.opt-btn.correct{border-color:#2e7d52!important;background:#edfaf3!important;color:#2e7d52!important;font-weight:700;}
+.opt-btn.wrong{border-color:#c0392b!important;background:rgba(192,57,43,0.06)!important;color:#c0392b!important;}
+.opt-btn:disabled{cursor:default;}
+.fill-area{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;}
+.fill-blank{display:inline-flex;align-items:center;justify-content:center;
+  min-width:80px;height:34px;padding:0 10px;border-radius:3px;
+  font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif;
+  letter-spacing:0.05em;transition:all 0.2s;cursor:pointer;white-space:nowrap;}
+.fill-blank.empty{background:#faf6ef;border:1.5px solid #2980b9;color:transparent;}
+.fill-blank.empty:hover{background:#eef4fb;border-color:#1a3a5c;}
+.fill-blank.filled{background:rgba(41,128,185,0.09);border:1.5px solid #2980b9;color:#1a3a5c;}
+.fill-blank.correct-f{background:#edfaf3!important;border:2px solid #2e7d52!important;color:#2e7d52!important;animation:popIn 0.3s;}
+.fill-blank.wrong-f{background:rgba(192,57,43,0.07)!important;border:2px solid #c0392b!important;color:#c0392b!important;}
+@keyframes popIn{0%{transform:scale(0.9)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+.word-bank{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;
+  padding:10px 12px;background:#faf6ef;border-radius:3px;border:1px solid #e8dcc8;}
+.wb-item{background:white;border:1.5px solid #2980b9;padding:5px 14px;border-radius:3px;
+  cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:13px;
+  color:#1a3a5c;transition:all 0.15s;}
+.wb-item:hover:not(.used){background:#eef4fb;transform:translateY(-1px);}
+.wb-item.sel{background:#1a3a5c;color:white;}
+.wb-item.used{opacity:0.15;cursor:default;}
+.q-kai{display:none;margin-top:12px;padding:12px 16px;
+  background:rgba(26,58,92,0.05);border-left:4px solid #2980b9;
+  border-radius:0 4px 4px 0;font-family:'Noto Sans JP',sans-serif;
+  font-size:12.5px;line-height:1.85;color:#3a3020;}
+.q-kai.show{display:block;}
+.q-kai strong{color:#1a3a5c;}
+.q-kai .verm{color:#c0392b;font-weight:700;}
+.btn-area{display:flex;justify-content:center;gap:12px;
+  margin-top:26px;padding-top:20px;border-top:1px solid #e8dcc8;flex-wrap:wrap;}
+.btn{padding:11px 28px;font-family:'Noto Sans JP',sans-serif;font-weight:700;
+  font-size:13px;letter-spacing:0.1em;border:none;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+.btn:active{transform:translateY(1px);}
+.btn-judge{background:linear-gradient(135deg,#43a36b,#27694a);color:white;box-shadow:0 3px 10px rgba(46,125,82,0.28);}
+.btn-retry{background:linear-gradient(135deg,#c0392b,#8b1a11);color:white;}
+.btn-kai-all{background:linear-gradient(135deg,#2980b9,#1a3a5c);color:white;}
+.btn-reset{background:#faf6ef;color:#8a7f72;border:1px solid #e8dcc8;}
+.result-card{display:none;background:#fdfaf4;border:1.5px solid #e8dcc8;border-radius:6px;
+  box-shadow:0 4px 20px rgba(90,60,20,0.13);padding:32px;text-align:center;margin-bottom:20px;}
+.result-card.show{display:block;animation:cardIn 0.4s ease-out;}
+.result-emoji{font-size:56px;margin-bottom:12px;}
+.result-title{font-family:'Zen Old Mincho',serif;font-size:24px;font-weight:700;margin-bottom:8px;}
+.result-score{font-family:'Noto Sans JP',sans-serif;font-size:15px;color:#8a7f72;margin-bottom:12px;}
+.result-rank{display:inline-block;padding:7px 24px;border-radius:20px;
+  font-family:'Noto Sans JP',sans-serif;font-size:15px;font-weight:700;margin-bottom:18px;}
+.result-rank.a{background:#2e7d52;color:white;}
+.result-rank.b{background:#b8860b;color:white;}
+.result-rank.c{background:#c0392b;color:white;}
+.result-msg{font-family:'Noto Sans JP',sans-serif;font-size:13px;color:#8a7f72;line-height:1.8;margin-bottom:18px;}
+.toast{position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0.85);background:#2d2416;color:white;
+  padding:16px 32px;border-radius:8px;font-family:'Zen Old Mincho',serif;font-size:20px;
+  z-index:9999;opacity:0;pointer-events:none;transition:all 0.25s;
+  box-shadow:0 8px 30px rgba(0,0,0,0.4);border:2px solid #b8860b;}
+.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.toast.ok{border-color:#2e7d52;}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden;}
+.cp{position:absolute;top:-12px;animation:cf linear forwards;}
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+.unit-nav{display:flex;justify-content:center;align-items:center;gap:10px;
+  padding:12px 18px;background:#2d2416;border-top:2px solid #b8860b;
+  position:fixed;bottom:0;left:0;width:100%;z-index:500;flex-wrap:wrap;}
+.unav{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:3px;
+  font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-decoration:none;border:none;}
+.unav.prev{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.2);}
+.unav.idx{background:#b8860b;color:white;}
+.unav.nxt{background:#c0392b;color:white;}
+
+</style>
+</head>
+<body>
+<div class="timer-header">
+  <div style="display:flex;align-items:center;">
+    <span class="timer-label">TIME</span>
+    <span class="timer-main" id="timer">00:00.0</span>
+  </div>
+  <div class="records-box">
+    <span class="rec-item"><span class="rec-num">1回目</span><span class="rec-val" id="r1">―</span></span>
+    <span class="rec-item"><span class="rec-num">2回目</span><span class="rec-val" id="r2">―</span></span>
+    <span class="rec-item"><span class="rec-num">3回目</span><span class="rec-val" id="r3">―</span></span>
+  </div>
+</div>
+<div class="wrapper">
+  <div class="page-header">
+    <div class="breadcrumb">古典文法 › 変格活用 › テスト</div>
+    <h1 class="page-title">変格活用 テスト</h1>
+    <p class="page-sub">カ変・サ変・ナ変・ラ変の動詞と活用語尾　全10問</p>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-row">
+      <div class="p-bar"><div class="p-fill" id="p-fill" style="width:0%"></div></div>
+      <span class="p-text" id="p-text">0 / 10</span>
+      <span class="score-live" id="score-live">正解 0</span>
+    </div>
+  </div>
+  <div style="font-family:'Noto Sans JP',sans-serif;font-size:13px;color:#8a7f72;
+    margin-bottom:18px;padding:10px 14px;background:#fdfaf4;border-radius:3px;
+    border-left:3px solid #2980b9;">各変格活用の動詞数と活用語尾を完全暗記しましょう。</div>
+  <div class="result-card" id="result-card">
+    <div class="result-emoji" id="res-emoji"></div>
+    <div class="result-title" id="res-title"></div>
+    <div class="result-score" id="res-score"></div>
+    <div class="result-rank" id="res-rank"></div>
+    <div class="result-msg" id="res-msg"></div>
+    <button class="btn btn-retry" onclick="retryTest()" style="margin:4px;">もう一度</button>
+    <a href="index.html" class="btn btn-kai-all" style="text-decoration:none;display:inline-flex;align-items:center;padding:11px 28px;margin:4px;">単元一覧へ</a>
+    <a href="kotenbun10.html" class="btn" style="background:#1a3a5c;color:white;text-decoration:none;display:inline-flex;align-items:center;padding:11px 28px;margin:4px;">📖 変格活用を復習</a>
+  </div>
+  <div id="q-container">
+<div class="q-card" id="qcard-1">
+  <div class="q-head"><div class="q-num">1</div>  <span class="q-type">四択</span></div>
+  <div class="q-body">
+    <div class="q-text">カ行変格活用の動詞は何語か？</div>
+    <div class="opts" id="opts-1">
+      <button class="opt-btn" id="opt-1-0" onclick="answerMC(1,0,0)">1語（来）</button>
+      <button class="opt-btn" id="opt-1-1" onclick="answerMC(1,1,0)">2語</button>
+      <button class="opt-btn" id="opt-1-2" onclick="answerMC(1,2,0)">4語</button>
+      <button class="opt-btn" id="opt-1-3" onclick="answerMC(1,3,0)">多数</button>
+    </div>
+    <div class="q-kai" id="kai-1">カ変は<strong>「来（く）」一語のみ</strong>。こ・き・く・くる・くれ・こ（こよ）と活用。</div>
+  </div>
+</div>
+<div class="q-card" id="qcard-2">
+  <div class="q-head"><div class="q-num">2</div>  <span class="q-type">四択</span></div>
+  <div class="q-body">
+    <div class="q-text">サ行変格活用の動詞2語は？</div>
+    <div class="opts" id="opts-2">
+      <button class="opt-btn" id="opt-2-0" onclick="answerMC(2,0,0)">す・おはす</button>
+      <button class="opt-btn" id="opt-2-1" onclick="answerMC(2,1,0)">す・あり</button>
+      <button class="opt-btn" id="opt-2-2" onclick="answerMC(2,2,0)">来・す</button>
+      <button class="opt-btn" id="opt-2-3" onclick="answerMC(2,3,0)">死ぬ・往ぬ</button>
+    </div>
+    <div class="q-kai" id="kai-2">サ変は<strong>「す」「おはす」の2語</strong>。音読み＋す（奏す・具す）もサ変複合動詞。</div>
+  </div>
+</div>
+<div class="q-card" id="qcard-3">
+  <div class="q-head"><div class="q-num">3</div>  <span class="q-type">四択</span></div>
+  <div class="q-body">
+    <div class="q-text">ナ行変格活用の動詞2語は？</div>
+    <div class="opts" id="opts-3">
+      <button class="opt-btn" id="opt-3-0" onclick="answerMC(3,0,2)">す・おはす</button>
+      <button class="opt-btn" id="opt-3-1" onclick="answerMC(3,1,2)">あり・をり</button>
+      <button class="opt-btn" id="opt-3-2" onclick="answerMC(3,2,2)">死ぬ・往ぬ</button>
+      <button class="opt-btn" id="opt-3-3" onclick="answerMC(3,3,2)">来・死ぬ</button>
+    </div>
+    <div class="q-kai" id="kai-3">ナ変は<strong>「死ぬ」「往（い）ぬ」の2語</strong>。な・に・ぬ・ぬる・ぬれ・ねと活用。</div>
+  </div>
+</div>
+<div class="q-card" id="qcard-4">
+  <div class="q-head"><div class="q-num">4</div>  <span class="q-type">四択</span></div>
+  <div class="q-body">
+    <div class="q-text">ラ行変格活用の動詞4語は？</div>
+    <div class="opts" id="opts-4">
+      <button class="opt-btn" id="opt-4-0" onclick="answerMC(4,0,0)">あり・をり・はべり・いまそかり</button>
+      <button class="opt-btn" id="opt-4-1" onclick="answerMC(4,1,0)">あり・をり・す・おはす</button>
+      <button class="opt-btn" id="opt-4-2" onclick="answerMC(4,2,0)">あり・来・はべり・いまそかり</button>
+      <button class="opt-btn" id="opt-4-3" onclick="answerMC(4,3,0)">死ぬ・往ぬ・はべり・いまそかり</button>
+    </div>
+    <div class="q-kai" id="kai-4">ラ変は<strong>あり・をり・はべり・いまそかり</strong>の4語。終止形が「り」で終わる。</div>
+  </div>
+</div>
+<div class="q-card" id="qcard-5">
+  <div class="q-head"><div class="q-num">5</div>  <span class="q-type">四択</span></div>
+  <div class="q-body">
+    <div class="q-text">「来（く）」の未然形は？</div>
+    <div class="opts" id="opts-5">
+      <button class="opt-btn" id="opt-5-0" onclick="answerMC(5,0,0)">こ</button>
+      <button class="opt-btn" id="opt-5-1" onclick="answerMC(5,1,0)">き</button>
+      <button class="opt-btn" id="opt-5-2" onclick="answerMC(5,2,0)">く</button>
+      <button class="opt-btn" id="opt-5-3" onclick="answerMC(5,3,0)">くる</button>
+    </div>
+    <div class="q-kai" id="kai-5">カ変「来」：<strong>こ</strong>・き・く・くる・くれ・こよ。未然形は「こ」（こず・こない）。</div>
+  </div>
+</div>
+<div class="q-card" id="qcard-6">
+  <div class="q-head"><div class="q-num">6</div>  <span class="q-type">四択</span></div>
+  <div class="q-body">
+    <div class="q-text">「あり」（ラ変）の連体形は？</div>
+    <div class="opts" id="opts-6">
+      <button class="opt-btn" id="opt-6-0" onclick="answerMC(6,0,1)">あり</button>
+      <button class="opt-btn" id="opt-6-1" onclick="answerMC(6,1,1)">ある</button>
+      <button class="opt-btn" id="opt-6-2" onclick="answerMC(6,2,1)">あれ</button>
+      <button class="opt-btn" id="opt-6-3" onclick="answerMC(6,3,1)">あら</button>
+    </div>
+    <div class="q-kai" id="kai-6">ラ変「あり」：ら・り・り・<strong>る</strong>・れ・れ。連体形は「る」（ある人）。四段と違い終止形が「り」！</div>
+  </div>
+</div>
+<div class="q-card" id="qcard-7">
+  <div class="q-head"><div class="q-num">7</div>  <span class="q-type">四択</span></div>
+  <div class="q-body">
+    <div class="q-text">「はべり」の意味は？</div>
+    <div class="opts" id="opts-7">
+      <button class="opt-btn" id="opt-7-0" onclick="answerMC(7,0,1)">あり の尊敬語</button>
+      <button class="opt-btn" id="opt-7-1" onclick="answerMC(7,1,1)">あり の丁寧語</button>
+      <button class="opt-btn" id="opt-7-2" onclick="answerMC(7,2,1)">す の複合語</button>
+      <button class="opt-btn" id="opt-7-3" onclick="answerMC(7,3,1)">来 の謙譲語</button>
+    </div>
+    <div class="q-kai" id="kai-7">「はべり」は<strong>「あり」の丁寧語</strong>（ございます）。「いまそかり」は「あり」の尊敬語（おいでになる）。</div>
+  </div>
+</div>
+<div class="q-card" id="qcard-8">
+  <div class="q-head"><div class="q-num">8</div>  <span class="q-type">四択</span></div>
+  <div class="q-body">
+    <div class="q-text">「奏す（そうす）」の活用の種類は？</div>
+    <div class="opts" id="opts-8">
+      <button class="opt-btn" id="opt-8-0" onclick="answerMC(8,0,2)">四段活用</button>
+      <button class="opt-btn" id="opt-8-1" onclick="answerMC(8,1,2)">ラ行変格活用</button>
+      <button class="opt-btn" id="opt-8-2" onclick="answerMC(8,2,2)">サ行変格活用</button>
+      <button class="opt-btn" id="opt-8-3" onclick="answerMC(8,3,2)">ナ行変格活用</button>
+    </div>
+    <div class="q-kai" id="kai-8">音読み「奏」＋「す」→<strong>サ行変格活用</strong>の複合動詞。「具す・決す・臆す」も同様。</div>
+  </div>
+</div>
+<div class="q-card" id="qcard-9">
+  <div class="q-head"><div class="q-num">9</div>  <span class="q-type">語群選択</span></div>
+  <div class="q-body">
+    <div class="q-text">ラ変「あり」の活用語尾（未然〜命令）を順に答えなさい。</div>
+    <div class="fill-area">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-size:12px;color:#8a7f72;">答え：</span>
+      <span class="fill-blank empty" id="fill-9" data-ans="ら・り・り・る・れ・れ" onclick="pickFill(9)">　　　　</span>
+    </div>
+    <div class="word-bank" id="wb-9">
+      <div class="wb-item" id="wb-9-0" data-val="ら・り・り・る・れ・れ" onclick="selectWord(this,9)">ら・り・り・る・れ・れ</div>
+      <div class="wb-item" id="wb-9-1" data-val="ら・り・る・る・れ・れ" onclick="selectWord(this,9)">ら・り・る・る・れ・れ</div>
+      <div class="wb-item" id="wb-9-2" data-val="な・に・ぬ・ぬる・ぬれ・ね" onclick="selectWord(this,9)">な・に・ぬ・ぬる・ぬれ・ね</div>
+      <div class="wb-item" id="wb-9-3" data-val="こ・き・く・くる・くれ・こよ" onclick="selectWord(this,9)">こ・き・く・くる・くれ・こよ</div>
+    </div>
+    <div class="q-kai" id="kai-9">ラ変の活用語尾：<strong>ら・り・り・る・れ・れ</strong>。終止形が「り」（i段）で終わるのが四段との違い！</div>
+  </div>
+</div>
+<div class="q-card" id="qcard-10">
+  <div class="q-head"><div class="q-num">10</div>  <span class="q-type">語群選択</span></div>
+  <div class="q-body">
+    <div class="q-text">死ぬ（ナ変）の命令形は？</div>
+    <div class="fill-area">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-size:12px;color:#8a7f72;">答え：</span>
+      <span class="fill-blank empty" id="fill-10" data-ans="ね" onclick="pickFill(10)">　　　　</span>
+    </div>
+    <div class="word-bank" id="wb-10">
+      <div class="wb-item" id="wb-10-0" data-val="な" onclick="selectWord(this,10)">な</div>
+      <div class="wb-item" id="wb-10-1" data-val="に" onclick="selectWord(this,10)">に</div>
+      <div class="wb-item" id="wb-10-2" data-val="ぬ" onclick="selectWord(this,10)">ぬ</div>
+      <div class="wb-item" id="wb-10-3" data-val="ぬれ" onclick="selectWord(this,10)">ぬれ</div>
+      <div class="wb-item" id="wb-10-4" data-val="ね" onclick="selectWord(this,10)">ね</div>
+    </div>
+    <div class="q-kai" id="kai-10">ナ変「死ぬ」：な・に・ぬ・ぬる・ぬれ・<strong>ね</strong>。命令形は「ね」（ネ行）。</div>
+  </div>
+</div>
+
+  </div>
+  <div class="btn-area">
+    <button class="btn btn-judge" onclick="judgeAll()">✓ 全問判定</button>
+    <button class="btn btn-kai-all" onclick="showAllKai()">📖 全解説を表示</button>
+    <button class="btn btn-reset" onclick="retryTest()">↺ リセット</button>
+  </div>
+</div>
+
+<div class="unit-nav">
+  <a class="unav prev" href="test_kotenbun8.html">◀ 上二・下二段テスト</a>
+  <a class="unav idx" href="index.html">☰ 単元一覧</a>
+  <a class="unav nxt" href="test_kotenbun10.html">自動詞・他動詞テスト ▶</a>
+</div>
+
+<div class="confetti-wrap" id="cfw"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+let _st=null,_ti=null,_records=[];
+function startTimer(){clearInterval(_ti);_st=Date.now();
+  _ti=setInterval(()=>{const d=(Date.now()-_st)/1000;
+    document.getElementById('timer').textContent=Math.floor(d/60).toString().padStart(2,'0')+':'+(d%60).toFixed(1).padStart(4,'0');},100);}
+function stopTimer(){clearInterval(_ti);const t=document.getElementById('timer').textContent;
+  _records.push(t);['r1','r2','r3'].forEach((id,i)=>{if(_records[i])document.getElementById(id).textContent=_records[i];});return t;}
+function showToast(msg,ok=false){const t=document.getElementById('toast');t.textContent=msg;
+  t.className='toast'+(ok?' ok':'');requestAnimationFrame(()=>{t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1100);});}
+function confetti(){const w=document.getElementById('cfw');w.innerHTML='';
+  const cols=['#c0392b','#b8860b','#2e7d52','#1a3a5c','#ffd700'];
+  for(let i=0;i<90;i++){const p=document.createElement('div');p.className='cp';
+    const sz=(Math.random()*8+5)+'px';
+    p.style.cssText='left:'+Math.random()*100+'%;width:'+sz+';height:'+sz+
+      ';background:'+cols[i%cols.length]+';border-radius:'+(Math.random()>.5?'50%':'2px')+
+      ';animation-duration:'+(Math.random()*1.5+1)+'s;animation-delay:'+(Math.random()*.4)+'s;opacity:1;';
+    w.appendChild(p);}setTimeout(()=>w.innerHTML='',3500);}
+function saveRank(unit,rank){try{const r=JSON.parse(localStorage.getItem('kotenbun_ranks')||'{}');
+  r[unit]=rank;localStorage.setItem('kotenbun_ranks',JSON.stringify(r));}catch(e){}}
+</script>
+
+<script>
+const TOTAL=10;
+let answered={};let selectedWb=null;let timerStarted=false;
+function ensureTimer(){if(!timerStarted){timerStarted=true;startTimer();}}
+function answerMC(n,chosen,correct){
+  ensureTimer();if(answered[n]!==undefined)return;
+  const opts=document.querySelectorAll('#opts-'+n+' .opt-btn');
+  opts.forEach(o=>o.disabled=true);
+  if(chosen===correct){opts[chosen].classList.add('correct');answered[n]=true;
+    showToast(['正解！','その通り！','よし！','完璧！'][Math.floor(Math.random()*4)],true);
+  }else{opts[chosen].classList.add('wrong');opts[correct].classList.add('correct');answered[n]=false;
+    showToast(['惜しい！','もう少し！','復習しよう！'][Math.floor(Math.random()*3)]);
+  }
+  document.getElementById('kai-'+n).classList.add('show');updateProgress();
+}
+function selectWord(el,n){
+  ensureTimer();if(el.classList.contains('used'))return;
+  if(selectedWb)selectedWb.classList.remove('sel');selectedWb=el;el.classList.add('sel');
+}
+function pickFill(n){
+  ensureTimer();if(answered[n]!==undefined)return;
+  const blank=document.getElementById('fill-'+n);
+  if(!selectedWb){showToast('語群から語を選んでください');return;}
+  const val=selectedWb.dataset.val;const ans=blank.dataset.ans;
+  blank.textContent=val;blank.classList.remove('empty');blank.classList.add('filled');
+  selectedWb.classList.add('used');selectedWb.classList.remove('sel');selectedWb=null;
+  if(val===ans){blank.classList.add('correct-f');answered[n]=true;
+    showToast(['正解！','その通り！','よし！'][Math.floor(Math.random()*3)],true);
+  }else{blank.classList.add('wrong-f');answered[n]=false;
+    showToast(['惜しい！','もう少し！'][Math.floor(Math.random()*2)]);
+  }
+  document.getElementById('kai-'+n).classList.add('show');updateProgress();
+}
+function updateProgress(){
+  const done=Object.keys(answered).length;
+  const correct=Object.values(answered).filter(v=>v).length;
+  document.getElementById('p-fill').style.width=(done/TOTAL*100)+'%';
+  document.getElementById('p-text').textContent=done+' / '+TOTAL;
+  document.getElementById('score-live').textContent='正解 '+correct;
+  if(done===TOTAL)setTimeout(showResult,600);
+}
+function judgeAll(){
+  ensureTimer();
+  for(let n=1;n<=TOTAL;n++){
+    if(answered[n]===undefined){showToast('未回答の問題があります');
+      document.getElementById('qcard-'+n).scrollIntoView({behavior:'smooth',block:'center'});return;}
+  }showResult();
+}
+function showAllKai(){for(let n=1;n<=TOTAL;n++)document.getElementById('kai-'+n).classList.add('show');showToast('解説をすべて表示しました',true);}
+function showResult(){
+  const t=stopTimer();
+  const correct=Object.values(answered).filter(v=>v).length;
+  const pct=Math.round(correct/TOTAL*100);
+  const rc=document.getElementById('result-card');rc.classList.add('show');
+  rc.scrollIntoView({behavior:'smooth',block:'start'});
+  let emoji,title,rank,rankClass,msg;
+  if(pct>=80){emoji='🎉';title='合格！すばらしい！';rank='A OK';rankClass='a';confetti();saveRank('unit12','A');msg='よく理解できています。次の単元に進みましょう！';}
+  else if(pct>=50){emoji='😊';title='もう少し！';rank='B 要復習';rankClass='b';saveRank('unit12','B');msg='もう一度単元を確認してから再挑戦しよう。';}
+  else{emoji='📖';title='復習が必要です';rank='C 何度も復習';rankClass='c';saveRank('unit12','C');msg='基礎からしっかり復習しましょう。解説をよく読もう。';}
+  document.getElementById('res-emoji').textContent=emoji;
+  document.getElementById('res-title').textContent=title;
+  document.getElementById('res-score').textContent=correct+' / '+TOTAL+' 正解（'+pct+'%）　記録：'+t;
+  const re=document.getElementById('res-rank');re.textContent=rank;re.className='result-rank '+rankClass;
+  document.getElementById('res-msg').textContent=msg;
+}
+function retryTest(){location.reload();}
+</script>
+</body>
+</html>

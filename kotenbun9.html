@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>上二段・下二段活用【演習】</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --sumi:#2d2416;--verm:#c0392b;--verm-lt:#e74c3c;
+  --gold:#b8860b;--gold-lt:#d4a017;
+  --jade:#2e7d52;--jade-lt:#43a36b;--jade-pale:#edfaf3;
+  --indigo:#1a3a5c;--indigo-lt:#2980b9;--indigo-pale:#eef4fb;
+  --paper:#faf6ef;--paper-dk:#f0e8d8;--paper-md:#e8dcc8;
+  --cream:#fdfaf4;--gray:#8a7f72;--gray-lt:#bbb0a0;
+  --shadow:rgba(90,60,20,0.13);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);font-family:'Noto Serif JP',serif;color:var(--sumi);
+  min-height:100vh;padding-bottom:80px;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;}
+/* Nav */
+.nav-bar{background:var(--sumi);border-bottom:3px solid var(--verm);
+  position:sticky;top:0;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,0.25);}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:stretch;overflow-x:auto;}
+.nav-btn{display:inline-block;padding:12px 13px;color:rgba(255,255,255,0.6);
+  text-decoration:none;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:500;
+  letter-spacing:0.03em;border-right:1px solid rgba(255,255,255,0.08);
+  transition:all 0.2s;white-space:nowrap;}
+.nav-btn:hover{color:white;background:rgba(255,255,255,0.06);}
+.nav-btn.active{color:white;background:var(--verm);}
+/* Timer */
+.timer-header{background:linear-gradient(135deg,var(--sumi),#1a1008);color:white;
+  padding:12px 28px;display:flex;justify-content:space-between;align-items:center;
+  border-bottom:2px solid var(--gold);}
+.timer-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gold-lt);
+  letter-spacing:0.15em;margin-right:8px;}
+.timer-main{font-family:'Courier New',monospace;font-size:26px;color:#ffd700;
+  font-weight:bold;text-shadow:0 0 20px rgba(255,215,0,0.4);}
+.rec-box{font-family:'Noto Sans JP',sans-serif;font-size:12px;
+  color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:10px;}
+.rec-item{display:flex;align-items:center;gap:4px;}
+.rec-n{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);
+  border-radius:3px;padding:2px 6px;font-size:11px;}
+.rec-v{color:#ffd700;font-weight:bold;font-family:monospace;}
+/* Wrapper */
+.wrapper{max-width:960px;margin:28px auto;padding:0 18px;position:relative;z-index:1;}
+/* Page header */
+.page-header{margin-bottom:26px;padding-bottom:18px;
+  border-bottom:1px solid var(--paper-md);position:relative;}
+.page-header::after{content:'';position:absolute;bottom:-1px;left:0;
+  width:80px;height:3px;background:var(--verm);}
+.breadcrumb{font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  color:var(--gray);letter-spacing:0.1em;margin-bottom:8px;}
+.page-title{font-family:'Zen Old Mincho',serif;font-size:26px;font-weight:700;
+  color:var(--sumi);letter-spacing:0.1em;}
+.page-sub{font-family:'Noto Sans JP',sans-serif;font-size:12px;
+  color:var(--gray);margin-top:5px;}
+/* Card */
+.card{background:var(--cream);border-radius:4px;border:1.5px solid var(--paper-md);
+  box-shadow:0 2px 14px var(--shadow);padding:24px 28px;margin-bottom:20px;
+  animation:cardIn 0.4s ease-out both;}
+.card:nth-child(2){animation-delay:.07s}
+.card:nth-child(3){animation-delay:.14s}
+.card:nth-child(4){animation-delay:.21s}
+.card:nth-child(5){animation-delay:.28s}
+.card:nth-child(6){animation-delay:.35s}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+/* Section head */
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;
+  padding-bottom:10px;border-bottom:1px solid var(--paper-md);}
+.sec-badge{color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;
+  font-weight:700;letter-spacing:0.12em;padding:3px 10px;border-radius:2px;}
+.sec-badge.blue{background:linear-gradient(135deg,var(--indigo),#0f2840);}
+.sec-badge.red{background:linear-gradient(135deg,var(--verm),#8b1a11);}
+.sec-badge.jade{background:linear-gradient(135deg,var(--jade-lt),#27694a);}
+.sec-badge.gold{background:linear-gradient(135deg,var(--gold),#7a5a00);}
+.sec-title{font-family:'Zen Old Mincho',serif;font-size:16px;font-weight:700;color:var(--sumi);}
+/* Desc box */
+.desc-box{background:var(--paper);border:1px solid var(--paper-md);
+  border-left:4px solid var(--indigo-lt);border-radius:0 3px 3px 0;
+  padding:14px 18px;font-size:13.5px;line-height:2;margin-bottom:16px;color:#3a3020;}
+.desc-box .verm{color:var(--verm);font-weight:700;}
+.desc-box .indigo{color:var(--indigo);font-weight:700;}
+.desc-box .jade{color:var(--jade);font-weight:700;}
+/* Point box */
+.point-box{background:rgba(26,58,92,0.04);border:1px solid rgba(26,58,92,0.14);
+  border-radius:3px;padding:12px 16px;font-family:'Noto Sans JP',sans-serif;
+  font-size:12.5px;line-height:1.9;color:var(--indigo);margin-top:10px;}
+.point-box strong{color:var(--verm);}
+/* 活用表 */
+.katsu-table{width:100%;border-collapse:collapse;font-family:'Noto Serif JP',serif;
+  font-size:13.5px;margin-bottom:14px;overflow-x:auto;}
+.katsu-table th{padding:8px 10px;text-align:center;font-family:'Noto Sans JP',sans-serif;
+  font-size:11px;letter-spacing:0.08em;font-weight:700;border:1px solid rgba(255,255,255,0.1);}
+.katsu-table th.th-gray{background:var(--sumi);color:white;}
+.katsu-table th.th-blue{background:var(--indigo);color:white;}
+.katsu-table th.th-jade{background:var(--jade);color:white;}
+.katsu-table th.th-red{background:var(--verm);color:white;}
+.katsu-table th.th-gold{background:var(--gold);color:white;}
+.katsu-table td{padding:8px 10px;border:1px solid var(--paper-md);
+  text-align:center;vertical-align:middle;background:var(--cream);}
+.katsu-table tr:nth-child(even) td{background:rgba(250,246,239,0.7);}
+.katsu-table .kana{font-family:'Zen Old Mincho',serif;font-size:15px;color:var(--sumi);}
+.katsu-table .small{font-size:11px;color:var(--gray);}
+.katsu-table .accent{color:var(--verm);font-weight:700;}
+/* Blank */
+.blank{display:inline-flex;align-items:center;justify-content:center;
+  min-width:60px;height:30px;padding:0 8px;border-radius:3px;cursor:pointer;
+  font-size:13px;letter-spacing:0.06em;font-family:'Noto Sans JP',sans-serif;
+  font-weight:700;transition:all 0.2s;white-space:nowrap;}
+.blank.initial{color:var(--verm);background:rgba(192,57,43,0.06);
+  border:1.5px dashed rgba(192,57,43,0.4);}
+.blank.challenge{background:var(--paper);border:1.5px solid var(--indigo-lt);
+  color:transparent;cursor:pointer;}
+.blank.challenge:hover{background:var(--indigo-pale);border-color:var(--indigo);}
+.blank.filled{background:var(--indigo-pale);border:1.5px solid var(--indigo-lt);color:var(--indigo);}
+.blank.correct{background:var(--jade-pale);border:2px solid var(--jade);
+  color:var(--jade);animation:pop 0.3s ease-out;}
+.blank.wrong{background:rgba(192,57,43,0.07);border:2px solid var(--verm);
+  color:var(--verm);animation:shake 0.3s ease-out;}
+@keyframes pop{0%{transform:scale(0.9)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* Word bank */
+#word-bank-fixed{position:fixed;bottom:0;left:0;width:100%;
+  background:linear-gradient(180deg,var(--cream),var(--paper-dk));
+  border-top:3px solid var(--indigo);padding:14px 0 20px;
+  z-index:9999;box-shadow:0 -8px 28px rgba(0,0,0,0.14);
+  display:none;animation:bankUp 0.3s ease-out;}
+@keyframes bankUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.bank-inner{max-width:960px;margin:0 auto;padding:0 18px;}
+.bank-head{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:11px;}
+.bank-title{font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;
+  color:var(--indigo);letter-spacing:0.15em;}
+.word-list{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;}
+.word-item{background:white;border:1.5px solid var(--indigo-lt);padding:6px 14px;
+  border-radius:3px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-weight:700;
+  font-size:13px;color:var(--indigo);transition:all 0.15s;}
+.word-item:hover:not(.used){background:var(--indigo-pale);transform:translateY(-1px);}
+.word-item.sel{background:var(--indigo);color:white;}
+.word-item.used{opacity:0.14;cursor:default;}
+/* Btn area */
+.btn-area{display:flex;justify-content:center;gap:12px;
+  margin-top:22px;padding-top:18px;border-top:1px solid var(--paper-md);flex-wrap:wrap;}
+.btn{padding:11px 26px;font-family:'Noto Sans JP',sans-serif;font-weight:700;
+  font-size:13px;letter-spacing:0.1em;border:none;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+.btn:active{transform:translateY(1px);}
+.btn-start{background:linear-gradient(135deg,var(--verm),#8b1a11);color:white;
+  box-shadow:0 3px 10px rgba(192,57,43,0.25);}
+.btn-check{background:linear-gradient(135deg,var(--jade-lt),#27694a);color:white;
+  box-shadow:0 3px 10px rgba(46,125,82,0.25);}
+.btn-kai{background:linear-gradient(135deg,var(--indigo-lt),#1a3a5c);color:white;}
+.btn-reset{background:var(--paper);color:var(--gray);border:1px solid var(--paper-md);}
+/* Kaisetsu */
+.kaisetsu{display:none;}
+.kaisetsu.show{display:block;}
+.k-list{display:flex;flex-direction:column;gap:14px;margin-top:6px;}
+.k-item{background:var(--paper);border:1px solid var(--paper-md);border-radius:4px;
+  padding:14px 18px;border-left:4px solid var(--indigo);}
+.k-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.k-num{flex-shrink:0;width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;color:white;}
+.k-word{font-family:'Zen Old Mincho',serif;font-size:18px;font-weight:700;color:var(--sumi);}
+.k-badge{color:white;font-family:'Noto Sans JP',sans-serif;font-size:11px;
+  font-weight:700;padding:2px 10px;border-radius:10px;}
+.k-body{font-family:'Noto Sans JP',sans-serif;font-size:13px;line-height:1.9;color:#3a3020;}
+.k-body strong{color:var(--indigo);}
+.k-body .verm{color:var(--verm);font-weight:700;}
+.k-pt{background:rgba(26,58,92,0.05);border-left:3px solid var(--indigo-lt);
+  padding:7px 12px;margin-top:8px;font-size:12px;color:var(--indigo);
+  font-family:'Noto Sans JP',sans-serif;line-height:1.8;border-radius:0 3px 3px 0;}
+/* Toast */
+.toast{position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0.85);background:var(--sumi);color:white;
+  padding:14px 30px;border-radius:8px;font-family:'Zen Old Mincho',serif;font-size:19px;
+  z-index:99999;opacity:0;pointer-events:none;transition:all 0.25s;
+  box-shadow:0 8px 30px rgba(0,0,0,0.4);border:2px solid var(--gold);}
+.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.toast.ok{border-color:var(--jade);}
+/* Score */
+.score-badge{display:inline-flex;align-items:center;gap:6px;
+  background:rgba(67,163,107,0.09);border:1.5px solid var(--jade);border-radius:3px;
+  padding:7px 16px;font-family:'Noto Sans JP',sans-serif;font-size:13px;
+  color:var(--jade);font-weight:700;margin-top:14px;}
+/* Unit nav */
+#koten-unit-nav{display:flex;justify-content:center;align-items:center;gap:10px;
+  padding:12px 18px;background:var(--sumi);border-top:2px solid var(--gold);
+  position:fixed;bottom:0;left:0;width:100%;z-index:500;flex-wrap:wrap;}
+.kun-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:3px;
+  font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-decoration:none;border:none;}
+.kun-btn.prev{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);
+  border:1px solid rgba(255,255,255,0.2);}
+.kun-btn.prev:hover{background:rgba(255,255,255,0.18);color:white;}
+.kun-btn.idx{background:var(--gold);color:white;}
+.kun-btn.idx:hover{background:var(--gold-lt);}
+.kun-btn.nxt{background:var(--verm);color:white;}
+.kun-btn.nxt:hover{background:var(--verm-lt);}
+.kun-btn.test{background:var(--indigo-lt);color:white;}
+.kun-btn.test:hover{background:var(--indigo);}
+/* Confetti */
+.cfw{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden;}
+.cp{position:absolute;top:-12px;animation:cf linear forwards;}
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+</style>
+</head><body>
+<nav class="nav-bar"><div class="nav-inner">
+  <a href="index.html" class="nav-btn">単元一覧</a>
+  <a href="kotenbun7.html" class="nav-btn">UNIT9 四段</a>
+  <a href="kotenbun8.html" class="nav-btn">UNIT10 上一・下一段</a>
+  <a href="kotenbun9.html" class="nav-btn active">UNIT11 上二・下二段</a>
+  <a href="kotenbun10.html" class="nav-btn">UNIT12 変格活用</a>
+  <a href="kotenbun11.html" class="nav-btn">UNIT13 自動詞・他動詞</a>
+</div></nav>
+<div class="timer-header">
+  <div style="display:flex;align-items:center;">
+    <span class="timer-label">TIME</span>
+    <span class="timer-main" id="timer">00:00.0</span>
+  </div>
+  <div class="rec-box">
+    <span class="rec-item"><span class="rec-n">1回目</span><span class="rec-v" id="r1">―</span></span>
+    <span class="rec-item"><span class="rec-n">2回目</span><span class="rec-v" id="r2">―</span></span>
+    <span class="rec-item"><span class="rec-n">3回目</span><span class="rec-v" id="r3">―</span></span>
+  </div>
+</div>
+<div class="wrapper">
+<div class="page-header">
+  <div class="breadcrumb">古典文法 › 第１章 動詞 › UNIT 11</div>
+  <h1 class="page-title">上二段活用・下二段活用</h1>
+  <p class="page-sub">上二段（イ・ウ段）と下二段（ウ・エ段）の活用表と識別</p>
+</div>
+
+<!-- 上二段 解説 -->
+<div class="card">
+  <div class="sec-head"><span class="sec-badge blue">KAISETSU 1</span><span class="sec-title">上二段活用</span></div>
+  <div class="desc-box">
+    活用語尾が <span class="verm">イ段とウ段の２段</span>で変化するものを<span class="verm">上二段活用</span>といいます。<br>
+    「ズ」をつけると <span class="verm">イ段（〜iず）</span> になります。<br><br>
+    代表語：<strong>起く・過ぐ・落つ・恨む・老ゆ</strong> など多数。<br>
+    「起きず」→ イ段 → 上一段か上二段 → 「起く」は終止形がu段 → <span class="verm">上二段</span>
+  </div>
+  <div style="overflow-x:auto;">
+  <table class="katsu-table" style="min-width:680px;">
+    <thead>
+      <tr>
+        <th class="th-gray">基本形</th><th class="th-gray">語幹</th>
+        <th class="th-blue">未然</th><th class="th-blue">連用</th>
+        <th class="th-gold">終止</th><th class="th-gold">連体</th>
+        <th class="th-jade">已然</th><th class="th-red">命令</th>
+        <th class="th-gray">活用行</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="kana">起く</td><td class="kana">起</td>
+        <td class="kana accent">き</td><td class="kana accent">き</td>
+        <td class="kana">く</td><td class="kana">くる</td>
+        <td class="kana accent">くれ</td><td class="kana accent">きよ</td>
+        <td class="small">カ行</td></tr>
+      <tr><td class="kana">過ぐ</td><td class="kana">過</td>
+        <td class="kana accent">ぎ</td><td class="kana accent">ぎ</td>
+        <td class="kana">ぐ</td><td class="kana">ぐる</td>
+        <td class="kana accent">ぐれ</td><td class="kana accent">ぎよ</td>
+        <td class="small">ガ行</td></tr>
+      <tr><td class="kana">落つ</td><td class="kana">落</td>
+        <td class="kana accent">ち</td><td class="kana accent">ち</td>
+        <td class="kana">つ</td><td class="kana">つる</td>
+        <td class="kana accent">つれ</td><td class="kana accent">ちよ</td>
+        <td class="small">タ行</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="point-box">
+    💡 上二段の特徴：<strong>未然形＝連用形（同形）</strong>、連体形に「る」が付く（「くる・ぐる」）。<br>
+    音の変化：i・i・u・u<strong>る</strong>・u<strong>れ</strong>・i<strong>よ</strong>（イ段とウ段の２段）<br>
+    「ズをつけてイ段」→「終止形でウ段」→ 上二段と確認！
+  </div>
+</div>
+
+<!-- 下二段 解説 -->
+<div class="card">
+  <div class="sec-head"><span class="sec-badge gold">KAISETSU 2</span><span class="sec-title">下二段活用</span></div>
+  <div class="desc-box">
+    活用語尾が <span class="verm">ウ段とエ段の２段</span>で変化するものを<span class="verm">下二段活用</span>といいます。<br>
+    「ズ」をつけると <span class="verm">エ段（〜eず）</span> になります。<br><br>
+    代表語：<strong>受く・出づ・変ふ・得（う）・寝（ぬ）・経（ふ）</strong> など多数。<br>
+    ※得・心得はア行下二段、老ゆ・悔ゆはヤ行上二段、植う・飢うはワ行下二段に注意！
+  </div>
+  <div style="overflow-x:auto;">
+  <table class="katsu-table" style="min-width:680px;">
+    <thead>
+      <tr>
+        <th class="th-gray">基本形</th><th class="th-gray">語幹</th>
+        <th class="th-blue">未然</th><th class="th-blue">連用</th>
+        <th class="th-gold">終止</th><th class="th-gold">連体</th>
+        <th class="th-jade">已然</th><th class="th-red">命令</th>
+        <th class="th-gray">活用行</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="kana">受く</td><td class="kana">受</td>
+        <td class="kana accent">け</td><td class="kana accent">け</td>
+        <td class="kana">く</td><td class="kana">くる</td>
+        <td class="kana accent">くれ</td><td class="kana accent">けよ</td>
+        <td class="small">カ行</td></tr>
+      <tr><td class="kana">得（う）</td><td class="kana">×</td>
+        <td class="kana accent">え</td><td class="kana accent">え</td>
+        <td class="kana">う</td><td class="kana">うる</td>
+        <td class="kana accent">うれ</td><td class="kana accent">えよ</td>
+        <td class="small">ア行</td></tr>
+      <tr><td class="kana">寝（ぬ）</td><td class="kana">×</td>
+        <td class="kana accent">ね</td><td class="kana accent">ね</td>
+        <td class="kana">ぬ</td><td class="kana">ぬる</td>
+        <td class="kana accent">ぬれ</td><td class="kana accent">ねよ</td>
+        <td class="small">ナ行</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="point-box">
+    💡 下二段の特徴：<strong>未然形＝連用形（同形）</strong>、連体形に「る」が付く（「くる・うる」）。<br>
+    音の変化：e・e・u・u<strong>る</strong>・u<strong>れ</strong>・e<strong>よ</strong>（ウ段とエ段の２段）<br>
+    「終止形が一字」の動詞（得・寝・経）に注意！ 語幹なし（×）で活用語尾全体が変化する。
+  </div>
+</div>
+
+<!-- 問題 -->
+<div class="card">
+  <div class="sec-head"><span class="sec-badge red">MONDAI</span><span class="sec-title">活用表を完成させよ</span></div>
+  <div class="desc-box" style="font-size:12.5px;">【問】空欄に活用語尾を語群から入れなさい。</div>
+  <div style="overflow-x:auto;">
+  <table class="katsu-table" style="min-width:680px;">
+    <thead>
+      <tr>
+        <th class="th-gray">基本形</th><th class="th-gray">語幹</th>
+        <th class="th-blue">未然</th><th class="th-blue">連用</th>
+        <th class="th-gold">終止</th><th class="th-gold">連体</th>
+        <th class="th-jade">已然</th><th class="th-red">命令</th>
+        <th class="th-gray">活用の種類</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="kana">恨む</td><td class="kana">恨</td>
+        <td><span class="blank initial" data-ans="み">み</span></td>
+        <td><span class="blank initial" data-ans="み">み</span></td>
+        <td class="kana">む</td>
+        <td><span class="blank initial" data-ans="むる">むる</span></td>
+        <td><span class="blank initial" data-ans="むれ">むれ</span></td>
+        <td><span class="blank initial" data-ans="みよ">みよ</span></td>
+        <td><span class="blank initial" data-ans="マ行上二段活用">マ行上二段活用</span></td>
+      </tr>
+      <tr>
+        <td class="kana">変ふ</td><td class="kana">変</td>
+        <td><span class="blank initial" data-ans="へ">へ</span></td>
+        <td><span class="blank initial" data-ans="へ">へ</span></td>
+        <td class="kana">ふ</td>
+        <td><span class="blank initial" data-ans="ふる">ふる</span></td>
+        <td><span class="blank initial" data-ans="ふれ">ふれ</span></td>
+        <td><span class="blank initial" data-ans="へよ">へよ</span></td>
+        <td><span class="blank initial" data-ans="ハ行下二段活用">ハ行下二段活用</span></td>
+      </tr>
+      <tr>
+        <td class="kana">経（ふ）</td><td class="kana">×</td>
+        <td><span class="blank initial" data-ans="へ">へ</span></td>
+        <td><span class="blank initial" data-ans="へ">へ</span></td>
+        <td class="kana">ふ</td>
+        <td><span class="blank initial" data-ans="ふる">ふる</span></td>
+        <td><span class="blank initial" data-ans="ふれ">ふれ</span></td>
+        <td><span class="blank initial" data-ans="へよ">へよ</span></td>
+        <td><span class="blank initial" data-ans="ハ行下二段活用">ハ行下二段活用</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div id="score-area"></div>
+  <div class="btn-area">
+    <button class="btn btn-start" onclick="startChallenge()">▶ チャレンジ開始</button>
+    <button class="btn btn-check" onclick="checkResult()">✓ 判定する</button>
+    <button class="btn btn-reset" onclick="location.reload()">↺ リセット</button>
+  </div>
+</div>
+</div>
+<div id="koten-unit-nav">
+  <a class="kun-btn prev" href="kotenbun8.html">◀ UNIT10 上一・下一段</a>
+  <a class="kun-btn idx" href="index.html">☰ 単元一覧</a>
+  <a class="kun-btn test" href="test_kotenbun8.html">📝 テストを受ける</a>
+  <a class="kun-btn nxt" href="kotenbun10.html">UNIT12 変格活用 ▶</a>
+</div>
+<div id="word-bank-fixed"><div class="bank-inner">
+  <div class="bank-head"><span class="bank-title">【 語 群 】</span></div>
+  <div id="word-list" class="word-list"></div>
+</div></div>
+<div class="cfw" id="cfw"></div><div class="toast" id="toast"></div>
+
+<script>
+let _st=null,_ti=null,_records=[];
+function startTimer(){
+  clearInterval(_ti);_st=Date.now();
+  _ti=setInterval(()=>{
+    const d=(Date.now()-_st)/1000;
+    const m=Math.floor(d/60).toString().padStart(2,'0');
+    const s=(d%60).toFixed(1).padStart(4,'0');
+    document.getElementById('timer').textContent=m+':'+s;
+  },100);
+}
+function stopTimer(){
+  clearInterval(_ti);
+  const t=document.getElementById('timer').textContent;
+  _records.push(t);
+  ['r1','r2','r3'].forEach((id,i)=>{if(_records[i])document.getElementById(id).textContent=_records[i];});
+  return t;
+}
+function showToast(msg,ok=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast'+(ok?' ok':'');
+  requestAnimationFrame(()=>{t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1100);});
+}
+function confetti(){
+  const w=document.getElementById('cfw');w.innerHTML='';
+  const cols=['#c0392b','#b8860b','#2e7d52','#1a3a5c','#ffd700','#e74c3c','#43a36b'];
+  for(let i=0;i<90;i++){
+    const p=document.createElement('div');p.className='cp';
+    const sz=(Math.random()*8+5)+'px';
+    p.style.cssText='left:'+Math.random()*100+'%;width:'+sz+';height:'+sz+
+      ';background:'+cols[i%cols.length]+';border-radius:'+(Math.random()>.5?'50%':'2px')+
+      ';animation-duration:'+(Math.random()*1.5+1)+'s;animation-delay:'+(Math.random()*.4)+'s;opacity:1;';
+    w.appendChild(p);
+  }
+  setTimeout(()=>w.innerHTML='',3500);
+}
+function saveRank(unit,rank){
+  try{const r=JSON.parse(localStorage.getItem('kotenbun_ranks')||'{}');
+  r[unit]=rank;localStorage.setItem('kotenbun_ranks',JSON.stringify(r));}catch(e){}
+}
+
+// ── 空欄補充共通 ──
+let _sel=null,_challenging=false,_startedTimer=false,_records2=[];
+function startChallenge(){
+  _challenging=true;_startedTimer=false;
+  const blanks=document.querySelectorAll('.blank');
+  const wl=document.getElementById('word-list');
+  const bank=document.getElementById('word-bank-fixed');
+  wl.innerHTML='';bank.style.display='block';
+  const counts={};
+  blanks.forEach(b=>{const a=b.dataset.ans;counts[a]=(counts[a]||0)+1;});
+  const words=[];
+  Object.keys(counts).forEach(w=>{for(let i=0;i<counts[w];i++)words.push(w);});
+  words.sort(()=>Math.random()-0.5);
+  blanks.forEach(b=>{
+    b.textContent='';b.classList.remove('initial','filled','correct','wrong');
+    b.classList.add('challenge');
+    b.onclick=function(){
+      if(!_challenging)return;
+      if(this.textContent!==''){
+        const txt=this.textContent;
+        document.querySelectorAll('.word-item').forEach(it=>{if(it.dataset.val===txt&&it.classList.contains('used'))it.classList.remove('used');});
+        this.textContent='';this.classList.remove('filled');
+      }
+      if(_sel){this.textContent=_sel.dataset.val;this.classList.add('filled');
+        _sel.classList.add('used');_sel.classList.remove('sel');_sel=null;}
+    };
+  });
+  words.forEach(w=>{
+    const item=document.createElement('div');item.className='word-item';
+    item.textContent=w;item.dataset.val=w;
+    item.onclick=function(e){
+      e.stopPropagation();if(this.classList.contains('used'))return;
+      document.querySelectorAll('.word-item').forEach(el=>el.classList.remove('sel'));
+      _sel=this;this.classList.add('sel');
+    };
+    wl.appendChild(item);
+  });
+  if(!_startedTimer){_startedTimer=true;startTimer();}
+  window.scrollTo({top:0,behavior:'smooth'});
+  showToast('チャレンジ開始！');
+}
+function checkResult(){
+  if(!_challenging){showToast('チャレンジを開始してください');return;}
+  let ok=0,total=0;
+  document.querySelectorAll('.blank').forEach(b=>{
+    total++;
+    if(b.textContent.trim()===b.dataset.ans){b.classList.add('correct');b.classList.remove('filled','wrong');ok++;}
+    else if(b.textContent!==''){b.classList.add('wrong');b.classList.remove('filled','correct');}
+  });
+  const sa=document.getElementById('score-area');
+  if(sa)sa.innerHTML='<div class="score-badge">✓ '+ok+' / '+total+' 正解</div>';
+  if(ok===total){
+    const t=stopTimer();_challenging=false;
+    _records2.push(t);updateRec2();
+    document.getElementById('word-bank-fixed').style.display='none';
+    confetti();showToast('🎉 全問正解！ '+t,'ok');
+  }else{showToast(ok+'/'+total+' 正解。赤い空欄を確認して');}
+}
+function updateRec2(){
+  if(_records2[0])document.getElementById('r1').textContent=_records2[0];
+  if(_records2[1])document.getElementById('r2').textContent=_records2[1];
+  if(_records2[2])document.getElementById('r3').textContent=_records2[2];
+}
+function toggleKai(id){
+  const el=document.getElementById(id);
+  if(el.classList.contains('show'))el.classList.remove('show');
+  else{el.classList.add('show');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),100);}
+}
+document.addEventListener('click',e=>{
+  if(!e.target.classList.contains('word-item')&&!e.target.classList.contains('blank')){
+    document.querySelectorAll('.word-item').forEach(el=>el.classList.remove('sel'));_sel=null;
+  }
+});
+</script>
+</body></html>

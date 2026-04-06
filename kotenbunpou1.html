@@ -2,223 +2,813 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>歴史的仮名遣い：基礎・ルール編（完全版）</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歴史的仮名遣い：基礎・ルール編</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --main-red: #d32f2f;
-            --sub-blue: #0070c0;
-            --bg-color: #fdfaf5;
-            --ans-bg: #fffde7;
+            --ink: #1a1008;
+            --sumi: #2d2416;
+            --vermilion: #c0392b;
+            --vermilion-light: #e74c3c;
+            --gold: #b8860b;
+            --gold-light: #d4a017;
+            --jade: #2e7d52;
+            --jade-light: #43a36b;
+            --indigo: #1a3a5c;
+            --indigo-light: #2980b9;
+            --paper: #faf6ef;
+            --paper-dark: #f0e8d8;
+            --paper-mid: #e8dcc8;
+            --cream: #fdfaf4;
+            --gray-soft: #8a7f72;
+            --shadow-warm: rgba(90,60,20,0.12);
         }
-        body { 
-            background-color: var(--bg-color); 
-            font-family: "Hiragino Sans", "Meiryo", sans-serif; 
-            margin: 0; padding: 0;
-            padding-bottom: 350px; 
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--paper);
+            font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+            color: var(--ink);
+            min-height: 100vh;
+            padding-bottom: 300px;
+            position: relative;
+            overflow-x: hidden;
         }
-        /* タイマーヘッダー */
-        .timer-header { 
-            background: #333; color: white; padding: 12px 25px; 
-            display: flex; justify-content: space-between; align-items: center; 
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: -100px; right: -150px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(192,57,43,0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: var(--sumi);
+            border-bottom: 3px solid var(--vermilion);
             position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
         }
-        .timer-main { font-size: 26px; color: #ffeb3b; font-family: monospace; font-weight: bold; }
-        .records-box { font-size: 14px; }
-        .reset-btn { background: #666; color: white; border: 1px solid #999; padding: 5px 12px; border-radius: 4px; cursor: pointer; margin-left: 15px; }
+        .nav-inner {
+            max-width: 1000px; margin: 0 auto;
+            display: flex; align-items: stretch;
+        }
+        .nav-btn {
+            display: inline-block;
+            padding: 13px 20px;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 13px; font-weight: 500; letter-spacing: 0.05em;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.2s;
+            position: relative;
+        }
+        .nav-btn:hover { color: white; background: rgba(255,255,255,0.06); }
+        .nav-btn.active { color: white; background: var(--vermilion); }
+        .nav-btn.active::after {
+            content: ''; position: absolute;
+            bottom: -3px; left: 0; right: 0;
+            height: 3px; background: var(--vermilion-light);
+        }
 
-        .wrapper { max-width: 950px; margin: 20px auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        
-        h1 { border-left: 10px solid var(--main-red); padding-left: 15px; font-size: 22px; color: #333; margin-bottom: 20px; }
-        h2 { background: #f5f5f5; padding: 10px 15px; border-left: 5px solid #666; font-size: 18px; margin-top: 40px; }
+        /* Timer */
+        .timer-header {
+            background: linear-gradient(135deg, var(--sumi) 0%, #1a1008 100%);
+            color: white; padding: 14px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid var(--gold);
+        }
+        .timer-left { display: flex; align-items: center; }
+        .timer-label {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 11px; color: var(--gold-light);
+            letter-spacing: 0.15em; margin-right: 8px;
+        }
+        .timer-main {
+            font-family: 'Courier New', monospace;
+            font-size: 28px; color: #ffd700; font-weight: bold;
+            letter-spacing: 0.05em;
+            text-shadow: 0 0 20px rgba(255,215,0,0.4);
+        }
+        .records-box {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 13px; color: rgba(255,255,255,0.65);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .record-item { display: flex; align-items: center; gap: 4px; }
+        .record-num {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 3px; padding: 2px 7px; font-size: 12px;
+        }
+        .record-val { color: #ffd700; font-weight: bold; font-family: monospace; }
+        .reset-btn {
+            background: transparent; color: rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 6px 14px; border-radius: 4px; cursor: pointer;
+            font-family: 'Noto Sans JP', sans-serif; font-size: 12px;
+            letter-spacing: 0.05em; transition: all 0.2s;
+        }
+        .reset-btn:hover { border-color: var(--vermilion); color: var(--vermilion-light); }
 
-        /* 空欄デザイン */
-        .blank { display: inline-block; min-width: 60px; height: 1.5em; border-bottom: 2px solid #666; margin: 0 3px; text-align: center; vertical-align: bottom; cursor: pointer; }
-        .blank.initial { color: var(--main-red); font-weight: bold; border-bottom: none; }
-        .blank.challenge { background-color: var(--ans-bg); border-bottom: 2px solid var(--sub-blue); }
-        .blank.filled { color: var(--sub-blue); font-weight: bold; }
-        .blank.correct { color: #4caf50; border-bottom: 3px solid #4caf50; }
+        /* Wrapper */
+        .wrapper {
+            max-width: 1000px; margin: 35px auto;
+            padding: 0 20px;
+            position: relative; z-index: 1;
+        }
 
-        /* 補足（漢字・意味・発音）デザイン */
-        .supplement { color: #666; transition: opacity 0.3s; font-size: 0.9em; }
-        .hidden { opacity: 0; visibility: hidden; }
+        /* Page Header */
+        .page-header {
+            margin-bottom: 40px; padding-bottom: 25px;
+            border-bottom: 1px solid var(--paper-mid);
+            position: relative;
+        }
+        .page-header::after {
+            content: ''; position: absolute;
+            bottom: -1px; left: 0; width: 80px; height: 3px;
+            background: var(--vermilion);
+        }
+        .breadcrumb {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12px; color: var(--gray-soft);
+            letter-spacing: 0.1em; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .breadcrumb-sep { color: var(--paper-mid); }
+        .page-title {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 30px; font-weight: 700;
+            color: var(--sumi); letter-spacing: 0.08em;
+        }
+        .page-subtitle {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 13px; color: var(--gray-soft);
+            margin-top: 8px; letter-spacing: 0.12em;
+        }
 
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95em; }
-        th, td { border: 1px solid #ccc; padding: 12px; text-align: left; line-height: 1.6; }
-        th { background: #eee; width: 25%; }
+        /* Section Cards */
+        .section-card {
+            background: var(--cream);
+            border-radius: 4px; margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px var(--shadow-warm), 0 1px 4px rgba(0,0,0,0.06);
+            border: 1px solid var(--paper-mid);
+            animation: cardIn 0.5s ease-out both;
+        }
+        .section-card:nth-child(1) { animation-delay: 0.05s; }
+        .section-card:nth-child(2) { animation-delay: 0.12s; }
+        .section-card:nth-child(3) { animation-delay: 0.19s; }
+        .section-card:nth-child(4) { animation-delay: 0.26s; }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
 
-        /* 固定語群エリア */
+        .section-head {
+            background: linear-gradient(90deg, var(--indigo) 0%, #1e4a70 100%);
+            padding: 16px 28px;
+            display: flex; align-items: center; gap: 14px;
+        }
+        .section-badge {
+            background: var(--vermilion); color: white;
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 12px; font-weight: 700;
+            padding: 4px 10px; border-radius: 2px;
+            letter-spacing: 0.08em; white-space: nowrap; flex-shrink: 0;
+        }
+        .section-title {
+            color: white;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 16px; font-weight: 600; letter-spacing: 0.06em;
+        }
+        .section-body { padding: 28px 35px; }
+
+        /* Intro paragraph */
+        .intro-para {
+            font-size: 15px; line-height: 2.2;
+            color: var(--sumi); letter-spacing: 0.04em;
+        }
+        .keyword {
+            color: var(--vermilion); font-weight: 700;
+            font-family: 'Zen Old Mincho', serif;
+            border-bottom: 1px dotted var(--vermilion);
+        }
+
+        /* Blanks */
+        .blank {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 52px; height: 30px; padding: 0 8px;
+            border-bottom: 2px solid var(--paper-mid);
+            cursor: pointer; font-size: 15px;
+            letter-spacing: 0.04em; vertical-align: middle;
+            transition: all 0.2s; border-radius: 2px 2px 0 0;
+        }
+        .blank.initial {
+            color: var(--vermilion); font-weight: 700;
+            border-bottom: none;
+            font-family: 'Zen Old Mincho', serif; font-size: 16px;
+        }
+        /* wider blanks for longer answers */
+        .blank.wide { min-width: 90px; }
+        .blank.xwide { min-width: 120px; }
+
+        .blank.challenge {
+            background: var(--paper);
+            border: 1px solid var(--indigo-light);
+            border-radius: 4px; cursor: pointer;
+            min-width: 60px; height: 32px;
+            font-family: 'Noto Sans JP', sans-serif; font-size: 13px;
+        }
+        .blank.challenge.wide  { min-width: 90px; }
+        .blank.challenge.xwide { min-width: 120px; }
+        .blank.challenge:hover { background: rgba(41,128,185,0.06); border-color: var(--indigo); }
+        .blank.filled {
+            background: rgba(41,128,185,0.08);
+            border-color: var(--indigo);
+            color: var(--indigo); font-weight: 700;
+        }
+        .blank.correct {
+            background: rgba(67,163,107,0.1);
+            border: 2px solid var(--jade);
+            color: var(--jade); font-weight: 700;
+            animation: correctPop 0.3s ease-out;
+        }
+        @keyframes correctPop {
+            0%   { transform: scale(0.95); }
+            60%  { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .supplement {
+            color: var(--gray-soft);
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12px; transition: opacity 0.3s, visibility 0.3s;
+        }
+        .supplement.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        /* Rules Table — shared style */
+        .rules-table {
+            width: 100%; border-collapse: collapse;
+            font-size: 14px; margin: 0;
+        }
+        .rules-table thead tr {
+            background: linear-gradient(90deg, var(--sumi), #3a2e1e);
+        }
+        .rules-table thead th {
+            color: rgba(255,255,255,0.82);
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 11px; font-weight: 500;
+            letter-spacing: 0.12em; padding: 12px 18px;
+            text-align: left; border: none;
+        }
+        .rules-table thead th:first-child { border-left: 3px solid var(--vermilion); }
+        .rules-table tbody tr {
+            border-bottom: 1px solid var(--paper-mid);
+            transition: background 0.15s;
+        }
+        .rules-table tbody tr:hover { background: rgba(255,250,240,0.85); }
+        .rules-table tbody tr:last-child { border-bottom: none; }
+        .rules-table tbody tr:nth-child(even) { background: rgba(240,232,216,0.22); }
+        .rules-table tbody tr:nth-child(even):hover { background: rgba(255,250,240,0.85); }
+        .rules-table td {
+            padding: 14px 18px; vertical-align: middle;
+            line-height: 2.2; border: none;
+            border-right: 1px solid var(--paper-mid);
+        }
+        .rules-table td:last-child { border-right: none; }
+
+        .col-rule {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 13px; color: #3a2e1e;
+            width: 28%;
+        }
+        .col-rule small {
+            display: block; margin-top: 4px;
+            color: var(--gray-soft); font-size: 11px; line-height: 1.6;
+        }
+        .col-read {
+            font-family: 'Noto Serif JP', serif;
+            width: 20%; font-size: 15px;
+            letter-spacing: 0.06em;
+        }
+        .col-ex {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 14px; line-height: 2.4;
+        }
+        .ex-arrow { color: var(--gold); margin: 0 4px; font-size: 12px; }
+
+        /* Long vowel table — 4 cols */
+        .col-sym {
+            width: 6%; font-family: 'Noto Sans JP', sans-serif;
+            font-size: 13px; color: var(--gray-soft);
+            text-align: center; font-weight: 700;
+        }
+        .col-pat {
+            width: 20%; font-family: 'Zen Old Mincho', serif;
+            font-size: 16px; letter-spacing: 0.08em;
+        }
+        .col-lon { width: 16%; }
+        .col-ex2 { font-family: 'Noto Serif JP', serif; font-size: 14px; line-height: 2.4; }
+
+        /* Phoneme grid for rule (1) */
+        .phoneme-grid {
+            display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+        }
+        .ph-item {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 4px;
+        }
+        .ph-old {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 18px; color: var(--gray-soft);
+            padding: 4px 10px;
+            background: var(--paper); border: 1px solid var(--paper-mid);
+            border-radius: 3px; min-width: 38px; text-align: center;
+        }
+        .ph-arrow { font-size: 10px; color: var(--gold); }
+        .ph-new {
+            min-width: 38px; text-align: center;
+        }
+        .ph-sep {
+            color: var(--paper-mid); font-size: 20px;
+            align-self: center; margin: 0 2px;
+        }
+
+        /* Buttons */
+        .btn-area {
+            display: flex; justify-content: center; gap: 16px;
+            margin-top: 40px; padding-top: 30px;
+            border-top: 1px solid var(--paper-mid);
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 13px 32px;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 700; font-size: 14px; letter-spacing: 0.1em;
+            border: none; border-radius: 3px; cursor: pointer;
+            transition: all 0.2s; position: relative; overflow: hidden;
+        }
+        .btn::after {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(255,255,255,0.1);
+            opacity: 0; transition: opacity 0.2s;
+        }
+        .btn:hover::after { opacity: 1; }
+        .btn:active { transform: translateY(1px); }
+        .btn-start {
+            background: linear-gradient(135deg, var(--vermilion), #a93226);
+            color: white; box-shadow: 0 3px 12px rgba(192,57,43,0.35);
+        }
+        .btn-check {
+            background: linear-gradient(135deg, var(--jade-light), #27694a);
+            color: white; box-shadow: 0 3px 12px rgba(46,125,82,0.35);
+        }
+        .btn-reset {
+            background: var(--paper); color: var(--gray-soft);
+            border: 1px solid var(--paper-mid);
+        }
+        .btn-reset:hover { border-color: var(--gray-soft); color: var(--sumi); }
+
+        /* Word Bank */
         #word-bank-fixed {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: white; border-top: 4px solid var(--main-red);
-            padding: 15px 0 30px 0; z-index: 9999;
-            box-shadow: 0 -10px 20px rgba(0,0,0,0.15);
+            background: linear-gradient(180deg, var(--cream) 0%, var(--paper-dark) 100%);
+            border-top: 3px solid var(--indigo);
+            padding: 18px 0 28px; z-index: 9999;
+            box-shadow: 0 -8px 30px rgba(0,0,0,0.15);
             display: none;
+            animation: bankUp 0.3s ease-out;
         }
-        .bank-inner { max-width: 950px; margin: 0 auto; padding: 0 20px; }
-        .bank-title { font-weight: bold; color: var(--main-red); margin-bottom: 12px; text-align: center; }
+        @keyframes bankUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+        .bank-inner { max-width: 1000px; margin: 0 auto; padding: 0 25px; }
+        .bank-header {
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; margin-bottom: 14px;
+        }
+        .bank-title {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12px; font-weight: 700;
+            color: var(--indigo); letter-spacing: 0.15em;
+        }
+        .bank-hint {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 11px; color: var(--gray-soft);
+        }
         .word-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-        .word-item { background: #fff; border: 2px solid var(--main-red); padding: 5px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; color: var(--main-red); font-size: 14px; }
-        .word-item.selected { background: var(--main-red); color: white; }
-        .word-item.used { opacity: 0.1; cursor: default; }
+        .word-item {
+            background: white; border: 1.5px solid var(--indigo-light);
+            padding: 7px 16px; border-radius: 3px; cursor: pointer;
+            font-family: 'Noto Sans JP', sans-serif; font-weight: 700;
+            font-size: 14px; color: var(--indigo); letter-spacing: 0.04em;
+            transition: all 0.15s; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .word-item:hover:not(.used) {
+            background: rgba(41,128,185,0.08); border-color: var(--indigo);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(41,128,185,0.2);
+        }
+        .word-item.selected {
+            background: var(--indigo); color: white; border-color: var(--indigo);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26,58,92,0.35);
+        }
+        .word-item.used { opacity: 0.12; cursor: default; }
 
-        .btn-area { text-align: center; margin-top: 30px; }
-        .btn { padding: 12px 30px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; color: white; margin: 0 10px; font-size: 16px; }
+        /* Toast */
+        .toast {
+            position: fixed; top: 120px; left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: var(--sumi); color: white;
+            padding: 14px 28px; border-radius: 4px;
+            font-family: 'Noto Sans JP', sans-serif; font-size: 14px;
+            z-index: 99999; opacity: 0; pointer-events: none;
+            transition: all 0.3s;
+            border-left: 4px solid var(--vermilion); white-space: nowrap;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.success { border-left-color: var(--jade); }
+
+        .correct-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(67,163,107,0.08);
+            z-index: 99998; pointer-events: none;
+            animation: flashGreen 1s ease-out forwards;
+        }
+        @keyframes flashGreen { 0% { opacity: 1; } 100% { opacity: 0; } }
     </style>
 </head>
 <body>
-<div style="background: #eee; padding: 10px; text-align: center; border-bottom: 1px solid #ccc;">
-    <a href="kotenbunpou1.html" style="text-decoration: none;"><button style="padding: 8px 15px; margin: 0 5px; cursor: pointer; background: #607d8b; color: white; border: none; border-radius: 4px; font-weight: bold;">歴史的仮名遣い</button></a>
-    <a href="kotenbunpou1-1.html" style="text-decoration: none;"><button style="padding: 8px 15px; margin: 0 5px; cursor: pointer; background: #0070c0; color: white; border: none; border-radius: 4px; font-weight: bold;">演習問題</button></a>
-    <a href="kotenbunpou1-2.html" style="text-decoration: none;"><button style="padding: 8px 15px; margin: 0 5px; cursor: pointer; background: #d32f2f; color: white; border: none; border-radius: 4px; font-weight: bold;">いろは歌【演習】</button></a>
-    <a href="kotenbunpou1-3.html" style="text-decoration: none;"><button style="padding: 8px 15px; margin: 0 5px; cursor: pointer; background: #4caf50; color: white; border: none; border-radius: 4px; font-weight: bold;">五十音図【演習】</button></a>
-</div>
+
+<nav class="nav-bar">
+    <div class="nav-inner">
+        <a href="kotenbunpou1.html" class="nav-btn active">歴史的仮名遣い</a>
+        <a href="kotenbunpou1-1.html" class="nav-btn">演習問題</a>
+        <a href="kotenbunpou1-2.html" class="nav-btn">いろは歌【演習】</a>
+        <a href="kotenbunpou1-3.html" class="nav-btn">五十音図【演習】</a>
+    </div>
+</nav>
+
 <div class="timer-header">
-    <div class="timer-main">TIME: <span id="timer">00:00.0</span></div>
+    <div class="timer-left">
+        <span class="timer-label">TIME</span>
+        <span class="timer-main" id="timer">00:00.0</span>
+    </div>
     <div class="records-box">
-        1回目 <span id="r1">●</span>秒 ／ 2回目 <span id="r2">●</span>秒 ／ 3回目 <span id="r3">●</span>秒
-        <button class="reset-btn" onclick="location.reload()">リセット</button>
+        <span class="record-item"><span class="record-num">1回目</span><span class="record-val" id="r1">―</span></span>
+        <span class="record-item"><span class="record-num">2回目</span><span class="record-val" id="r2">―</span></span>
+        <span class="record-item"><span class="record-num">3回目</span><span class="record-val" id="r3">―</span></span>
+        <button class="reset-btn" onclick="location.reload()">↺ リセット</button>
     </div>
 </div>
 
 <div class="wrapper">
-    <h1>1. 歴史的仮名遣い</h1>
-    <p>
-        現代文と古文との違いの一つに仮名遣いがあります。現代文に使われている仮名遣いを「現代仮名遣（づか）い」といい、古文に使われている仮名遣いを「<span class="blank initial" data-ans="歴史的仮名遣い">歴史的仮名遣い</span>」といいます。歴史的仮名遣いは、「<span class="blank initial" data-ans="平安">平安</span>」時代中期ごろに実際に発音されていた形が基本になっています。
-    </p>
 
-    <h2>2. 歴史的仮名遣いの読み方　8つの決まり</h2>
-    <table>
-        <tr>
-            <th>決まりの内容</th>
-            <th>読み方</th>
-            <th>【例】</th>
-        </tr>
-        <tr>
-            <td>(1) 単語の最初を除いた「は・ひ・ふ・へ・ほ」</td>
-            <td>
-                <span class="blank initial" data-ans="わ">わ</span>・<span class="blank initial" data-ans="い">い</span>・<span class="blank initial" data-ans="う">う</span>・<span class="blank initial" data-ans="え">え</span>・<span class="blank initial" data-ans="お">お</span>
-            </td>
-            <td>
-                <span class="supplement">(匂い)</span> にほひ → に<span class="blank initial" data-ans="お">お</span>い<br>
-                <span class="supplement">(会ひて)</span> あひて → あ<span class="blank initial" data-ans="い">い</span>て
-            </td>
-        </tr>
-        <tr>
-            <td>(2) ワ行の「ゐ・ゑ・を」<br><span class="supplement">発音は「ウィ(wi)・ウェ(we)・ウォ(wo)」</span></td>
-            <td>
-                <span class="blank initial" data-ans="い">い</span>・<span class="blank initial" data-ans="え">え</span>・<span class="blank initial" data-ans="お">お</span>
-            </td>
-            <td>
-                <span class="supplement">(田舎)</span> ゐなか → <span class="blank initial" data-ans="い">い</span>なか、<span class="supplement">(井戸)</span> ゐど → <span class="blank initial" data-ans="い">い</span>ど<br>
-                <span class="supplement">(声)</span> こゑ → こ<span class="blank initial" data-ans="え">え</span>、<span class="supplement">(笑む)</span> ゑむ → <span class="blank initial" data-ans="え">え</span>む<br>
-                <span class="supplement">(趣深い)</span> をかし → <span class="blank initial" data-ans="お">お</span>かし、<span class="supplement">(男)</span> をとこ → <span class="blank initial" data-ans="お">お</span>とこ
-            </td>
-        </tr>
-        <tr>
-            <td>(3) 語中の「む」、助動詞「む」「らむ」「けむ」、助詞の「なむ」</td>
-            <td><span class="blank initial" data-ans="ん">ん</span></td>
-            <td><span class="supplement">(女)</span> をむな → お<span class="blank initial" data-ans="ん">ん</span>な</td>
-        </tr>
-        <tr>
-            <td>(4) 「ぢ・づ」は</td>
-            <td><span class="blank initial" data-ans="じ">じ</span>・<span class="blank initial" data-ans="ず">ず</span></td>
-            <td>
-                <span class="supplement">(万)</span> よろづ → よろ<span class="blank initial" data-ans="ず">ず</span>、<span class="supplement">(汝)</span> なんぢ → なん<span class="blank initial" data-ans="じ">じ</span>
-            </td>
-        </tr>
-        <tr>
-            <td>(5) 「くわ・ぐわ」は</td>
-            <td><span class="blank initial" data-ans="か">か</span>・<span class="blank initial" data-ans="が">が</span></td>
-            <td>
-                <span class="supplement">(菓子)</span> くわし → <span class="blank initial" data-ans="か">か</span>し、<span class="supplement">(火事)</span> くわじ → <span class="blank initial" data-ans="か">か</span>じ<br>
-                <span class="supplement">(元日)</span> ぐわんじつ → <span class="blank initial" data-ans="が">が</span>んじつ、<span class="supplement">(念願)</span> ねんぐわん → ねん<span class="blank initial" data-ans="が">が</span>ん
-            </td>
-        </tr>
-    </table>
+    <div class="page-header">
+        <div class="breadcrumb">
+            <span>古典文法</span>
+            <span class="breadcrumb-sep">›</span>
+            <span style="color: var(--vermilion);">歴史的仮名遣い</span>
+        </div>
+        <h1 class="page-title">歴史的仮名遣い</h1>
+        <p class="page-subtitle">Historical Kana Orthography ／ 基礎・ルール編（完全版）</p>
+    </div>
 
-    <h2>3. 長音の決まり (6)(7)</h2>
-    <table>
-        <tr>
-            <th>記号</th>
-            <th>変化のパターン</th>
-            <th>読み方</th>
-            <th>【例】</th>
-        </tr>
-        <tr>
-            <td>&lt;1&gt;</td>
-            <td>au (あう)</td>
-            <td><span class="blank initial" data-ans="おう">おう</span></td>
-            <td><span class="supplement">(更衣)</span> かうい → <span class="blank initial" data-ans="こうい">こうい</span>、<span class="supplement">(漸く)</span> やうやう → <span class="blank initial" data-ans="ようよう">ようよう</span></td>
-        </tr>
-        <tr>
-            <td>&lt;2&gt;</td>
-            <td>iu (いう)</td>
-            <td><span class="blank initial" data-ans="ゆう">ゆう</span></td>
-            <td><span class="supplement">(秀句)</span> しうく → <span class="blank initial" data-ans="しゅうく">しゅうく</span>、<span class="supplement">(優なり)</span> いうなり → <span class="blank initial" data-ans="ゆうなり">ゆうなり</span></td>
-        </tr>
-        <tr>
-            <td>&lt;3&gt;</td>
-            <td>eu (えう)</td>
-            <td><span class="blank initial" data-ans="よう">よう</span></td>
-            <td><span class="supplement">(調子)</span> てうし → <span class="blank initial" data-ans="ちょうし">ちょうし</span>、<span class="supplement">(今日)</span> けふ → <span class="blank initial" data-ans="きょう">きょう</span></td>
-        </tr>
-        <tr>
-            <td>&lt;4&gt;</td>
-            <td>ou (おう)</td>
-            <td><span class="blank initial" data-ans="おう">おう</span></td>
-            <td><span class="supplement">(嫗)</span> おうな → <span class="blank initial" data-ans="おうな">おうな</span>、<span class="supplement">(尊し)</span> たふとし → <span class="blank initial" data-ans="とうとし">とうとし</span></td>
-        </tr>
-    </table>
+    <!-- 1. 概要 -->
+    <div class="section-card">
+        <div class="section-head">
+            <span class="section-badge">１</span>
+            <span class="section-title">歴史的仮名遣いとは</span>
+        </div>
+        <div class="section-body">
+            <p class="intro-para">
+                現代文と古文との違いの一つに仮名遣いがあります。現代文に使われている仮名遣いを「現代仮名遣（づか）い」といい、古文に使われている仮名遣いを「<span class="blank initial xwide" data-ans="歴史的仮名遣い">歴史的仮名遣い</span>」といいます。歴史的仮名遣いは、「<span class="blank initial wide" data-ans="平安">平安</span>」時代中期ごろに実際に発音されていた形が基本になっています。
+            </p>
+        </div>
+    </div>
+
+    <!-- 2. 8つの決まり (1)〜(5) -->
+    <div class="section-card">
+        <div class="section-head">
+            <span class="section-badge">２</span>
+            <span class="section-title">歴史的仮名遣いの読み方　―　8つの決まり（前半）</span>
+        </div>
+        <div class="section-body" style="padding: 0;">
+            <table class="rules-table">
+                <thead>
+                    <tr>
+                        <th style="width:28%">決まりの内容</th>
+                        <th style="width:22%">読み方</th>
+                        <th>【例】</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rule 1 -->
+                    <tr>
+                        <td class="col-rule">
+                            (1) 単語の最初を除いた<br>「は・ひ・ふ・へ・ほ」
+                        </td>
+                        <td class="col-read">
+                            <div class="phoneme-grid">
+                                <div class="ph-item">
+                                    <span class="ph-old">は</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="わ">わ</span>
+                                </div>
+                                <span class="ph-sep">・</span>
+                                <div class="ph-item">
+                                    <span class="ph-old">ひ</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="い">い</span>
+                                </div>
+                                <span class="ph-sep">・</span>
+                                <div class="ph-item">
+                                    <span class="ph-old">ふ</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="う">う</span>
+                                </div>
+                                <span class="ph-sep">・</span>
+                                <div class="ph-item">
+                                    <span class="ph-old">へ</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="え">え</span>
+                                </div>
+                                <span class="ph-sep">・</span>
+                                <div class="ph-item">
+                                    <span class="ph-old">ほ</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="お">お</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-ex">
+                            <span class="supplement">（匂い）</span>
+                            にほひ<span class="ex-arrow">→</span>に<span class="blank initial" data-ans="お">お</span>い<br>
+                            <span class="supplement">（会ひて）</span>
+                            あひて<span class="ex-arrow">→</span>あ<span class="blank initial" data-ans="い">い</span>て
+                        </td>
+                    </tr>
+                    <!-- Rule 2 -->
+                    <tr>
+                        <td class="col-rule">
+                            (2) ワ行の「ゐ・ゑ・を」
+                            <small>発音は「ウィ(wi)・ウェ(we)・ウォ(wo)」</small>
+                        </td>
+                        <td class="col-read">
+                            <div class="phoneme-grid">
+                                <div class="ph-item">
+                                    <span class="ph-old">ゐ</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="い">い</span>
+                                </div>
+                                <span class="ph-sep">・</span>
+                                <div class="ph-item">
+                                    <span class="ph-old">ゑ</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="え">え</span>
+                                </div>
+                                <span class="ph-sep">・</span>
+                                <div class="ph-item">
+                                    <span class="ph-old">を</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="お">お</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-ex">
+                            <span class="supplement">（田舎）</span> ゐなか<span class="ex-arrow">→</span><span class="blank initial" data-ans="い">い</span>なか　
+                            <span class="supplement">（井戸）</span> ゐど<span class="ex-arrow">→</span><span class="blank initial" data-ans="い">い</span>ど<br>
+                            <span class="supplement">（声）</span> こゑ<span class="ex-arrow">→</span>こ<span class="blank initial" data-ans="え">え</span>　
+                            <span class="supplement">（笑む）</span> ゑむ<span class="ex-arrow">→</span><span class="blank initial" data-ans="え">え</span>む<br>
+                            <span class="supplement">（趣深い）</span> をかし<span class="ex-arrow">→</span><span class="blank initial" data-ans="お">お</span>かし　
+                            <span class="supplement">（男）</span> をとこ<span class="ex-arrow">→</span><span class="blank initial" data-ans="お">お</span>とこ
+                        </td>
+                    </tr>
+                    <!-- Rule 3 -->
+                    <tr>
+                        <td class="col-rule">
+                            (3) 語中の「む」、助動詞「む」「らむ」「けむ」、助詞の「なむ」
+                        </td>
+                        <td class="col-read">
+                            <div class="phoneme-grid">
+                                <div class="ph-item">
+                                    <span class="ph-old">む</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="ん">ん</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-ex">
+                            <span class="supplement">（女）</span>
+                            をむな<span class="ex-arrow">→</span>お<span class="blank initial" data-ans="ん">ん</span>な
+                        </td>
+                    </tr>
+                    <!-- Rule 4 -->
+                    <tr>
+                        <td class="col-rule">(4) 「ぢ・づ」は</td>
+                        <td class="col-read">
+                            <div class="phoneme-grid">
+                                <div class="ph-item">
+                                    <span class="ph-old">ぢ</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="じ">じ</span>
+                                </div>
+                                <span class="ph-sep">・</span>
+                                <div class="ph-item">
+                                    <span class="ph-old">づ</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="ず">ず</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-ex">
+                            <span class="supplement">（万）</span> よろづ<span class="ex-arrow">→</span>よろ<span class="blank initial" data-ans="ず">ず</span><br>
+                            <span class="supplement">（汝）</span> なんぢ<span class="ex-arrow">→</span>なん<span class="blank initial" data-ans="じ">じ</span>
+                        </td>
+                    </tr>
+                    <!-- Rule 5 -->
+                    <tr>
+                        <td class="col-rule">(5) 「くわ・ぐわ」は</td>
+                        <td class="col-read">
+                            <div class="phoneme-grid">
+                                <div class="ph-item">
+                                    <span class="ph-old" style="font-size:14px">くわ</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="か">か</span>
+                                </div>
+                                <span class="ph-sep">・</span>
+                                <div class="ph-item">
+                                    <span class="ph-old" style="font-size:14px">ぐわ</span>
+                                    <span class="ph-arrow">↓</span>
+                                    <span class="blank initial ph-new" data-ans="が">が</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-ex">
+                            <span class="supplement">（菓子）</span> くわし<span class="ex-arrow">→</span><span class="blank initial" data-ans="か">か</span>し　
+                            <span class="supplement">（火事）</span> くわじ<span class="ex-arrow">→</span><span class="blank initial" data-ans="か">か</span>じ<br>
+                            <span class="supplement">（元日）</span> ぐわんじつ<span class="ex-arrow">→</span><span class="blank initial" data-ans="が">が</span>んじつ　
+                            <span class="supplement">（念願）</span> ねんぐわん<span class="ex-arrow">→</span>ねん<span class="blank initial" data-ans="が">が</span>ん
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 3. 長音 (6)(7) -->
+    <div class="section-card">
+        <div class="section-head">
+            <span class="section-badge">３</span>
+            <span class="section-title">長音の決まり　(6)(7) ― 母音の連続</span>
+        </div>
+        <div class="section-body" style="padding: 0;">
+            <table class="rules-table">
+                <thead>
+                    <tr>
+                        <th class="col-sym">#</th>
+                        <th style="width:20%">変化のパターン</th>
+                        <th style="width:18%">読み方</th>
+                        <th>【例】</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-sym" style="text-align:center; font-size:13px; color:var(--gray-soft);">&lt;1&gt;</td>
+                        <td class="col-pat">au（あう）</td>
+                        <td class="col-lon">
+                            <span class="blank initial wide" data-ans="おう">おう</span>
+                        </td>
+                        <td class="col-ex2">
+                            <span class="supplement">（更衣）</span> かうい<span class="ex-arrow">→</span><span class="blank initial wide" data-ans="こうい">こうい</span>　
+                            <span class="supplement">（漸く）</span> やうやう<span class="ex-arrow">→</span><span class="blank initial xwide" data-ans="ようよう">ようよう</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-sym" style="text-align:center; font-size:13px; color:var(--gray-soft);">&lt;2&gt;</td>
+                        <td class="col-pat">iu（いう）</td>
+                        <td class="col-lon">
+                            <span class="blank initial wide" data-ans="ゆう">ゆう</span>
+                        </td>
+                        <td class="col-ex2">
+                            <span class="supplement">（秀句）</span> しうく<span class="ex-arrow">→</span><span class="blank initial xwide" data-ans="しゅうく">しゅうく</span>　
+                            <span class="supplement">（優なり）</span> いうなり<span class="ex-arrow">→</span><span class="blank initial xwide" data-ans="ゆうなり">ゆうなり</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-sym" style="text-align:center; font-size:13px; color:var(--gray-soft);">&lt;3&gt;</td>
+                        <td class="col-pat">eu（えう）</td>
+                        <td class="col-lon">
+                            <span class="blank initial wide" data-ans="よう">よう</span>
+                        </td>
+                        <td class="col-ex2">
+                            <span class="supplement">（調子）</span> てうし<span class="ex-arrow">→</span><span class="blank initial xwide" data-ans="ちょうし">ちょうし</span>　
+                            <span class="supplement">（今日）</span> けふ<span class="ex-arrow">→</span><span class="blank initial wide" data-ans="きょう">きょう</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-sym" style="text-align:center; font-size:13px; color:var(--gray-soft);">&lt;4&gt;</td>
+                        <td class="col-pat">ou（おう）</td>
+                        <td class="col-lon">
+                            <span class="blank initial wide" data-ans="おう">おう</span>
+                        </td>
+                        <td class="col-ex2">
+                            <span class="supplement">（嫗）</span> おうな<span class="ex-arrow">→</span><span class="blank initial wide" data-ans="おうな">おうな</span>　
+                            <span class="supplement">（尊し）</span> たふとし<span class="ex-arrow">→</span><span class="blank initial xwide" data-ans="とうとし">とうとし</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <div class="btn-area">
-        <button class="btn" style="background: #e91e63;" onclick="startChallenge()">チャレンジ開始！</button>
-        <button class="btn" style="background: #4caf50;" onclick="checkResult()">判定</button>
-        <button class="btn" style="background: #9e9e9e;" onclick="location.reload()">初期表示</button>
+        <button class="btn btn-start" onclick="startChallenge()">▶ チャレンジ開始</button>
+        <button class="btn btn-check" onclick="checkResult()">✓ 判定する</button>
+        <button class="btn btn-reset" onclick="location.reload()">↺ 初期表示に戻す</button>
     </div>
+
 </div>
 
 <div id="word-bank-fixed">
     <div class="bank-inner">
-        <div class="bank-title">【 語 群 】（クリックして選択し、上の空欄に入れてください）</div>
+        <div class="bank-header">
+            <span class="bank-title">【 語 群 】</span>
+            <span class="bank-hint">クリックして選択し、空欄に入れてください</span>
+        </div>
         <div id="word-list" class="word-list"></div>
     </div>
 </div>
 
+<div class="toast" id="toast"></div>
+<div class="correct-overlay" id="correct-overlay"></div>
+
 <script>
     let startTime, timerInterval, selectedWordItem = null;
     let records = [];
+    let isChallenging = false;
+
+    function showToast(msg, type = '') {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast ' + type;
+        requestAnimationFrame(() => {
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2400);
+        });
+    }
 
     function startChallenge() {
+        isChallenging = true;
         const blanks = document.querySelectorAll('.blank');
         const supplements = document.querySelectorAll('.supplement');
         const bankContainer = document.getElementById('word-bank-fixed');
         const wordList = document.getElementById('word-list');
-        
+
         let answers = [];
         wordList.innerHTML = '';
         bankContainer.style.display = 'block';
 
-        // 補足（漢字・発音説明）を消す
         supplements.forEach(s => s.classList.add('hidden'));
 
-        // 空欄化
         blanks.forEach(b => {
-            answers.push(b.getAttribute('data-ans'));
+            answers.push(b.getAttribute('data-ans').trim());
             b.innerText = '';
-            b.classList.remove('initial');
+            // preserve wide/xwide class
+            const isWide = b.classList.contains('wide');
+            const isXWide = b.classList.contains('xwide');
+            b.classList.remove('initial', 'filled', 'correct');
             b.classList.add('challenge');
-            b.classList.remove('filled', 'correct');
+            if (isWide)  b.classList.add('wide');
+            if (isXWide) b.classList.add('xwide');
 
-            b.onclick = function() {
+            b.onclick = function () {
+                if (!isChallenging) return;
                 if (this.innerText !== '') {
-                    const currentText = this.innerText;
-                    const usedItems = document.querySelectorAll('.word-item.used');
-                    for (let item of usedItems) {
-                        if (item.innerText === currentText) {
-                            item.classList.remove('used');
-                            break;
-                        }
-                    }
+                    const txt = this.innerText;
+                    document.querySelectorAll('.word-item.used').forEach(item => {
+                        if (item.innerText === txt) item.classList.remove('used');
+                    });
+                    this.innerText = '';
+                    this.classList.remove('filled');
                 }
                 if (selectedWordItem) {
                     this.innerText = selectedWordItem.innerText;
@@ -226,19 +816,15 @@
                     selectedWordItem.classList.add('used');
                     selectedWordItem.classList.remove('selected');
                     selectedWordItem = null;
-                } else {
-                    this.innerText = '';
-                    this.classList.remove('filled');
                 }
             };
         });
 
-        // 語群シャッフル
-        answers.sort(() => Math.random() - 0.5).forEach(val => {
+        [...answers].sort(() => Math.random() - 0.5).forEach(val => {
             const item = document.createElement('div');
             item.className = 'word-item';
             item.innerText = val;
-            item.onclick = function(e) {
+            item.onclick = function (e) {
                 e.stopPropagation();
                 if (this.classList.contains('used')) return;
                 document.querySelectorAll('.word-item').forEach(el => el.classList.remove('selected'));
@@ -248,38 +834,94 @@
             wordList.appendChild(item);
         });
 
-        // タイマー開始
+        clearInterval(timerInterval);
         startTime = Date.now();
         timerInterval = setInterval(() => {
             const diff = (Date.now() - startTime) / 1000;
-            document.getElementById('timer').innerText = diff.toFixed(1).padStart(6, '0');
+            const min = Math.floor(diff / 60).toString().padStart(2, '0');
+            const sec = (diff % 60).toFixed(1).padStart(4, '0');
+            document.getElementById('timer').innerText = min + ':' + sec;
         }, 100);
-        window.scrollTo(0,0);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast('チャレンジ開始！全問埋めて判定ボタンを押してください');
     }
 
     function checkResult() {
+        if (!isChallenging) { showToast('まずチャレンジを開始してください'); return; }
         let allCorrect = true;
         document.querySelectorAll('.blank').forEach(b => {
-            if (b.innerText === b.getAttribute('data-ans')) {
+            if (b.innerText.trim() === b.getAttribute('data-ans').trim()) {
                 b.classList.add('correct');
+                b.classList.remove('filled');
             } else {
+                b.classList.remove('correct');
                 allCorrect = false;
             }
         });
-        if (allCorrect && document.querySelectorAll('.challenge').length > 0) {
+
+        if (allCorrect) {
             clearInterval(timerInterval);
+            isChallenging = false;
             const score = document.getElementById('timer').innerText;
             records.push(score);
             updateRecords();
-            alert("全問正解です！ 記録: " + score + "秒");
+            document.getElementById('word-bank-fixed').style.display = 'none';
+            const overlay = document.getElementById('correct-overlay');
+            overlay.style.display = 'block';
+            overlay.style.animation = 'none';
+            requestAnimationFrame(() => {
+                overlay.style.animation = 'flashGreen 1s ease-out forwards';
+                setTimeout(() => overlay.style.display = 'none', 1000);
+            });
+            showToast('🎉 全問正解！記録：' + score + '秒', 'success');
+        } else {
+            showToast('間違いや空欄があります。確認してください');
         }
     }
 
     function updateRecords() {
-        if(records[0]) document.getElementById('r1').innerText = records[0];
-        if(records[1]) document.getElementById('r2').innerText = records[1];
-        if(records[2]) document.getElementById('r3').innerText = records[2];
+        if (records[0]) document.getElementById('r1').innerText = records[0];
+        if (records[1]) document.getElementById('r2').innerText = records[1];
+        if (records[2]) document.getElementById('r3').innerText = records[2];
     }
+
+    document.addEventListener('click', e => {
+        if (!e.target.classList.contains('word-item') && !e.target.classList.contains('blank')) {
+            document.querySelectorAll('.word-item').forEach(el => el.classList.remove('selected'));
+            selectedWordItem = null;
+        }
+    });
 </script>
+
+
+<style>
+#koten-unit-nav{
+  display:flex;justify-content:center;align-items:center;gap:10px;
+  padding:12px 18px;background:#2d2416;border-top:2px solid #b8860b;
+  position:sticky;bottom:0;z-index:500;flex-wrap:wrap;
+}
+.kun-btn{
+  display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:3px;
+  font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-decoration:none;border:none;
+}
+.kun-btn.prev{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.2);}
+.kun-btn.prev:hover{background:rgba(255,255,255,0.18);color:white;}
+.kun-btn.idx{background:#b8860b;color:white;}
+.kun-btn.idx:hover{background:#d4a017;}
+.kun-btn.nxt{background:#c0392b;color:white;}
+.kun-btn.nxt:hover{background:#e74c3c;}
+.kun-btn.test{background:#2980b9;color:white;}
+.kun-btn.test:hover{background:#3a9bd5;}
+</style>
+
+<div id="koten-unit-nav">
+  <a class="kun-btn prev" href="index.html">◀ 単元一覧</a>
+  <a class="kun-btn idx" href="index.html">☰ 単元一覧</a>
+  <a class="kun-btn test" href="test_kotenbun1.html">📝 テストを受ける</a>
+  <a class="kun-btn nxt" href="kotenbunpou1-2.html">UNIT2 いろは歌 ▶</a>
+</div>
+
 </body>
 </html>
