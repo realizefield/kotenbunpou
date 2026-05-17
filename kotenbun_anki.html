@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>助動詞の接続　暗記法チャレンジ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--sumi:#2d2416;--verm:#c0392b;--verm-lt:#e74c3c;--gold:#b8860b;--gold-lt:#d4a017;--jade:#2e7d52;--jade-lt:#43a36b;--jade-pale:#edfaf3;--indigo:#1a3a5c;--indigo-lt:#2980b9;--indigo-pale:#eef4fb;--paper:#faf6ef;--paper-dk:#f0e8d8;--paper-md:#e8dcc8;--cream:#fdfaf4;--gray:#8a7f72;--gray-lt:#bbb0a0;--shadow:rgba(90,60,20,0.13);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);font-family:'Noto Serif JP',serif;color:var(--sumi);min-height:100vh;padding-bottom:80px;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+.nav-bar{background:var(--sumi);border-bottom:3px solid var(--gold);position:sticky;top:0;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,0.25);}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:stretch;overflow-x:auto;}
+.nav-btn{display:inline-block;padding:12px 13px;color:rgba(255,255,255,0.6);text-decoration:none;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.03em;border-right:1px solid rgba(255,255,255,0.08);transition:all 0.2s;white-space:nowrap;}
+.nav-btn:hover{color:white;background:rgba(255,255,255,0.06);}.nav-btn.active{color:white;background:var(--gold);}
+.timer-header{background:linear-gradient(135deg,#1a1008,#2d1a04);color:white;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--gold);}
+.timer-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gold-lt);letter-spacing:0.15em;margin-right:8px;}
+.timer-main{font-family:'Courier New',monospace;font-size:26px;color:#ffd700;font-weight:bold;text-shadow:0 0 16px rgba(255,215,0,0.4);}
+.rec-box{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:10px;}
+.rec-item{display:flex;align-items:center;gap:4px;}
+.rec-n{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:3px;padding:2px 6px;font-size:11px;}
+.rec-v{color:#ffd700;font-weight:bold;font-family:monospace;}
+.wrapper{max-width:960px;margin:28px auto;padding:0 18px;position:relative;z-index:1;}
+.page-header{margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid var(--paper-md);position:relative;}
+.page-header::after{content:'';position:absolute;bottom:-1px;left:0;width:80px;height:3px;background:var(--gold);}
+.breadcrumb{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gray);letter-spacing:0.1em;margin-bottom:8px;}
+.page-title{font-family:'Zen Old Mincho',serif;font-size:26px;font-weight:700;color:var(--sumi);letter-spacing:0.1em;}
+.page-sub{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:var(--gray);margin-top:5px;line-height:1.7;}
+.card{background:var(--cream);border-radius:4px;border:1.5px solid var(--paper-md);box-shadow:0 2px 14px var(--shadow);padding:24px 28px;margin-bottom:22px;animation:cardIn 0.4s ease-out both;}
+.card:nth-child(2){animation-delay:.06s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.18s}.card:nth-child(5){animation-delay:.24s}.card:nth-child(6){animation-delay:.30s}.card:nth-child(7){animation-delay:.36s}.card:nth-child(8){animation-delay:.42s}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--paper-md);}
+.sec-badge{color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;padding:3px 10px;border-radius:2px;}
+.sec-badge.gold{background:linear-gradient(135deg,var(--gold),#7a5a00);}
+.sec-badge.red{background:linear-gradient(135deg,var(--verm),#8b1a11);}
+.sec-badge.blue{background:linear-gradient(135deg,var(--indigo),#0f2840);}
+.sec-badge.jade{background:linear-gradient(135deg,var(--jade-lt),#27694a);}
+.sec-title{font-family:'Zen Old Mincho',serif;font-size:16px;font-weight:700;color:var(--sumi);}
+.desc-box{background:var(--paper);border:1px solid var(--paper-md);border-left:4px solid var(--gold);border-radius:0 3px 3px 0;padding:16px 20px;font-size:14px;line-height:2.2;margin-bottom:16px;color:#3a3020;}
+.desc-box .verm{color:var(--verm);font-weight:700;}
+.desc-box .indigo{color:var(--indigo);font-weight:700;}
+.desc-box .gold{color:var(--gold);font-weight:700;}
+/* 語呂ボックス */
+.goryo-box{background:linear-gradient(135deg,rgba(184,134,11,0.06),rgba(184,134,11,0.02));border:2px solid var(--gold);border-radius:6px;padding:20px 24px;margin:12px 0;font-family:'Noto Sans JP',sans-serif;}
+.goryo-title{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:0.15em;margin-bottom:10px;}
+.goryo-phrase{font-family:'Zen Old Mincho',serif;font-size:17px;color:var(--sumi);line-height:1.9;margin-bottom:8px;}
+.goryo-story{font-size:12.5px;color:#7a5500;line-height:1.9;border-top:1px dashed rgba(184,134,11,0.3);padding-top:8px;margin-top:4px;}
+.goryo-words{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.goryo-word{background:white;border:1.5px solid var(--gold);padding:4px 12px;border-radius:20px;font-family:'Zen Old Mincho',serif;font-size:14px;color:var(--sumi);}
+/* 空欄 */
+.blank{display:inline-flex;align-items:center;justify-content:center;min-width:60px;height:30px;padding:0 8px;border-radius:3px;cursor:pointer;font-size:13px;font-family:'Noto Sans JP',sans-serif;font-weight:700;transition:all 0.2s;white-space:nowrap;}
+.blank.initial{color:var(--verm);background:rgba(192,57,43,0.06);border:1.5px dashed rgba(192,57,43,0.4);}
+.blank.challenge{background:var(--paper);border:1.5px solid var(--gold);color:transparent;}
+.blank.challenge:hover{background:rgba(184,134,11,0.08);}
+.blank.filled{background:rgba(184,134,11,0.08);border:1.5px solid var(--gold);color:#5a3a00;}
+.blank.correct{background:var(--jade-pale);border:2px solid var(--jade);color:var(--jade);animation:pop 0.3s ease-out;}
+.blank.wrong{background:rgba(192,57,43,0.07);border:2px solid var(--verm);color:var(--verm);animation:shake 0.3s ease-out;}
+@keyframes pop{0%{transform:scale(0.9)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.score-badge{display:inline-block;padding:8px 20px;border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;background:rgba(184,134,11,0.08);border:1.5px solid var(--gold);color:#5a3a00;margin-top:8px;}
+/* 語群バンク */
+#word-bank-fixed{position:fixed;bottom:0;left:0;width:100%;background:linear-gradient(180deg,var(--cream),var(--paper-dk));border-top:3px solid var(--gold);padding:14px 0 20px;z-index:9999;box-shadow:0 -8px 28px rgba(0,0,0,0.14);display:none;animation:bankUp 0.3s ease-out;}
+@keyframes bankUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.bank-inner{max-width:960px;margin:0 auto;padding:0 18px;}
+.bank-head{display:flex;align-items:center;justify-content:center;margin-bottom:11px;}
+.bank-title{font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:var(--gold);letter-spacing:0.15em;}
+.word-list{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;}
+.word-item{background:white;border:1.5px solid var(--gold);padding:6px 14px;border-radius:20px;cursor:pointer;font-family:'Zen Old Mincho',serif;font-size:13px;color:var(--sumi);transition:all 0.15s;}
+.word-item:hover:not(.used){background:rgba(184,134,11,0.08);transform:translateY(-1px);}
+.word-item.sel{background:var(--gold);color:white;}.word-item.used{opacity:0.14;cursor:default;}
+/* ボタン */
+.btn-area{display:flex;justify-content:center;gap:12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--paper-md);flex-wrap:wrap;}
+.btn{padding:11px 26px;font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.1em;border:none;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+.btn:active{transform:translateY(1px);}
+.btn-start{background:linear-gradient(135deg,var(--gold),#7a5a00);color:white;}
+.btn-check{background:linear-gradient(135deg,var(--jade-lt),#27694a);color:white;}
+.btn-reset{background:var(--paper-dk);color:var(--sumi);border:1.5px solid var(--paper-md);}
+.btn:hover{filter:brightness(1.08);}
+/* トースト */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--sumi);color:white;padding:10px 22px;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;opacity:0;transition:all 0.3s;pointer-events:none;z-index:10000;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}.toast.ok{background:var(--jade);}
+.cfw{position:fixed;inset:0;pointer-events:none;z-index:9998;overflow:hidden;}
+.cp{position:absolute;top:-10px;animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+#koten-unit-nav{display:flex;justify-content:center;align-items:center;gap:8px;padding:12px 18px;background:var(--sumi);border-top:2px solid var(--gold);position:sticky;bottom:0;z-index:500;flex-wrap:wrap;}
+.kun-btn{display:inline-flex;align-items:center;gap:5px;padding:9px 18px;border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-decoration:none;border:none;}
+.kun-btn.prev{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.2);}
+.kun-btn.prev:hover{background:rgba(255,255,255,0.18);}
+.kun-btn.idx{background:var(--gold);color:white;}.kun-btn.idx:hover{background:var(--gold-lt);}
+.kun-btn.nxt{background:var(--verm);color:white;}.kun-btn.nxt:hover{background:var(--verm-lt);}
+/* 接続マップ */
+.setsu-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.setsu-label{background:var(--sumi);color:white;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;padding:4px 12px;border-radius:3px;white-space:nowrap;}
+.setsu-words{display:flex;flex-wrap:wrap;gap:5px;}
+.setsu-word{font-family:'Zen Old Mincho',serif;font-size:14px;background:var(--paper);border:1px solid var(--paper-md);padding:3px 10px;border-radius:3px;}
+</style>
+</head>
+<body>
+<nav class="nav-bar"><div class="nav-inner">
+  <a class="nav-btn" href="index.html">☰ 一覧</a>
+  <a class="nav-btn" href="kotenbun14.html">き・けり</a>
+  <a class="nav-btn" href="kotenbun15.html">つ・ぬ・たり・り</a>
+  <a class="nav-btn" href="kotenbun16.html">る・らる</a>
+  <a class="nav-btn" href="kotenbun17.html">ず・む</a>
+  <a class="nav-btn" href="kotenbun18.html">べし・まじ</a>
+  <a class="nav-btn" href="kotenbun19.html">なり・ごとし</a>
+  <a class="nav-btn" href="kotenbun20.html">まし・まほし</a>
+  <a class="nav-btn active" href="kotenbun_anki.html">📝 暗記法チャレンジ</a>
+</div></nav>
+<div class="timer-header">
+  <div style="display:flex;align-items:baseline;gap:6px;">
+    <span class="timer-label">ELAPSED</span><span class="timer-main" id="timer">00:00.0</span>
+  </div>
+  <div class="rec-box">
+    <span class="rec-item"><span class="rec-n">1st</span><span class="rec-v" id="r1">--:--.-</span></span>
+    <span class="rec-item"><span class="rec-n">2nd</span><span class="rec-v" id="r2">--:--.-</span></span>
+    <span class="rec-item"><span class="rec-n">3rd</span><span class="rec-v" id="r3">--:--.-</span></span>
+  </div>
+</div>
+<div class="wrapper">
+  <div class="page-header">
+    <div class="breadcrumb">古典文法 › 第３章 助動詞 › 接続の暗記法チャレンジ</div>
+    <div class="page-title">助動詞の接続　暗記法チャレンジ</div>
+    <div class="page-sub">テキストの語呂合わせで、すべての接続をまとめて覚えましょう。空欄を語群から選んで埋めてください。</div>
+  </div>
+
+  <!-- 接続マップ概観 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge gold">全体像</span><span class="sec-title">接続の全体マップ</span></div>
+    <div class="desc-box">
+      助動詞の接続は4種類です。まず全体像をつかんでから、語呂合わせで細部を覚えましょう。
+    </div>
+    <div style="margin-top:4px;">
+      <div class="setsu-row">
+        <span class="setsu-label">未然形</span>
+        <div class="setsu-words">
+          <span class="setsu-word">む</span><span class="setsu-word">ず</span><span class="setsu-word">むず</span><span class="setsu-word">す</span><span class="setsu-word">る</span><span class="setsu-word">じ</span><span class="setsu-word">さす</span><span class="setsu-word">しむ</span><span class="setsu-word">らる</span><span class="setsu-word">まし</span><span class="setsu-word">まほし</span>
+        </div>
+      </div>
+      <div class="setsu-row">
+        <span class="setsu-label">連用形</span>
+        <div class="setsu-words">
+          <span class="setsu-word">けり</span><span class="setsu-word">つ</span><span class="setsu-word">き</span><span class="setsu-word">たり</span><span class="setsu-word">ぬ</span><span class="setsu-word">けむ</span><span class="setsu-word">たし</span>
+        </div>
+      </div>
+      <div class="setsu-row">
+        <span class="setsu-label" style="background:var(--jade);">特殊「り」</span>
+        <div class="setsu-words">
+          <span class="setsu-word">サ変の未然形</span><span class="setsu-word">四段の已然形</span>
+        </div>
+      </div>
+      <div class="setsu-row">
+        <span class="setsu-label" style="background:var(--indigo);">終止形</span>
+        <div class="setsu-words">
+          <span class="setsu-word">めり</span><span class="setsu-word">まじ</span><span class="setsu-word">なり（伝聞）</span><span class="setsu-word">らむ</span><span class="setsu-word">らし</span><span class="setsu-word">べし</span><span style="font-size:11px;color:var(--gray);align-self:center;">※ラ変は連体形</span>
+        </div>
+      </div>
+      <div class="setsu-row">
+        <span class="setsu-label" style="background:var(--verm);">体言・連体形</span>
+        <div class="setsu-words">
+          <span class="setsu-word">ごとし</span><span class="setsu-word">なり（断定）</span><span class="setsu-word">たり（断定）</span><span style="font-size:11px;color:var(--gray);align-self:center;">※たりは体言のみ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 未然形チャレンジ -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge gold">語呂①</span><span class="sec-title">未然形接続の暗記法</span></div>
+    <div class="goryo-box">
+      <div class="goryo-title">📖 テキストの語呂合わせ</div>
+      <div class="goryo-phrase">〔む〕〔ず〕〔むず〕と する〔じ〕、〔さす〕と〔しむ〕、さす〔らる〕と〔まし〕、未然に防が〔まほし〕</div>
+      <div class="goryo-story">意味）痔（じ）がムズムズとする（む・ず・むず）。さすとしみるが（さす・しむ）、さすらるとまし（らる・まし）。やっぱり未然に防いだほうがよいなぁ（まほし）</div>
+    </div>
+    <div class="desc-box" style="margin-top:12px;">
+      語呂合わせを声に出して読んだら、空欄に助動詞を入れましょう。「する（＝す）」「じ」「さす」「しむ」「らる（＝る）」の位置に注目してください。
+    </div>
+    <div id="sec-mizen">
+      <p style="font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--sumi);line-height:2.4;margin-bottom:12px;">
+        未然形接続の助動詞：
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="む">む</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="ず">ず</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="むず">むず</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="す">す</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="る">る</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="じ">じ</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="さす">さす</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="しむ">しむ</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="らる">らる</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="まし">まし</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="まほし">まほし</span></span>
+      </p>
+    </div>
+    <div id="score-mizen"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('mizen')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('mizen')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('mizen')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- 連用形チャレンジ -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge gold">語呂②</span><span class="sec-title">連用形接続の暗記法</span></div>
+    <div class="goryo-box">
+      <div class="goryo-title">📖 テキストの語呂合わせ</div>
+      <div class="goryo-phrase">〔けり〕〔つ〕〔き〕〔たり〕〔ぬ〕用済みさ。〔けむ〕〔たし〕</div>
+      <div class="goryo-story">意味）「けりがついたな、お前は用済みさ（けり・つ・き・たり・ぬ）。けむたいあっちへ行け（けむ・たし）」</div>
+    </div>
+    <div id="sec-renyo">
+      <p style="font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--sumi);line-height:2.4;margin-bottom:12px;">
+        連用形接続の助動詞：
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="けり">けり</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="つ">つ</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="き">き</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="たり">たり</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="ぬ">ぬ</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="けむ">けむ</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="たし">たし</span></span>
+      </p>
+    </div>
+    <div id="score-renyo"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('renyo')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('renyo')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('renyo')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- 「り」の特殊接続 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge jade">語呂③</span><span class="sec-title">完了「り」の特殊接続の暗記法</span></div>
+    <div class="goryo-box">
+      <div class="goryo-title">📖 テキストの語呂合わせ</div>
+      <div class="goryo-phrase">完全にフラれた〔リ〕ーさん　さみしい</div>
+      <div class="goryo-story">さ＝サ変動詞　み＝未然形　し＝四段動詞　い＝已然形<br>「完全にフラれたリーさんはさみしい」→ 「り」はサ変の未然形・四段の已然形に接続する</div>
+    </div>
+    <div id="sec-ri">
+      <p style="font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--sumi);line-height:2.4;margin-bottom:12px;">
+        完了「り」の接続：<br>
+        <span class="blank initial" data-ans="サ変">サ変</span> 動詞の <span class="blank initial" data-ans="未然形">未然形</span> ・ <span class="blank initial" data-ans="四段">四段</span> 動詞の <span class="blank initial" data-ans="已然形">已然形</span> に接続する
+      </p>
+      <p style="font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--indigo);margin-bottom:8px;">
+        ポイント：エ段＋「り」で覚えましょう（四段已然形はエ段になる）<br>
+        例）給<span style="color:var(--verm);font-weight:700;">へ</span>＋り → 給へり　死<span style="color:var(--verm);font-weight:700;">せ</span>＋り → 死せり（サ変未然形）
+      </p>
+    </div>
+    <div id="score-ri"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('ri')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('ri')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('ri')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- 終止形チャレンジ -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge blue">語呂④</span><span class="sec-title">終止形接続の暗記法</span></div>
+    <div class="goryo-box">
+      <div class="goryo-title">📖 テキストの語呂合わせ</div>
+      <div class="goryo-phrase">〔めり〕ーさん〔まじ〕に〔なり〕すぎと伝え聞く<br>〔らむ〕らむとする〔らし〕彼の目に<br>最後はラ体（ラ変連体形）で終わる〔べし〕</div>
+      <div class="goryo-story">意味）めりーさんはまじになりすぎたと伝え聞きます。らむらむするらしい彼の目に、最後は裸体（ラ体）で終わるべし</div>
+    </div>
+    <div id="sec-shushi">
+      <p style="font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--sumi);line-height:2.4;margin-bottom:12px;">
+        終止形接続の助動詞：
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="めり">めり</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="まじ">まじ</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="なり（伝聞）">なり（伝聞）</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="らむ">らむ</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="らし">らし</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="べし">べし</span></span>
+      </p>
+      <p style="font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--indigo);margin-bottom:8px;">
+        ※ ラ変型動詞・形容詞補助活用の場合のみ <span class="blank initial" data-ans="連体形">連体形</span> に接続します（「あるべし」→○　「ありべし」→×）
+      </p>
+    </div>
+    <div id="score-shushi"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('shushi')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('shushi')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('shushi')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- 体言連体形チャレンジ -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">語呂⑤</span><span class="sec-title">体言・連体形接続の暗記法</span></div>
+    <div class="goryo-box">
+      <div class="goryo-title">📖 テキストの語呂合わせ</div>
+      <div class="goryo-phrase">マトリックスで「からだ（体）〔ごとし〕〔なり〕〔たり〕」と断定した</div>
+      <div class="goryo-story">マトリックスで体をよけながら「体ごとしならたり」と断定した<br>※ 断定「たり」は体言のみ（連体形には接続しない）に注意！</div>
+    </div>
+    <div id="sec-taigen">
+      <p style="font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--sumi);line-height:2.4;margin-bottom:12px;">
+        体言・連体形接続の助動詞：
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="ごとし">ごとし</span>・</span>
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="なり（断定）">なり（断定）</span></span>
+        <span style="white-space:nowrap;">（連体形も可）</span><br>
+        体言のみ接続：
+        <span style="white-space:nowrap;"><span class="blank initial" data-ans="たり（断定）">たり（断定）</span></span>
+      </p>
+    </div>
+    <div id="score-taigen"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('taigen')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('taigen')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('taigen')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- 総合チャレンジ -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge gold">総合</span><span class="sec-title">総合チャレンジ：接続を答えよ</span></div>
+    <div class="desc-box">
+      各助動詞の接続を答えなさい。語呂合わせを思い浮かべながら解いてみましょう。
+    </div>
+    <div id="sec-sogo">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:12px;">
+        <tr style="background:var(--sumi);color:white;">
+          <th style="padding:8px 12px;text-align:left;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;">助動詞</th>
+          <th style="padding:8px 12px;text-align:left;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;">接続</th>
+          <th style="padding:8px 12px;text-align:left;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;">助動詞</th>
+          <th style="padding:8px 12px;text-align:left;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;">接続</th>
+        </tr>
+        <tr style="background:var(--cream);">
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);font-family:'Zen Old Mincho',serif;font-size:15px;">き・けり</td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);"><span class="blank initial" data-ans="連用形">連用形</span></td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);font-family:'Zen Old Mincho',serif;font-size:15px;">む・ず・まし</td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);"><span class="blank initial" data-ans="未然形">未然形</span></td>
+        </tr>
+        <tr style="background:rgba(250,246,239,0.7);">
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);font-family:'Zen Old Mincho',serif;font-size:15px;">べし・らむ・めり</td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);"><span class="blank initial" data-ans="終止形">終止形</span></td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);font-family:'Zen Old Mincho',serif;font-size:15px;">なり（断定）・ごとし</td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);"><span class="blank initial" data-ans="体言・連体形">体言・連体形</span></td>
+        </tr>
+        <tr style="background:var(--cream);">
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);font-family:'Zen Old Mincho',serif;font-size:15px;">つ・ぬ・たり（完了）</td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);"><span class="blank initial" data-ans="連用形">連用形</span></td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);font-family:'Zen Old Mincho',serif;font-size:15px;">る・らる・さす・しむ</td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);"><span class="blank initial" data-ans="未然形">未然形</span></td>
+        </tr>
+        <tr style="background:rgba(250,246,239,0.7);">
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);font-family:'Zen Old Mincho',serif;font-size:15px;">まほし・たし</td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);"><span class="blank initial" data-ans="連用形">連用形</span> / <span class="blank initial" data-ans="未然形">未然形</span></td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);font-family:'Zen Old Mincho',serif;font-size:15px;">り（完了）</td>
+          <td style="padding:8px 12px;border:1px solid var(--paper-md);"><span class="blank initial" data-ans="サ変未然・四段已然">サ変未然・四段已然</span></td>
+        </tr>
+      </table>
+      <div style="font-family:'Noto Sans JP',sans-serif;font-size:12px;color:var(--gray);margin-bottom:8px;">※まほしは連用形、たしも連用形接続です。</div>
+    </div>
+    <div id="score-sogo"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('sogo')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('sogo')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('sogo')">↺ リセット</button>
+</div>
+  </div>
+
+</div>
+<div id="koten-unit-nav">
+  <a class="kun-btn prev" href="kotenbun20.html">◀ UNIT22 まし・まほし</a>
+  <a class="kun-btn idx" href="index.html">☰ 単元一覧</a>
+  <a class="kun-btn nxt" href="kotenbun21.html">UNIT23 重要語法 ▶</a>
+</div>
+<div id="word-bank-fixed"><div class="bank-inner">
+  <div class="bank-head"><span class="bank-title">【 語 群 】</span></div>
+  <div id="word-list" class="word-list"></div>
+</div></div>
+<div class="cfw" id="cfw"></div><div class="toast" id="toast"></div>
+<script>
+let _st=null,_ti=null,_recs=[];
+function startTimer(){if(_st)return;_st=Date.now();_ti=setInterval(()=>{const d=(Date.now()-_st)/1000;document.getElementById('timer').textContent=Math.floor(d/60).toString().padStart(2,'0')+':'+(d%60).toFixed(1).padStart(4,'0');},100);}
+function stopTimer(){if(!_st)return'--:--.–';clearInterval(_ti);const t=document.getElementById('timer').textContent;_recs.push(t);_st=null;['r1','r2','r3'].forEach((id,i)=>{if(_recs[i])document.getElementById(id).textContent=_recs[i];});return t;}
+function showToast(msg,ok=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(ok?' ok':'');requestAnimationFrame(()=>{t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1400);});}
+function confetti(){const w=document.getElementById('cfw');w.innerHTML='';const cols=['#b8860b','#d4a017','#2e7d52','#1a3a5c','#ffd700','#e74c3c','#43a36b'];for(let i=0;i<90;i++){const p=document.createElement('div');p.className='cp';const sz=(Math.random()*8+5)+'px';p.style.cssText='left:'+Math.random()*100+'%;width:'+sz+';height:'+sz+';background:'+cols[i%cols.length]+';border-radius:'+(Math.random()>.5?'50%':'2px')+';animation-duration:'+(Math.random()*1.5+1)+'s;animation-delay:'+(Math.random()*.4)+'s;opacity:1;';w.appendChild(p);}setTimeout(()=>w.innerHTML='',3500);}
+let _sel=null,_states={};
+function _getBlanks(id){const el=document.getElementById('tbl-'+id);if(el)return el.querySelectorAll('.blank');const el2=document.getElementById('sec-'+id);if(el2)return el2.querySelectorAll('.blank');return [];}
+function startChallenge(id){
+  startTimer();if(!_states[id])_states[id]={};_states[id].on=true;
+  const blanks=_getBlanks(id),wl=document.getElementById('word-list'),bank=document.getElementById('word-bank-fixed');
+  wl.innerHTML='';bank.style.display='block';
+  const cnt={};blanks.forEach(b=>{cnt[b.dataset.ans]=(cnt[b.dataset.ans]||0)+1;});
+  const words=[];Object.keys(cnt).forEach(w=>{for(let i=0;i<cnt[w];i++)words.push(w);});
+  words.sort(()=>Math.random()-0.5);
+  blanks.forEach(b=>{
+    b.textContent='';b.classList.remove('initial','filled','correct','wrong');b.classList.add('challenge');b.dataset.gid=id;
+    b.onclick=function(){
+      if(!_states[this.dataset.gid]?.on)return;
+      if(this.textContent!==''){const txt=this.textContent;document.querySelectorAll('.word-item').forEach(it=>{if(it.dataset.val===txt&&it.classList.contains('used'))it.classList.remove('used');});this.textContent='';this.classList.remove('filled');}
+      if(_sel){this.textContent=_sel.dataset.val;this.classList.add('filled');_sel.classList.add('used');_sel.classList.remove('sel');_sel=null;}
+    };
+  });
+  words.forEach(w=>{
+    const item=document.createElement('div');item.className='word-item';item.textContent=w;item.dataset.val=w;
+    item.onclick=function(e){e.stopPropagation();if(this.classList.contains('used'))return;document.querySelectorAll('.word-item').forEach(el=>el.classList.remove('sel'));_sel=this;this.classList.add('sel');};
+    wl.appendChild(item);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});showToast('チャレンジ開始！');
+}
+function checkResult(id){
+  if(!_states[id]?.on){showToast('チャレンジを開始してください');return;}
+  const blanks=_getBlanks(id);let ok=0,total=0;
+  blanks.forEach(b=>{total++;if(b.textContent.trim()===b.dataset.ans){b.classList.add('correct');b.classList.remove('filled','wrong');ok++;}else if(b.textContent!==''){b.classList.add('wrong');b.classList.remove('filled','correct');}});
+  const sa=document.getElementById('score-'+id);if(sa)sa.innerHTML='<div class="score-badge">✓ '+ok+' / '+total+' 正解</div>';
+  if(ok===total){const t=stopTimer();_states[id].on=false;document.getElementById('word-bank-fixed').style.display='none';confetti();showToast('🎉 全問正解！ '+t,true);}
+  else showToast(ok+'/'+total+' 正解。確認しましょう');
+}
+function resetTable(id){
+  if(_states[id])_states[id].on=false;
+  const blanks=_getBlanks(id);
+  blanks.forEach(b=>{b.textContent=b.dataset.ans;b.classList.remove('challenge','filled','correct','wrong');b.classList.add('initial');b.onclick=null;});
+  const sa=document.getElementById('score-'+id);if(sa)sa.innerHTML='';
+  document.getElementById('word-bank-fixed').style.display='none';
+}
+document.addEventListener('click',e=>{if(!e.target.classList.contains('word-item')&&!e.target.classList.contains('blank')){document.querySelectorAll('.word-item').forEach(el=>el.classList.remove('sel'));_sel=null;}});
+</script>
+</body></html>

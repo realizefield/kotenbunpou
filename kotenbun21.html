@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>重要語法（副詞の呼応）【演習】</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--sumi:#2d2416;--verm:#c0392b;--verm-lt:#e74c3c;--gold:#b8860b;--gold-lt:#d4a017;--jade:#2e7d52;--jade-lt:#43a36b;--jade-pale:#edfaf3;--indigo:#1a3a5c;--indigo-lt:#2980b9;--indigo-pale:#eef4fb;--paper:#faf6ef;--paper-dk:#f0e8d8;--paper-md:#e8dcc8;--cream:#fdfaf4;--gray:#8a7f72;--gray-lt:#bbb0a0;--shadow:rgba(90,60,20,0.13);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);font-family:'Noto Serif JP',serif;color:var(--sumi);min-height:100vh;padding-bottom:80px;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+.nav-bar{background:var(--sumi);border-bottom:3px solid var(--verm);position:sticky;top:0;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,0.25);}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:stretch;overflow-x:auto;}
+.nav-btn{display:inline-block;padding:12px 13px;color:rgba(255,255,255,0.6);text-decoration:none;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.03em;border-right:1px solid rgba(255,255,255,0.08);transition:all 0.2s;white-space:nowrap;}
+.nav-btn:hover{color:white;background:rgba(255,255,255,0.06);}.nav-btn.active{color:white;background:var(--verm);}
+.timer-header{background:linear-gradient(135deg,var(--sumi),#1a1008);color:white;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--gold);}
+.timer-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gold-lt);letter-spacing:0.15em;margin-right:8px;}
+.timer-main{font-family:'Courier New',monospace;font-size:26px;color:#ffd700;font-weight:bold;text-shadow:0 0 16px rgba(255,215,0,0.4);}
+.rec-box{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:10px;}
+.rec-item{display:flex;align-items:center;gap:4px;}
+.rec-n{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:3px;padding:2px 6px;font-size:11px;}
+.rec-v{color:#ffd700;font-weight:bold;font-family:monospace;}
+.wrapper{max-width:960px;margin:28px auto;padding:0 18px;position:relative;z-index:1;}
+.page-header{margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid var(--paper-md);position:relative;}
+.page-header::after{content:'';position:absolute;bottom:-1px;left:0;width:80px;height:3px;background:var(--verm);}
+.breadcrumb{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gray);letter-spacing:0.1em;margin-bottom:8px;}
+.page-title{font-family:'Zen Old Mincho',serif;font-size:26px;font-weight:700;color:var(--sumi);letter-spacing:0.1em;}
+.page-sub{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:var(--gray);margin-top:5px;line-height:1.7;}
+.card{background:var(--cream);border-radius:4px;border:1.5px solid var(--paper-md);box-shadow:0 2px 14px var(--shadow);padding:24px 28px;margin-bottom:22px;animation:cardIn 0.4s ease-out both;}
+.card:nth-child(2){animation-delay:.06s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.18s}.card:nth-child(5){animation-delay:.24s}.card:nth-child(6){animation-delay:.30s}.card:nth-child(7){animation-delay:.36s}.card:nth-child(8){animation-delay:.42s}.card:nth-child(9){animation-delay:.48s}.card:nth-child(10){animation-delay:.54s}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--paper-md);}
+.sec-badge{color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;padding:3px 10px;border-radius:2px;}
+.sec-badge.blue{background:linear-gradient(135deg,var(--indigo),#0f2840);}
+.sec-badge.red{background:linear-gradient(135deg,var(--verm),#8b1a11);}
+.sec-badge.jade{background:linear-gradient(135deg,var(--jade-lt),#27694a);}
+.sec-badge.gold{background:linear-gradient(135deg,var(--gold),#7a5a00);}
+.sec-title{font-family:'Zen Old Mincho',serif;font-size:16px;font-weight:700;color:var(--sumi);}
+.desc-box{background:var(--paper);border:1px solid var(--paper-md);border-left:4px solid var(--indigo-lt);border-radius:0 3px 3px 0;padding:16px 20px;font-size:14px;line-height:2.2;margin-bottom:16px;color:#3a3020;}
+.desc-box .verm{color:var(--verm);font-weight:700;}
+.desc-box .indigo{color:var(--indigo);font-weight:700;}
+.desc-box .jade{color:var(--jade);font-weight:700;}
+.desc-box .gold{color:var(--gold);font-weight:700;}
+.point-box{background:rgba(26,58,92,0.04);border:1px solid rgba(26,58,92,0.16);border-radius:3px;padding:14px 18px;font-family:'Noto Sans JP',sans-serif;font-size:13px;line-height:2.1;color:var(--indigo);margin-top:12px;}
+.point-box strong{color:var(--verm);}
+.warn-box{background:rgba(184,134,11,0.05);border:1.5px solid rgba(184,134,11,0.3);border-radius:3px;padding:13px 18px;font-family:'Noto Sans JP',sans-serif;font-size:13px;line-height:2.1;color:#5a4000;margin-top:12px;}
+.warn-box strong{color:#8a6000;}
+.katsu-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-bottom:14px;}
+.katsu-table th{padding:9px 10px;text-align:center;font-family:'Noto Sans JP',sans-serif;font-size:11px;letter-spacing:0.08em;font-weight:700;border:1px solid rgba(255,255,255,0.1);}
+.katsu-table th.th-gray{background:var(--sumi);color:white;}.katsu-table th.th-blue{background:var(--indigo);color:white;}.katsu-table th.th-jade{background:var(--jade);color:white;}.katsu-table th.th-red{background:var(--verm);color:white;}.katsu-table th.th-gold{background:var(--gold);color:white;}
+.katsu-table td{padding:9px 10px;border:1px solid var(--paper-md);text-align:center;vertical-align:middle;background:var(--cream);}
+.katsu-table tr:nth-child(even) td{background:rgba(250,246,239,0.7);}
+.katsu-table .kana{font-family:'Zen Old Mincho',serif;font-size:15px;color:var(--sumi);}
+.katsu-table .small{font-size:11px;color:var(--gray);}
+.blank{display:inline-flex;align-items:center;justify-content:center;min-width:60px;height:30px;padding:0 8px;border-radius:3px;cursor:pointer;font-size:13px;font-family:'Noto Sans JP',sans-serif;font-weight:700;transition:all 0.2s;white-space:nowrap;}
+.blank.initial{color:var(--verm);background:rgba(192,57,43,0.06);border:1.5px dashed rgba(192,57,43,0.4);}
+.blank.challenge{background:var(--paper);border:1.5px solid var(--indigo-lt);color:transparent;}
+.blank.challenge:hover{background:var(--indigo-pale);}
+.blank.filled{background:var(--indigo-pale);border:1.5px solid var(--indigo-lt);color:var(--indigo);}
+.blank.correct{background:var(--jade-pale);border:2px solid var(--jade);color:var(--jade);animation:pop 0.3s ease-out;}
+.blank.wrong{background:rgba(192,57,43,0.07);border:2px solid var(--verm);color:var(--verm);animation:shake 0.3s ease-out;}
+@keyframes pop{0%{transform:scale(0.9)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.score-badge{display:inline-block;padding:8px 20px;border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;background:var(--indigo-pale);border:1.5px solid var(--indigo-lt);color:var(--indigo);margin-top:8px;}
+#word-bank-fixed{position:fixed;bottom:0;left:0;width:100%;background:linear-gradient(180deg,var(--cream),var(--paper-dk));border-top:3px solid var(--indigo);padding:14px 0 20px;z-index:9999;box-shadow:0 -8px 28px rgba(0,0,0,0.14);display:none;animation:bankUp 0.3s ease-out;}
+@keyframes bankUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.bank-inner{max-width:960px;margin:0 auto;padding:0 18px;}
+.bank-head{display:flex;align-items:center;justify-content:center;margin-bottom:11px;}
+.bank-title{font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:var(--indigo);letter-spacing:0.15em;}
+.word-list{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;}
+.word-item{background:white;border:1.5px solid var(--indigo-lt);padding:6px 14px;border-radius:3px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:13px;color:var(--indigo);transition:all 0.15s;}
+.word-item:hover:not(.used){background:var(--indigo-pale);transform:translateY(-1px);}
+.word-item.sel{background:var(--indigo);color:white;}.word-item.used{opacity:0.14;cursor:default;}
+.btn-area{display:flex;justify-content:center;gap:12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--paper-md);flex-wrap:wrap;}
+.btn{padding:11px 26px;font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.1em;border:none;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+.btn:active{transform:translateY(1px);}
+.btn-start{background:linear-gradient(135deg,var(--verm),#8b1a11);color:white;}
+.btn-check{background:linear-gradient(135deg,var(--jade-lt),#27694a);color:white;}
+.btn-reset{background:var(--paper-dk);color:var(--sumi);border:1.5px solid var(--paper-md);}
+.btn:hover{filter:brightness(1.08);}
+.kai-btn{display:inline-block;margin-top:10px;padding:6px 14px;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;border:1px solid var(--gold);border-radius:2px;color:var(--gold);cursor:pointer;background:transparent;transition:all 0.2s;}
+.kai-btn:hover{background:var(--gold);color:white;}
+.kai-box{display:none;margin-top:10px;padding:14px 18px;background:rgba(184,134,11,0.04);border:1px solid rgba(184,134,11,0.22);border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:13px;line-height:2.1;color:#3a3020;}
+.kai-box.show{display:block;animation:fadeIn 0.3s ease-out;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--sumi);color:white;padding:10px 22px;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;opacity:0;transition:all 0.3s;pointer-events:none;z-index:10000;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}.toast.ok{background:var(--jade);}
+.cfw{position:fixed;inset:0;pointer-events:none;z-index:9998;overflow:hidden;}
+.cp{position:absolute;top:-10px;animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+#koten-unit-nav{display:flex;justify-content:center;align-items:center;gap:8px;padding:12px 18px;background:var(--sumi);border-top:2px solid var(--gold);position:sticky;bottom:0;z-index:500;flex-wrap:wrap;}
+.kun-btn{display:inline-flex;align-items:center;gap:5px;padding:9px 18px;border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-decoration:none;border:none;}
+.kun-btn.prev{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.2);}
+.kun-btn.prev:hover{background:rgba(255,255,255,0.18);}
+.kun-btn.idx{background:var(--gold);color:white;}.kun-btn.idx:hover{background:var(--gold-lt);}
+.kun-btn.nxt{background:var(--verm);color:white;}.kun-btn.nxt:hover{background:var(--verm-lt);}
+.ex-box{background:var(--paper);border:1px solid var(--paper-md);border-left:4px solid var(--gold);border-radius:0 3px 3px 0;padding:13px 18px;font-family:'Zen Old Mincho',serif;font-size:14px;line-height:2.3;margin:10px 0 4px;color:var(--sumi);}
+.tr{font-family:'Noto Sans JP',sans-serif;font-size:12.5px;color:var(--gray);margin-bottom:8px;padding-left:4px;line-height:1.8;}
+.q-block{border:1px solid var(--paper-md);border-radius:4px;padding:16px 20px;margin-bottom:18px;background:var(--paper);}
+.q-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:var(--gray);letter-spacing:0.12em;margin-bottom:8px;}
+.q-text{font-size:14px;line-height:2.0;margin-bottom:10px;color:var(--sumi);}
+/* 敬語3種バッジ */
+.badge-sonkei{display:inline-block;background:#c0392b;color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;vertical-align:middle;}
+.badge-kenjo{display:inline-block;background:#1a3a5c;color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;vertical-align:middle;}
+.badge-teinei{display:inline-block;background:#2e7d52;color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;vertical-align:middle;}
+/* 敬語表 */
+.keigo-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px;}
+.keigo-table th{padding:8px 10px;text-align:center;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,0.1);}
+.keigo-table th.red{background:var(--verm);color:white;}
+.keigo-table th.blue{background:var(--indigo);color:white;}
+.keigo-table th.jade{background:var(--jade);color:white;}
+.keigo-table th.gray{background:var(--sumi);color:white;}
+.keigo-table td{padding:8px 10px;border:1px solid var(--paper-md);background:var(--cream);font-family:'Noto Serif JP',serif;}
+.keigo-table td.kana{font-family:'Zen Old Mincho',serif;font-size:14px;}
+.keigo-table tr:nth-child(even) td{background:rgba(250,246,239,0.7);}
+</style>
+</head>
+<body>
+<nav class="nav-bar"><div class="nav-inner">
+<a class="nav-btn" href="index.html">☰ 一覧</a>
+<a class="nav-btn" href="kotenbun20.html">まし・まほし</a>
+  <a class="nav-btn active" href="kotenbun21.html">重要語法</a>
+  <a class="nav-btn" href="kotenbun22.html">敬語</a>
+  <a class="nav-btn" href="kotenbun23.html">識別</a>
+</div></nav>
+<div class="timer-header">
+  <div style="display:flex;align-items:baseline;gap:6px;">
+    <span class="timer-label">ELAPSED</span><span class="timer-main" id="timer">00:00.0</span>
+  </div>
+  <div class="rec-box">
+    <span class="rec-item"><span class="rec-n">1st</span><span class="rec-v" id="r1">--:--.-</span></span>
+    <span class="rec-item"><span class="rec-n">2nd</span><span class="rec-v" id="r2">--:--.-</span></span>
+    <span class="rec-item"><span class="rec-n">3rd</span><span class="rec-v" id="r3">--:--.-</span></span>
+  </div>
+</div>
+<div class="wrapper">
+  <div class="page-header">
+    <div class="breadcrumb">古典文法 › 第５章 重要語法 › UNIT 23</div>
+    <div class="page-title">重要語法（副詞の呼応）</div>
+    <div class="page-sub">「な〜そ」「え〜ず」「さらに〜ず」「いかで〜む」など入試頻出の呼応表現をまとめて覚えましょう</div>
+  </div>
+
+  <!-- 導入 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge blue">はじめに</span><span class="sec-title">呼応の副詞とは</span></div>
+    <div class="desc-box">
+      古典語では、特定の副詞が決まった表現と組み合わさって、まとまった意味を作ることがよくあります。
+      これを<span class="verm">呼応の副詞（陳述の副詞）</span>といいます。<br><br>
+      副詞の種類と、それに呼応する語のパターンをセットで覚えることが大切です。
+      この単元では入試に最もよく出る9つの公式を学びます。
+    </div>
+  </div>
+
+  <!-- 公式一覧表 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge blue">まとめ</span><span class="sec-title">呼応表現の一覧表（空欄を埋めましょう）</span></div>
+    <div style="overflow-x:auto;" id="sec-list">
+      <table class="katsu-table">
+        <thead><tr><th class="th-gray">副詞・語</th><th class="th-blue">呼応する語</th><th class="th-gold">意味</th></tr></thead>
+        <tbody>
+          <tr><td class="kana">な〜そ</td><td><span class="blank initial" data-ans="禁止（〜するな）">禁止（〜するな）</span></td><td>懇願的禁止「〜しないでくれ」</td></tr>
+          <tr><td class="kana">え〜</td><td><span class="blank initial" data-ans="打消（ず・なし・で・じ・まじ）">打消（ず・なし・で・じ・まじ）</span></td><td>不可能「〜できない」</td></tr>
+          <tr><td class="kana">さらに〜<br>つゆ〜<br>すべて〜<br>おほかた〜</td><td><span class="blank initial" data-ans="打消">打消</span></td><td>全部否定「全く〜ない・少しも〜ない」</td></tr>
+          <tr><td class="kana">をさをさ〜</td><td>打消</td><td><span class="blank initial" data-ans="ほとんど〜ない・めったに〜ない">ほとんど〜ない・めったに〜ない</span></td></tr>
+          <tr><td class="kana">よに〜</td><td>打消</td><td><span class="blank initial" data-ans="どうにも〜ない・決して〜ない">どうにも〜ない・決して〜ない</span></td></tr>
+          <tr><td class="kana">よも〜</td><td><span class="blank initial" data-ans="じ">じ</span></td><td>まさか〜ないだろう・よもや〜まい</td></tr>
+          <tr><td class="kana">あなかしこ〜<br>ゆめゆめ〜</td><td><span class="blank initial" data-ans="禁止">禁止</span></td><td>強い禁止「決して〜するな・絶対に〜するな」</td></tr>
+          <tr><td class="kana">いかで(か)〜</td><td>推量・希望</td><td><span class="blank initial" data-ans="疑問・反語「どうして〜か」<br>または希望「何とかして〜たい」">疑問・反語「どうして〜か」<br>または希望「何とかして〜たい」</span></td></tr>
+          <tr><td class="kana">いつしか〜</td><td>過去・完了 → <span class="blank initial" data-ans="既遂">既遂</span><br>希望・願望 → <span class="blank initial" data-ans="未遂">未遂</span></td><td>「早くも〜した」または「早く〜してほしい」</td></tr>
+          <tr><td class="kana">はやく（はやう）〜けり</td><td>詠嘆の「けり」</td><td><span class="blank initial" data-ans="事実・真相の発見「何とまあ〜だったよ」">事実・真相の発見「何とまあ〜だったよ」</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="score-list"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('list')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('list')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('list')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- ① な〜そ -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">公式①</span><span class="sec-title">「な〜そ」禁止の公式</span></div>
+    <div class="desc-box">
+      副詞「な」と終助詞「そ」で動詞をはさんで<span class="verm">禁止</span>を表します。<br>
+      「強い禁止」ではなく、<span class="indigo">相手に頼み込むような懇願的な禁止</span>の気持ちを表します。<br><br>
+      接続：副詞「な」＋ <span class="verm">動詞・助動詞の連用形</span>（カ変・サ変は未然形も可）＋ 終助詞「そ」
+    </div>
+    <div class="ex-box">「な<span style="text-decoration:underline">起こし奉り</span>そ。幼き人は寝入り給ひにけり。」（宇治拾遺物語）</div>
+    <div class="tr">訳）起こし申し上げるな。幼い人は寝込みなさってしまった。</div>
+    <div class="ex-box">東風吹かば匂ひおこせよ梅の花あるじなしとて春<span style="text-decoration:underline">な忘れ</span>そ。（拾遺集）</div>
+    <div class="tr">訳）東風が吹いたら香りを届けておくれ。梅の花よ、主人がいないからといって春を忘れないでくれ。</div>
+
+    <div id="sec-naso">
+      <div class="q-block">
+        <div class="q-label">演習①：現代語訳</div>
+        <div class="q-text">「な〜そ」の意味に注意して傍線部を現代語訳しなさい。</div>
+        ① 「<span style="text-decoration:underline">な起こし奉りそ</span>」の意味：<span class="blank initial" data-ans="起こし申し上げるな">起こし申し上げるな</span><br>
+        ② 「春<span style="text-decoration:underline">な忘れそ</span>」の意味：<span class="blank initial" data-ans="春を忘れないでくれ">春を忘れないでくれ</span>
+      </div>
+    </div>
+    <div id="score-naso"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('naso')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('naso')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('naso')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- ② え〜打消 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">公式②</span><span class="sec-title">「え〜打消」不可能の公式</span></div>
+    <div class="desc-box">
+      副詞「え」と打消表現がセットで<span class="verm">不可能</span>「〜できない」を表します。<br>
+      呼応する打消表現は次のとおりです。<br>
+      ①「え〜<span class="verm">ず</span>・なし」→「〜できない」<br>
+      ②「え〜<span class="verm">じ</span>・まじ」→「〜できないだろう」「〜できそうもない」<br>
+      ③「え〜<span class="verm">で</span>」→「〜できないで」
+    </div>
+    <div class="ex-box">殿へも<span style="text-decoration:underline">えまゐらざりし</span>。（竹取物語）</div>
+    <div class="tr">訳）御殿へも参上できなかった。</div>
+
+    <div id="sec-e">
+      <div class="q-block">
+        <div class="q-label">演習②：空欄補充 〈蜻蛉日記〉</div>
+        <div class="q-text">いみじくよよと泣けば、われも<span style="text-decoration:underline">えせきあへ</span>　　　ど、（後略）<br>
+        （「ど」は已然形接続の逆接助詞。「え〜打消」の打消部分を入れよ）</div>
+        答え：<span class="blank initial" data-ans="ね">ね</span>　（打消の助動詞「ず」の已然形）
+        <button class="kai-btn" onclick="toggleKai('k1')">解説を見る ▼</button>
+        <div class="kai-box" id="k1">「え〜打消」の不可能構文。「ど」は已然形に接続する逆接の助詞なので、「ず」の已然形「ね」が入ります。<br>訳）ひどくおいおいと泣くので、私も涙を止めることができないけれど、</div>
+      </div>
+    </div>
+    <div id="score-e"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('e')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('e')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('e')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- ③ 全部否定 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">公式③④</span><span class="sec-title">全部否定・部分否定の副詞</span></div>
+    <div class="desc-box">
+      <span class="verm">全部否定「全く〜ない・少しも〜ない」</span>の副詞：<br>
+      <span class="indigo">さらに・つゆ・すべて・つやつや・おほかた</span>＋打消表現<br><br>
+      <span class="verm">部分否定（弱め）「ほとんど〜ない・めったに〜ない」</span>の副詞：<br>
+      <span class="indigo">をさをさ</span>＋打消表現（全部否定よりやや弱い）<br><br>
+      <span class="verm">「どうにも〜ない」</span>：<span class="indigo">よに</span>＋打消表現<br>
+      <span class="verm">「まさか〜ないだろう」</span>：<span class="indigo">よも</span>＋じ
+    </div>
+    <div class="ex-box">暇<span style="text-decoration:underline">さらに</span>許させたまはず。（源氏物語）</div>
+    <div class="tr">訳）暇を全くお許しにならない。</div>
+    <div class="ex-box">冬枯れのけしきこそ、秋には<span style="text-decoration:underline">をさをさ</span>劣るまじけれ。（徒然草）</div>
+    <div class="tr">訳）冬枯れの景色は、秋と比べてほとんど劣らないだろう。</div>
+    <div class="ex-box">勝つべきいくさに負くること、<span style="text-decoration:underline">よも</span>あらじ。（平家物語）</div>
+    <div class="tr">訳）当然勝つはずの戦に負けることは、よもやあるまい。</div>
+
+    <div id="sec-hitei">
+      <div class="q-block">
+        <div class="q-label">演習③：現代語訳</div>
+        ①「かけひのしずくならでは、<span style="text-decoration:underline">つゆおとなふものなし</span>」→ <span class="blank initial" data-ans="全く音を立てるものがない">全く音を立てるものがない</span><br>
+        ②「<span style="text-decoration:underline">すべて音もせで</span>、五、六日になりぬ」→ <span class="blank initial" data-ans="全く連絡もなくなって">全く連絡もなくなって</span><br>
+        ③「<span style="text-decoration:underline">をさをさいらへもせ</span>ず」→ <span class="blank initial" data-ans="ほとんど返事をしない">ほとんど返事をしない</span><br>
+        ④「<span style="text-decoration:underline">よもまさりはべら</span>まじ」→ <span class="blank initial" data-ans="まさかまさっていないでしょう">まさかまさっていないでしょう</span>
+      </div>
+    </div>
+    <div id="score-hitei"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('hitei')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('hitei')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('hitei')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- ④ あなかしこ・ゆめゆめ -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">公式⑤</span><span class="sec-title">「あなかしこ・ゆめゆめ」強い禁止</span></div>
+    <div class="desc-box">
+      「あなかしこ」「ゆめゆめ」は<span class="verm">禁止表現</span>と組み合わさって「決して〜するな・絶対に〜するな」という強い禁止を表します。<br>
+      また「ゆめゆめ〜打消」の場合は「少しも〜ない・ゆめにも〜ない」という否定の意味になります。
+    </div>
+    <div class="ex-box">この事、<span style="text-decoration:underline">あなかしこ</span>人に<span style="text-decoration:underline">披露すな</span>。（平家物語）</div>
+    <div class="tr">訳）この事を決して人に披露するな。</div>
+    <div class="ex-box"><span style="text-decoration:underline">ゆめゆめ</span>人に<span style="text-decoration:underline">語るべからず</span>。（宇治拾遺物語）</div>
+    <div class="tr">訳）決して人に語るな。</div>
+    <div id="sec-yume">
+      <div class="q-block">
+        <div class="q-label">演習④：現代語訳</div>
+        ①「あなかしこ<span style="text-decoration:underline">鶯打ちなんどしてやるな</span>」 → <span class="blank initial" data-ans="絶対に鶯を手を打ったりなどして逃がすな">絶対に鶯を手を打ったりなどして逃がすな</span><br>
+        ②「ゆめ<span style="text-decoration:underline">寝ぬな</span>」 → <span class="blank initial" data-ans="決して寝るな">決して寝るな</span>
+      </div>
+    </div>
+    <div id="score-yume"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('yume')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('yume')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('yume')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- ⑤ いかで・いつしか・はやく -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">公式⑥⑦⑧</span><span class="sec-title">「いかで」「いつしか」「はやく〜けり」</span></div>
+    <div class="desc-box">
+      <span class="verm">いかで（か）</span>＋推量表現 → <span class="indigo">疑問・反語</span>「どうして〜か」<br>
+      <span class="verm">いかで（か）</span>＋希望・意志表現 → <span class="indigo">希望</span>「何とかして〜したい」<br><br>
+      <span class="verm">いつしか</span>＋過去・完了 → <span class="indigo">既遂</span>「早くも〜した・いつの間にか」<br>
+      <span class="verm">いつしか</span>＋希望・願望 → <span class="indigo">未遂</span>「早く〜してほしい・いつか」<br><br>
+      <span class="verm">はやく（はやう）〜けり</span> → <span class="indigo">事実・真相の発見</span>「何とまあ〜だったよ」
+    </div>
+    <div class="ex-box"><span style="text-decoration:underline">いかで</span>月を<span style="text-decoration:underline">見ではあらむ</span>。（竹取物語）</div>
+    <div class="tr">訳）どうして月を見ないでいられようか、いや、いられない。（疑問・反語）</div>
+    <div class="ex-box"><span style="text-decoration:underline">いつしか</span>梅<span style="text-decoration:underline">咲かなむ</span>。（更級日記）</div>
+    <div class="tr">訳）早く梅が咲いてほしい。（希望・未遂）</div>
+    <div class="ex-box">針を引き抜きつれば、<span style="text-decoration:underline">はやく</span>しりを結ばざり<span style="text-decoration:underline">けり</span>。（枕草子）</div>
+    <div class="tr">訳）針を引き抜いたところ、何とまあ糸尻を結んでいなかったよ。（事実の発見）</div>
+
+    <div id="sec-ikade">
+      <div class="q-block">
+        <div class="q-label">演習⑤：意味と訳</div>
+        ①「いつしか人の心どものかはりゆく」の「いつしか」の意味 → <span class="blank initial" data-ans="早くも（既遂）">早くも（既遂）</span><br>
+        ②「いつしかその日にならなむ」の「いつしか」の意味 → <span class="blank initial" data-ans="早く〜してほしい（未遂・希望）">早く〜してほしい（未遂・希望）</span><br>
+        ③「いかでその宮の琴聞かむ」の「いかで」の意味 → <span class="blank initial" data-ans="何とかして〜したい（希望）">何とかして〜したい（希望）</span><br>
+        ④「はやくぞく賊ふね舟なりけり」の意味 → <span class="blank initial" data-ans="何とまあ海賊船だったよ（事実の発見）">何とまあ海賊船だったよ（事実の発見）</span>
+      </div>
+    </div>
+    <div id="score-ikade"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('ikade')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('ikade')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('ikade')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- 反語 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge jade">応用</span><span class="sec-title">反語の公式</span></div>
+    <div class="desc-box">
+      <span class="verm">反語</span>は「〜だろうか、いや〜ない」のように、<span class="indigo">疑問の形で否定の意味</span>を強調する表現です。<br>
+      次の形式で判断しましょう。<br>
+      ①「いかが・いかで・など・何・なでふ」＋推量表現（む・らむ・べし）→ 反語<br>
+      ②「〜やは・〜かは」（係助詞の重なり）→ 反語
+    </div>
+    <div class="ex-box">などかことものも食べざらむ。（枕草子）</div>
+    <div class="tr">訳）どうして他のものも食べないだろうか、いや、いただきます。</div>
+    <div class="ex-box">死なぬ薬も何にかはせむ。（竹取物語）</div>
+    <div class="tr">訳）死なないという薬も何になるだろうか、いや、何の役にも立たない。</div>
+
+    <div id="sec-hango">
+      <div class="q-block">
+        <div class="q-label">演習⑥：入試問題 〈竹取物語〉</div>
+        ①「死なぬ薬も<span style="text-decoration:underline">何にかはせむ</span>」の訳 → <span class="blank initial" data-ans="何になるだろうか、いや、何の役にも立たない">何になるだろうか、いや、何の役にも立たない</span><br>
+        ②「だれ<span style="text-decoration:underline">かは</span>思ひ<span style="text-decoration:underline">出でむ</span>」の訳 → <span class="blank initial" data-ans="だれが思い出すだろうか、いや、思い出さない">だれが思い出すだろうか、いや、思い出さない</span>
+      </div>
+    </div>
+    <div id="score-hango"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('hango')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('hango')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('hango')">↺ リセット</button>
+</div>
+  </div>
+</div>
+<div id="koten-unit-nav">
+  <a class="kun-btn prev" href="kotenbun20.html">◀ UNIT22 まし・まほし</a>
+  <a class="kun-btn idx" href="index.html">☰ 単元一覧</a>
+  <a class="kun-btn nxt" href="kotenbun22.html">UNIT24 敬語 ▶</a>
+</div>
+<div id="word-bank-fixed"><div class="bank-inner">
+  <div class="bank-head"><span class="bank-title">【 語 群 】</span></div>
+  <div id="word-list" class="word-list"></div>
+</div></div>
+<div class="cfw" id="cfw"></div><div class="toast" id="toast"></div>
+<script>
+let _st=null,_ti=null,_recs=[];
+function startTimer(){if(_st)return;_st=Date.now();_ti=setInterval(()=>{const d=(Date.now()-_st)/1000;document.getElementById('timer').textContent=Math.floor(d/60).toString().padStart(2,'0')+':'+(d%60).toFixed(1).padStart(4,'0');},100);}
+function stopTimer(){if(!_st)return'--:--.–';clearInterval(_ti);const t=document.getElementById('timer').textContent;_recs.push(t);_st=null;['r1','r2','r3'].forEach((id,i)=>{if(_recs[i])document.getElementById(id).textContent=_recs[i];});return t;}
+function showToast(msg,ok=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(ok?' ok':'');requestAnimationFrame(()=>{t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1400);});}
+function confetti(){const w=document.getElementById('cfw');w.innerHTML='';const cols=['#c0392b','#b8860b','#2e7d52','#1a3a5c','#ffd700','#e74c3c','#43a36b'];for(let i=0;i<90;i++){const p=document.createElement('div');p.className='cp';const sz=(Math.random()*8+5)+'px';p.style.cssText='left:'+Math.random()*100+'%;width:'+sz+';height:'+sz+';background:'+cols[i%cols.length]+';border-radius:'+(Math.random()>.5?'50%':'2px')+';animation-duration:'+(Math.random()*1.5+1)+'s;animation-delay:'+(Math.random()*.4)+'s;opacity:1;';w.appendChild(p);}setTimeout(()=>w.innerHTML='',3500);}
+let _sel=null,_states={};
+function _getBlanks(id){const el=document.getElementById('tbl-'+id);if(el)return el.querySelectorAll('.blank');const el2=document.getElementById('sec-'+id);if(el2)return el2.querySelectorAll('.blank');return [];}
+function startChallenge(id){
+  startTimer();if(!_states[id])_states[id]={};_states[id].on=true;
+  const blanks=_getBlanks(id),wl=document.getElementById('word-list'),bank=document.getElementById('word-bank-fixed');
+  wl.innerHTML='';bank.style.display='block';
+  const cnt={};blanks.forEach(b=>{cnt[b.dataset.ans]=(cnt[b.dataset.ans]||0)+1;});
+  const words=[];Object.keys(cnt).forEach(w=>{for(let i=0;i<cnt[w];i++)words.push(w);});
+  words.sort(()=>Math.random()-0.5);
+  blanks.forEach(b=>{
+    b.textContent='';b.classList.remove('initial','filled','correct','wrong');b.classList.add('challenge');b.dataset.gid=id;
+    b.onclick=function(){
+      if(!_states[this.dataset.gid]?.on)return;
+      if(this.textContent!==''){const txt=this.textContent;document.querySelectorAll('.word-item').forEach(it=>{if(it.dataset.val===txt&&it.classList.contains('used'))it.classList.remove('used');});this.textContent='';this.classList.remove('filled');}
+      if(_sel){this.textContent=_sel.dataset.val;this.classList.add('filled');_sel.classList.add('used');_sel.classList.remove('sel');_sel=null;}
+    };
+  });
+  words.forEach(w=>{
+    const item=document.createElement('div');item.className='word-item';item.textContent=w;item.dataset.val=w;
+    item.onclick=function(e){e.stopPropagation();if(this.classList.contains('used'))return;document.querySelectorAll('.word-item').forEach(el=>el.classList.remove('sel'));_sel=this;this.classList.add('sel');};
+    wl.appendChild(item);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});showToast('チャレンジ開始！');
+}
+function checkResult(id){
+  if(!_states[id]?.on){showToast('チャレンジを開始してください');return;}
+  const blanks=_getBlanks(id);let ok=0,total=0;
+  blanks.forEach(b=>{total++;if(b.textContent.trim()===b.dataset.ans){b.classList.add('correct');b.classList.remove('filled','wrong');ok++;}else if(b.textContent!==''){b.classList.add('wrong');b.classList.remove('filled','correct');}});
+  const sa=document.getElementById('score-'+id);if(sa)sa.innerHTML='<div class="score-badge">✓ '+ok+' / '+total+' 正解</div>';
+  if(ok===total){const t=stopTimer();_states[id].on=false;document.getElementById('word-bank-fixed').style.display='none';confetti();showToast('🎉 全問正解！ '+t,true);}
+  else showToast(ok+'/'+total+' 正解。赤い空欄を確認しましょう');
+}
+function resetTable(id){
+  if(_states[id])_states[id].on=false;
+  const blanks=_getBlanks(id);
+  blanks.forEach(b=>{b.textContent=b.dataset.ans;b.classList.remove('challenge','filled','correct','wrong');b.classList.add('initial');b.onclick=null;});
+  const sa=document.getElementById('score-'+id);if(sa)sa.innerHTML='';
+  document.getElementById('word-bank-fixed').style.display='none';
+}
+function toggleKai(id){const el=document.getElementById(id);if(el.classList.contains('show'))el.classList.remove('show');else{el.classList.add('show');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),100);}}
+document.addEventListener('click',e=>{if(!e.target.classList.contains('word-item')&&!e.target.classList.contains('blank')){document.querySelectorAll('.word-item').forEach(el=>el.classList.remove('sel'));_sel=null;}});
+</script>
+</body></html>

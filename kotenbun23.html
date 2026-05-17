@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>助動詞の識別【演習】</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--sumi:#2d2416;--verm:#c0392b;--verm-lt:#e74c3c;--gold:#b8860b;--gold-lt:#d4a017;--jade:#2e7d52;--jade-lt:#43a36b;--jade-pale:#edfaf3;--indigo:#1a3a5c;--indigo-lt:#2980b9;--indigo-pale:#eef4fb;--paper:#faf6ef;--paper-dk:#f0e8d8;--paper-md:#e8dcc8;--cream:#fdfaf4;--gray:#8a7f72;--gray-lt:#bbb0a0;--shadow:rgba(90,60,20,0.13);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);font-family:'Noto Serif JP',serif;color:var(--sumi);min-height:100vh;padding-bottom:80px;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+.nav-bar{background:var(--sumi);border-bottom:3px solid var(--verm);position:sticky;top:0;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,0.25);}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:stretch;overflow-x:auto;}
+.nav-btn{display:inline-block;padding:12px 13px;color:rgba(255,255,255,0.6);text-decoration:none;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.03em;border-right:1px solid rgba(255,255,255,0.08);transition:all 0.2s;white-space:nowrap;}
+.nav-btn:hover{color:white;background:rgba(255,255,255,0.06);}.nav-btn.active{color:white;background:var(--verm);}
+.timer-header{background:linear-gradient(135deg,var(--sumi),#1a1008);color:white;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--gold);}
+.timer-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gold-lt);letter-spacing:0.15em;margin-right:8px;}
+.timer-main{font-family:'Courier New',monospace;font-size:26px;color:#ffd700;font-weight:bold;text-shadow:0 0 16px rgba(255,215,0,0.4);}
+.rec-box{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:10px;}
+.rec-item{display:flex;align-items:center;gap:4px;}
+.rec-n{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:3px;padding:2px 6px;font-size:11px;}
+.rec-v{color:#ffd700;font-weight:bold;font-family:monospace;}
+.wrapper{max-width:960px;margin:28px auto;padding:0 18px;position:relative;z-index:1;}
+.page-header{margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid var(--paper-md);position:relative;}
+.page-header::after{content:'';position:absolute;bottom:-1px;left:0;width:80px;height:3px;background:var(--verm);}
+.breadcrumb{font-family:'Noto Sans JP',sans-serif;font-size:11px;color:var(--gray);letter-spacing:0.1em;margin-bottom:8px;}
+.page-title{font-family:'Zen Old Mincho',serif;font-size:26px;font-weight:700;color:var(--sumi);letter-spacing:0.1em;}
+.page-sub{font-family:'Noto Sans JP',sans-serif;font-size:12px;color:var(--gray);margin-top:5px;line-height:1.7;}
+.card{background:var(--cream);border-radius:4px;border:1.5px solid var(--paper-md);box-shadow:0 2px 14px var(--shadow);padding:24px 28px;margin-bottom:22px;animation:cardIn 0.4s ease-out both;}
+.card:nth-child(2){animation-delay:.06s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.18s}.card:nth-child(5){animation-delay:.24s}.card:nth-child(6){animation-delay:.30s}.card:nth-child(7){animation-delay:.36s}.card:nth-child(8){animation-delay:.42s}.card:nth-child(9){animation-delay:.48s}.card:nth-child(10){animation-delay:.54s}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--paper-md);}
+.sec-badge{color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;padding:3px 10px;border-radius:2px;}
+.sec-badge.blue{background:linear-gradient(135deg,var(--indigo),#0f2840);}
+.sec-badge.red{background:linear-gradient(135deg,var(--verm),#8b1a11);}
+.sec-badge.jade{background:linear-gradient(135deg,var(--jade-lt),#27694a);}
+.sec-badge.gold{background:linear-gradient(135deg,var(--gold),#7a5a00);}
+.sec-title{font-family:'Zen Old Mincho',serif;font-size:16px;font-weight:700;color:var(--sumi);}
+.desc-box{background:var(--paper);border:1px solid var(--paper-md);border-left:4px solid var(--indigo-lt);border-radius:0 3px 3px 0;padding:16px 20px;font-size:14px;line-height:2.2;margin-bottom:16px;color:#3a3020;}
+.desc-box .verm{color:var(--verm);font-weight:700;}
+.desc-box .indigo{color:var(--indigo);font-weight:700;}
+.desc-box .jade{color:var(--jade);font-weight:700;}
+.desc-box .gold{color:var(--gold);font-weight:700;}
+.point-box{background:rgba(26,58,92,0.04);border:1px solid rgba(26,58,92,0.16);border-radius:3px;padding:14px 18px;font-family:'Noto Sans JP',sans-serif;font-size:13px;line-height:2.1;color:var(--indigo);margin-top:12px;}
+.point-box strong{color:var(--verm);}
+.warn-box{background:rgba(184,134,11,0.05);border:1.5px solid rgba(184,134,11,0.3);border-radius:3px;padding:13px 18px;font-family:'Noto Sans JP',sans-serif;font-size:13px;line-height:2.1;color:#5a4000;margin-top:12px;}
+.warn-box strong{color:#8a6000;}
+.katsu-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-bottom:14px;}
+.katsu-table th{padding:9px 10px;text-align:center;font-family:'Noto Sans JP',sans-serif;font-size:11px;letter-spacing:0.08em;font-weight:700;border:1px solid rgba(255,255,255,0.1);}
+.katsu-table th.th-gray{background:var(--sumi);color:white;}.katsu-table th.th-blue{background:var(--indigo);color:white;}.katsu-table th.th-jade{background:var(--jade);color:white;}.katsu-table th.th-red{background:var(--verm);color:white;}.katsu-table th.th-gold{background:var(--gold);color:white;}
+.katsu-table td{padding:9px 10px;border:1px solid var(--paper-md);text-align:center;vertical-align:middle;background:var(--cream);}
+.katsu-table tr:nth-child(even) td{background:rgba(250,246,239,0.7);}
+.katsu-table .kana{font-family:'Zen Old Mincho',serif;font-size:15px;color:var(--sumi);}
+.katsu-table .small{font-size:11px;color:var(--gray);}
+.blank{display:inline-flex;align-items:center;justify-content:center;min-width:60px;height:30px;padding:0 8px;border-radius:3px;cursor:pointer;font-size:13px;font-family:'Noto Sans JP',sans-serif;font-weight:700;transition:all 0.2s;white-space:nowrap;}
+.blank.initial{color:var(--verm);background:rgba(192,57,43,0.06);border:1.5px dashed rgba(192,57,43,0.4);}
+.blank.challenge{background:var(--paper);border:1.5px solid var(--indigo-lt);color:transparent;}
+.blank.challenge:hover{background:var(--indigo-pale);}
+.blank.filled{background:var(--indigo-pale);border:1.5px solid var(--indigo-lt);color:var(--indigo);}
+.blank.correct{background:var(--jade-pale);border:2px solid var(--jade);color:var(--jade);animation:pop 0.3s ease-out;}
+.blank.wrong{background:rgba(192,57,43,0.07);border:2px solid var(--verm);color:var(--verm);animation:shake 0.3s ease-out;}
+@keyframes pop{0%{transform:scale(0.9)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.score-badge{display:inline-block;padding:8px 20px;border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;background:var(--indigo-pale);border:1.5px solid var(--indigo-lt);color:var(--indigo);margin-top:8px;}
+#word-bank-fixed{position:fixed;bottom:0;left:0;width:100%;background:linear-gradient(180deg,var(--cream),var(--paper-dk));border-top:3px solid var(--indigo);padding:14px 0 20px;z-index:9999;box-shadow:0 -8px 28px rgba(0,0,0,0.14);display:none;animation:bankUp 0.3s ease-out;}
+@keyframes bankUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.bank-inner{max-width:960px;margin:0 auto;padding:0 18px;}
+.bank-head{display:flex;align-items:center;justify-content:center;margin-bottom:11px;}
+.bank-title{font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:var(--indigo);letter-spacing:0.15em;}
+.word-list{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;}
+.word-item{background:white;border:1.5px solid var(--indigo-lt);padding:6px 14px;border-radius:3px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:13px;color:var(--indigo);transition:all 0.15s;}
+.word-item:hover:not(.used){background:var(--indigo-pale);transform:translateY(-1px);}
+.word-item.sel{background:var(--indigo);color:white;}.word-item.used{opacity:0.14;cursor:default;}
+.btn-area{display:flex;justify-content:center;gap:12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--paper-md);flex-wrap:wrap;}
+.btn{padding:11px 26px;font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.1em;border:none;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+.btn:active{transform:translateY(1px);}
+.btn-start{background:linear-gradient(135deg,var(--verm),#8b1a11);color:white;}
+.btn-check{background:linear-gradient(135deg,var(--jade-lt),#27694a);color:white;}
+.btn-reset{background:var(--paper-dk);color:var(--sumi);border:1.5px solid var(--paper-md);}
+.btn:hover{filter:brightness(1.08);}
+.kai-btn{display:inline-block;margin-top:10px;padding:6px 14px;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;border:1px solid var(--gold);border-radius:2px;color:var(--gold);cursor:pointer;background:transparent;transition:all 0.2s;}
+.kai-btn:hover{background:var(--gold);color:white;}
+.kai-box{display:none;margin-top:10px;padding:14px 18px;background:rgba(184,134,11,0.04);border:1px solid rgba(184,134,11,0.22);border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:13px;line-height:2.1;color:#3a3020;}
+.kai-box.show{display:block;animation:fadeIn 0.3s ease-out;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--sumi);color:white;padding:10px 22px;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;opacity:0;transition:all 0.3s;pointer-events:none;z-index:10000;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}.toast.ok{background:var(--jade);}
+.cfw{position:fixed;inset:0;pointer-events:none;z-index:9998;overflow:hidden;}
+.cp{position:absolute;top:-10px;animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+#koten-unit-nav{display:flex;justify-content:center;align-items:center;gap:8px;padding:12px 18px;background:var(--sumi);border-top:2px solid var(--gold);position:sticky;bottom:0;z-index:500;flex-wrap:wrap;}
+.kun-btn{display:inline-flex;align-items:center;gap:5px;padding:9px 18px;border-radius:3px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;text-decoration:none;border:none;}
+.kun-btn.prev{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.2);}
+.kun-btn.prev:hover{background:rgba(255,255,255,0.18);}
+.kun-btn.idx{background:var(--gold);color:white;}.kun-btn.idx:hover{background:var(--gold-lt);}
+.kun-btn.nxt{background:var(--verm);color:white;}.kun-btn.nxt:hover{background:var(--verm-lt);}
+.ex-box{background:var(--paper);border:1px solid var(--paper-md);border-left:4px solid var(--gold);border-radius:0 3px 3px 0;padding:13px 18px;font-family:'Zen Old Mincho',serif;font-size:14px;line-height:2.3;margin:10px 0 4px;color:var(--sumi);}
+.tr{font-family:'Noto Sans JP',sans-serif;font-size:12.5px;color:var(--gray);margin-bottom:8px;padding-left:4px;line-height:1.8;}
+.q-block{border:1px solid var(--paper-md);border-radius:4px;padding:16px 20px;margin-bottom:18px;background:var(--paper);}
+.q-label{font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:var(--gray);letter-spacing:0.12em;margin-bottom:8px;}
+.q-text{font-size:14px;line-height:2.0;margin-bottom:10px;color:var(--sumi);}
+/* 敬語3種バッジ */
+.badge-sonkei{display:inline-block;background:#c0392b;color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;vertical-align:middle;}
+.badge-kenjo{display:inline-block;background:#1a3a5c;color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;vertical-align:middle;}
+.badge-teinei{display:inline-block;background:#2e7d52;color:white;font-family:'Noto Sans JP',sans-serif;font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;vertical-align:middle;}
+/* 敬語表 */
+.keigo-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px;}
+.keigo-table th{padding:8px 10px;text-align:center;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,0.1);}
+.keigo-table th.red{background:var(--verm);color:white;}
+.keigo-table th.blue{background:var(--indigo);color:white;}
+.keigo-table th.jade{background:var(--jade);color:white;}
+.keigo-table th.gray{background:var(--sumi);color:white;}
+.keigo-table td{padding:8px 10px;border:1px solid var(--paper-md);background:var(--cream);font-family:'Noto Serif JP',serif;}
+.keigo-table td.kana{font-family:'Zen Old Mincho',serif;font-size:14px;}
+.keigo-table tr:nth-child(even) td{background:rgba(250,246,239,0.7);}
+</style>
+</head>
+<body>
+<nav class="nav-bar"><div class="nav-inner">
+<a class="nav-btn" href="index.html">☰ 一覧</a>
+<a class="nav-btn" href="kotenbun20.html">まし・まほし</a>
+  <a class="nav-btn" href="kotenbun21.html">重要語法</a>
+  <a class="nav-btn" href="kotenbun22.html">敬語</a>
+  <a class="nav-btn active" href="kotenbun23.html">識別</a>
+</div></nav>
+<div class="timer-header">
+  <div style="display:flex;align-items:baseline;gap:6px;">
+    <span class="timer-label">ELAPSED</span><span class="timer-main" id="timer">00:00.0</span>
+  </div>
+  <div class="rec-box">
+    <span class="rec-item"><span class="rec-n">1st</span><span class="rec-v" id="r1">--:--.-</span></span>
+    <span class="rec-item"><span class="rec-n">2nd</span><span class="rec-v" id="r2">--:--.-</span></span>
+    <span class="rec-item"><span class="rec-n">3rd</span><span class="rec-v" id="r3">--:--.-</span></span>
+  </div>
+</div>
+<div class="wrapper">
+  <div class="page-header">
+    <div class="breadcrumb">古典文法 › 第７章 識別 › UNIT 25</div>
+    <div class="page-title">助動詞の識別</div>
+    <div class="page-sub">「ぬ」「ね」「る・らる」「なり」など、同じ形で複数の意味を持つ語を正確に見分けましょう</div>
+  </div>
+
+  <!-- 導入 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge blue">はじめに</span><span class="sec-title">識別の基本手順</span></div>
+    <div class="desc-box">
+      古典語では、同じ形の語が複数の品詞・助動詞になることがよくあります。<br>
+      識別には決まった手順があります。<br><br>
+      <span class="verm">① 直前の語の活用形を確認する</span>（接続で判断）<br>
+      　→ 未然形接続か連用形接続かで多くの場合判断できます。<br><br>
+      <span class="verm">② それでも判断できない場合は直後の語を確認する</span><br>
+      　→ 体言が続く → 連体形　接続助詞「ど・ば」が続く → 已然形　など
+    </div>
+    <div class="point-box">
+      <strong>「ズをつけてみる」「タリをつけてみる」テスト：</strong><br>
+      直前の語に「ズ」が自然につながる → 未然形接続（打消「ず」など）<br>
+      直前の語に「タリ」が自然につながる → 連用形接続（完了「ぬ」「つ」など）
+    </div>
+  </div>
+
+  <!-- ぬの識別 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">識別①</span><span class="sec-title">「ぬ」の識別</span></div>
+    <div class="desc-box">
+      「ぬ」は次の2つのどちらかです。<br>
+      <span class="verm">完了の助動詞「ぬ」の終止形</span>→ <span class="indigo">連用形接続</span>（〜してしまった）<br>
+      <span class="verm">打消の助動詞「ず」の連体形</span>→ <span class="indigo">未然形接続</span>（〜ない）
+    </div>
+    <div style="overflow-x:auto;" id="sec-nu">
+      <table class="katsu-table">
+        <thead><tr><th class="th-gray"></th><th class="th-blue">未然</th><th class="th-blue">連用</th><th class="th-blue">終止</th><th class="th-blue">連体</th><th class="th-blue">已然</th><th class="th-blue">命令</th><th class="th-gold">接続</th></tr></thead>
+        <tbody>
+          <tr><td class="kana">完了「ぬ」</td><td><span class="blank initial" data-ans="な">な</span></td><td><span class="blank initial" data-ans="に">に</span></td><td class="kana" style="color:var(--verm);font-weight:700;">ぬ</td><td><span class="blank initial" data-ans="ぬる">ぬる</span></td><td><span class="blank initial" data-ans="ぬれ">ぬれ</span></td><td><span class="blank initial" data-ans="ね">ね</span></td><td><span class="blank initial" data-ans="連用形">連用形</span></td></tr>
+          <tr><td class="kana">打消「ず」</td><td>ず・ざら</td><td>ず・ざり</td><td>ず</td><td class="kana" style="color:var(--verm);font-weight:700;">ぬ（ざる）</td><td>ね・ざれ</td><td>ざれ</td><td><span class="blank initial" data-ans="未然形">未然形</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="point-box">
+      <strong>識別の手順：</strong><br>
+      ①「直前の語＋ズ」→ 自然 → 未然形接続 → 打消「ず」の連体形「ぬ」<br>
+      ①「直前の語＋タリ」→ 自然 → 連用形接続 → 完了「ぬ」の終止形<br>
+      ② どちらも可能な場合 → 直後を見る。体言が続く → 連体形「ぬ」→ 打消<br><br>
+      <strong>「ぬべし」「ぬらむ」は強意（確述）</strong>「きっと〜だろう」（完了「ぬ」＋推量）
+    </div>
+    <div id="score-nu"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('nu')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('nu')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('nu')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- ぬの演習 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge jade">演習①</span><span class="sec-title">「ぬ」の識別演習</span></div>
+    <div id="sec-nu-ex">
+      <div class="q-block">
+        <div class="q-label">問 ① 〈西南学院大〉</div>
+        <div class="q-text">「松はひとりになり①ぬべきにや」と……「ひとかたなら②ぬわびしさも、」</div>
+        ①「ぬ」の意味：<span class="blank initial" data-ans="強意（確述）">強意（確述）</span>　理由：<span class="blank initial" data-ans="直後に推量の助動詞「べし」がある">直後に推量の助動詞「べし」がある</span><br>
+        ②「ぬ」の意味：<span class="blank initial" data-ans="打消（ず）">打消（ず）</span>　理由：<span class="blank initial" data-ans="未然形「なら」に接続し直後に体言「わびしさ」がある">未然形「なら」に接続し直後に体言「わびしさ」がある</span>
+        <button class="kai-btn" onclick="toggleKai('k4')">解説 ▼</button>
+        <div class="kai-box" id="k4">①「なり」連用形＋「ぬ」＋「べし」→「ぬべし」の形式なので強意。②「なら」はラ変「なり」の未然形→未然形接続→打消「ず」の連体形「ぬ」。直後の「わびしさ」という体言も連体形を確認。</div>
+      </div>
+      <div class="q-block">
+        <div class="q-label">問 ② 接続から判断</div>
+        <div class="q-text">「花咲か①ぬ枝を折り取り②ぬ」<br>
+        ①と②の「ぬ」の意味をそれぞれ答えよ。</div>
+        ①の意味：<span class="blank initial" data-ans="打消（ず・連体形）">打消（ず・連体形）</span>　（「咲か」は未然形、直後に体言「枝」）<br>
+        ②の意味：<span class="blank initial" data-ans="完了（ぬ・終止形）">完了（ぬ・終止形）</span>　（「取り」は連用形、文末の言い切り）
+      </div>
+      <div class="q-block">
+        <div class="q-label">問 ③ 活用形問題 〈千葉大〉</div>
+        <div class="q-text">「暗うなり　　　ど、こなたには火もともさぬに、」（枕草子）<br>
+        空欄に完了の助動詞「ぬ」を正しく活用させよ。（「ど」は已然形接続の逆接助詞）</div>
+        答え：<span class="blank initial" data-ans="ぬれ">ぬれ</span>
+        <button class="kai-btn" onclick="toggleKai('k5')">解説 ▼</button>
+        <div class="kai-box" id="k5">「ど」は已然形接続の逆接接続助詞なので、完了「ぬ」の已然形「ぬれ」が入ります。</div>
+      </div>
+    </div>
+    <div id="score-nu-ex"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('nu-ex')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('nu-ex')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('nu-ex')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- ねの識別 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">識別②</span><span class="sec-title">「ね」の識別</span></div>
+    <div class="desc-box">
+      「ね」は次の2つのどちらかです。<br>
+      <span class="verm">完了「ぬ」の命令形</span>→ 連用形接続。「早く〜してしまえ」の命令。<br>
+      <span class="verm">打消「ず」の已然形</span>→ 未然形接続。「ば・ど・ども」に接続する。また係助詞「こそ」の結びになる。
+    </div>
+    <div id="sec-ne">
+      <div class="q-block">
+        <div class="q-label">演習②：識別問題</div>
+        ①「都を出で<span style="text-decoration:underline">ね</span>ど、ものさびし」の「ね」の意味：<span class="blank initial" data-ans="打消（ず・已然形）">打消（ず・已然形）</span><br>
+        　理由：「ど」は已然形接続の逆接助詞。<br>
+        ②「行け、行き<span style="text-decoration:underline">ね</span>。」の「ね」の意味：<span class="blank initial" data-ans="完了（ぬ・命令形）">完了（ぬ・命令形）</span><br>
+        　理由：「行き」は連用形接続。命令形→「行ってしまえ」。<br>
+        ③「えこそ聞き知ら<span style="text-decoration:underline">ね</span>。」の「ね」の意味：<span class="blank initial" data-ans="打消（ず・已然形）">打消（ず・已然形）</span><br>
+        　理由：係助詞「こそ」の結びなので已然形。「知ら」は未然形接続→打消。
+      </div>
+    </div>
+    <div id="score-ne"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('ne')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('ne')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('ne')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- るらるの識別 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">識別③</span><span class="sec-title">「る・らる」の意味の識別（受身・可能・自発・尊敬）</span></div>
+    <div class="desc-box">
+      「る・らる」はどちらも4つの意味を持ちます。文脈と次の手がかりで判断しましょう。<br><br>
+      ①<span class="verm">受身</span>「〜される」→ 動作主を示す「〜に」がある。<br>
+      ②<span class="verm">可能</span>「〜できる」→ 打消の語（ず・なし）が一緒に使われることが多い。<br>
+      ③<span class="verm">自発</span>「自然と〜される」→ 「見る・聞く・思ふ」などの<span class="indigo">知覚動詞・心情動詞</span>に付く。<br>
+      ④<span class="verm">尊敬</span>「〜なさる」→ 主語が貴人（身分の高い人）の場合。
+    </div>
+    <div id="sec-ruru">
+      <div class="q-block">
+        <div class="q-label">演習③：意味の識別</div>
+        ①「物におそ襲はるるやうにて、戦はむ心もなかりけり」（竹取）→ <span class="blank initial" data-ans="受身">受身</span><br>
+        ②「恐ろしくて、寝られず」→ <span class="blank initial" data-ans="可能">可能</span>　（打消「ず」あり）<br>
+        ③「今日は都のみぞ思ひやら<span style="text-decoration:underline">るる</span>」（土佐）→ <span class="blank initial" data-ans="自発">自発</span>　（心情動詞「思ひやる」）<br>
+        ④「大夫敦盛とて、十七にぞなら<span style="text-decoration:underline">れ</span>ける」（平家）→ <span class="blank initial" data-ans="尊敬">尊敬</span>　（貴人「敦盛」が主語）<br>
+        ⑤「抜かんとするに、おほかた抜か<span style="text-decoration:underline">れ</span>ず」（徒然草）→ <span class="blank initial" data-ans="可能">可能</span>　（打消「ず」あり）
+      </div>
+    </div>
+    <div id="score-ruru"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('ruru')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('ruru')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('ruru')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- なりの識別 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">識別④</span><span class="sec-title">「なり」の識別</span></div>
+    <div class="desc-box">
+      「なり」は最低でも4種類あります。接続を確認することが最優先です。<br><br>
+      ①<span class="verm">断定の助動詞「なり」</span>→ 体言・連体形接続。「〜である・〜だ」<br>
+      ②<span class="verm">伝聞推量の助動詞「なり」</span>→ 終止形接続（ラ変は連体形）。「〜だそうだ・〜ようだ」<br>
+      ③<span class="verm">ナリ活用形容動詞の活用語尾</span>→「いと〜なり」が自然につながる。<br>
+      ④<span class="verm">動詞「なる」の連用形</span>→「に」「なく」「なり」と変化する。文脈で判断。
+    </div>
+    <div id="sec-nari">
+      <div class="q-block">
+        <div class="q-label">演習④：識別問題</div>
+        ①「友<span style="text-decoration:underline">なり</span>（友＝体言）」の「なり」の種類 → <span class="blank initial" data-ans="断定の助動詞">断定の助動詞</span><br>
+        ②「行く<span style="text-decoration:underline">なり</span>（行く＝四段終止形）」の「なり」の種類 → <span class="blank initial" data-ans="伝聞推量の助動詞">伝聞推量の助動詞</span><br>
+        ③「静か<span style="text-decoration:underline">なり</span>（いと静かなり→自然）」の「なり」の種類 → <span class="blank initial" data-ans="形容動詞の活用語尾">形容動詞の活用語尾</span><br>
+        ④「昔、男あり<span style="text-decoration:underline">けり</span>。東の五条わたりに…いき<span style="text-decoration:underline">けり</span>。」の「けり」の意味<br>
+        　→ <span class="blank initial" data-ans="伝聞過去">伝聞過去</span>　（物語の地の文・作者の直接経験でない）
+      </div>
+    </div>
+    <div id="score-nari"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('nari')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('nari')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('nari')">↺ リセット</button>
+</div>
+  </div>
+
+  <!-- 総合演習 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-badge red">総合演習</span><span class="sec-title">入試問題にチャレンジ</span></div>
+
+    <div class="q-block">
+      <div class="q-label">問 ① 〈早稲田大〉</div>
+      <div class="q-text">「みづからの心にも従は<span style="text-decoration:underline">ぬ</span>やうにはべりけれ。」（源氏物語）の「ぬ」と同じ助動詞を選べ。<br>
+      ハ「みな人はまことの道に入り<span style="text-decoration:underline">ぬ</span>なり」<br>
+      ニ「わびしさの数も忘られ<span style="text-decoration:underline">ぬ</span>べし」<br>
+      ヘ「この国に見え<span style="text-decoration:underline">ぬ</span>玉の枝なり」<br>
+      ト「翁を、いとほしくかなしと思しつる事も失せ<span style="text-decoration:underline">ぬ</span>」</div>
+      本文の「ぬ」の意味：<span class="blank initial" data-ans="打消（ず・連体形）">打消（ず・連体形）</span><br>
+      同じ意味の選択肢（打消）：<span class="blank initial" data-ans="ヘ">ヘ</span>
+      <button class="kai-btn" onclick="toggleKai('k6')">解説 ▼</button>
+      <div class="kai-box" id="k6">本文「従は（未然形）＋ぬ」→未然形接続→打消「ず」の連体形。ハ「入り（連用形）＋ぬ」→完了。ニ「られ＋ぬべし」→強意。ヘ「見え＋ぬ」→未然・連用どちらも可能だが直後に体言「玉の枝」→連体形→打消。ト「失せ（連用形）＋ぬ」→完了。</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">問 ② 〈関西学院大〉</div>
+      <div class="q-text">「取り返さ<span style="text-decoration:underline">るる</span>よはい齢ならねば、走りて坂を下る輪のごとくに衰へゆく。」（徒然草）<br>
+      傍線部「るる」の意味を①〜④から選べ。　①受身　②尊敬　③可能　④自発</div>
+      答え：<span class="blank initial" data-ans="③可能">③可能</span>
+      <button class="kai-btn" onclick="toggleKai('k7')">解説 ▼</button>
+      <div class="kai-box" id="k7">「取り返さるる」→「取り返す＋るる」。直後に打消の語は明示されていませんが、文脈上「取り返すことができる（よはい＝若さ）ではないので」→可能の否定の意。「取り返さるる齢ならねば」＝「取り返すことができる若さではないので」。</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">問 ③ 〈学習院大〉</div>
+      <div class="q-text">「とかく心得<span style="text-decoration:underline">ぬ</span>人には心得あるべし。」（西鶴諸国咄）<br>
+      傍線部「ぬ」の品詞と活用形名を答えよ。</div>
+      品詞：<span class="blank initial" data-ans="打消の助動詞「ず」">打消の助動詞「ず」</span>　活用形名：<span class="blank initial" data-ans="連体形">連体形</span>
+      <button class="kai-btn" onclick="toggleKai('k8')">解説 ▼</button>
+      <div class="kai-box" id="k8">「心得」はア行下二段動詞で未然形・連用形が同形。直後に体言「人」があるので「ぬ」は連体形。連体形が「ぬ」になるのは打消「ず」のみ（完了「ぬ」の連体形は「ぬる」）。</div>
+    </div>
+    <div id="score-sogo"></div><div class="btn-area">
+  <button class="btn btn-start" onclick="startChallenge('sogo')">▶ チャレンジ開始</button>
+  <button class="btn btn-check" onclick="checkResult('sogo')">✓ 判定する</button>
+  <button class="btn btn-reset" onclick="resetTable('sogo')">↺ リセット</button>
+</div>
+  </div>
+</div>
+<div id="koten-unit-nav">
+  <a class="kun-btn prev" href="kotenbun22.html">◀ UNIT24 敬語</a>
+  <a class="kun-btn idx" href="index.html">☰ 単元一覧</a>
+  <a class="kun-btn nxt" href="index.html">単元一覧へ ▶</a>
+</div>
+<div id="word-bank-fixed"><div class="bank-inner">
+  <div class="bank-head"><span class="bank-title">【 語 群 】</span></div>
+  <div id="word-list" class="word-list"></div>
+</div></div>
+<div class="cfw" id="cfw"></div><div class="toast" id="toast"></div>
+<script>
+let _st=null,_ti=null,_recs=[];
+function startTimer(){if(_st)return;_st=Date.now();_ti=setInterval(()=>{const d=(Date.now()-_st)/1000;document.getElementById('timer').textContent=Math.floor(d/60).toString().padStart(2,'0')+':'+(d%60).toFixed(1).padStart(4,'0');},100);}
+function stopTimer(){if(!_st)return'--:--.–';clearInterval(_ti);const t=document.getElementById('timer').textContent;_recs.push(t);_st=null;['r1','r2','r3'].forEach((id,i)=>{if(_recs[i])document.getElementById(id).textContent=_recs[i];});return t;}
+function showToast(msg,ok=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(ok?' ok':'');requestAnimationFrame(()=>{t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1400);});}
+function confetti(){const w=document.getElementById('cfw');w.innerHTML='';const cols=['#c0392b','#b8860b','#2e7d52','#1a3a5c','#ffd700','#e74c3c','#43a36b'];for(let i=0;i<90;i++){const p=document.createElement('div');p.className='cp';const sz=(Math.random()*8+5)+'px';p.style.cssText='left:'+Math.random()*100+'%;width:'+sz+';height:'+sz+';background:'+cols[i%cols.length]+';border-radius:'+(Math.random()>.5?'50%':'2px')+';animation-duration:'+(Math.random()*1.5+1)+'s;animation-delay:'+(Math.random()*.4)+'s;opacity:1;';w.appendChild(p);}setTimeout(()=>w.innerHTML='',3500);}
+let _sel=null,_states={};
+function _getBlanks(id){const el=document.getElementById('tbl-'+id);if(el)return el.querySelectorAll('.blank');const el2=document.getElementById('sec-'+id);if(el2)return el2.querySelectorAll('.blank');return [];}
+function startChallenge(id){
+  startTimer();if(!_states[id])_states[id]={};_states[id].on=true;
+  const blanks=_getBlanks(id),wl=document.getElementById('word-list'),bank=document.getElementById('word-bank-fixed');
+  wl.innerHTML='';bank.style.display='block';
+  const cnt={};blanks.forEach(b=>{cnt[b.dataset.ans]=(cnt[b.dataset.ans]||0)+1;});
+  const words=[];Object.keys(cnt).forEach(w=>{for(let i=0;i<cnt[w];i++)words.push(w);});
+  words.sort(()=>Math.random()-0.5);
+  blanks.forEach(b=>{
+    b.textContent='';b.classList.remove('initial','filled','correct','wrong');b.classList.add('challenge');b.dataset.gid=id;
+    b.onclick=function(){
+      if(!_states[this.dataset.gid]?.on)return;
+      if(this.textContent!==''){const txt=this.textContent;document.querySelectorAll('.word-item').forEach(it=>{if(it.dataset.val===txt&&it.classList.contains('used'))it.classList.remove('used');});this.textContent='';this.classList.remove('filled');}
+      if(_sel){this.textContent=_sel.dataset.val;this.classList.add('filled');_sel.classList.add('used');_sel.classList.remove('sel');_sel=null;}
+    };
+  });
+  words.forEach(w=>{
+    const item=document.createElement('div');item.className='word-item';item.textContent=w;item.dataset.val=w;
+    item.onclick=function(e){e.stopPropagation();if(this.classList.contains('used'))return;document.querySelectorAll('.word-item').forEach(el=>el.classList.remove('sel'));_sel=this;this.classList.add('sel');};
+    wl.appendChild(item);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});showToast('チャレンジ開始！');
+}
+function checkResult(id){
+  if(!_states[id]?.on){showToast('チャレンジを開始してください');return;}
+  const blanks=_getBlanks(id);let ok=0,total=0;
+  blanks.forEach(b=>{total++;if(b.textContent.trim()===b.dataset.ans){b.classList.add('correct');b.classList.remove('filled','wrong');ok++;}else if(b.textContent!==''){b.classList.add('wrong');b.classList.remove('filled','correct');}});
+  const sa=document.getElementById('score-'+id);if(sa)sa.innerHTML='<div class="score-badge">✓ '+ok+' / '+total+' 正解</div>';
+  if(ok===total){const t=stopTimer();_states[id].on=false;document.getElementById('word-bank-fixed').style.display='none';confetti();showToast('🎉 全問正解！ '+t,true);}
+  else showToast(ok+'/'+total+' 正解。赤い空欄を確認しましょう');
+}
+function resetTable(id){
+  if(_states[id])_states[id].on=false;
+  const blanks=_getBlanks(id);
+  blanks.forEach(b=>{b.textContent=b.dataset.ans;b.classList.remove('challenge','filled','correct','wrong');b.classList.add('initial');b.onclick=null;});
+  const sa=document.getElementById('score-'+id);if(sa)sa.innerHTML='';
+  document.getElementById('word-bank-fixed').style.display='none';
+}
+function toggleKai(id){const el=document.getElementById(id);if(el.classList.contains('show'))el.classList.remove('show');else{el.classList.add('show');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),100);}}
+document.addEventListener('click',e=>{if(!e.target.classList.contains('word-item')&&!e.target.classList.contains('blank')){document.querySelectorAll('.word-item').forEach(el=>el.classList.remove('sel'));_sel=null;}});
+</script>
+</body></html>
