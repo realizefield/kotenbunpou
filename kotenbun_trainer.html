@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>古文文法トレーナー</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#edf0f3; --surface:#ffffff; --fg:#19212c; --muted:#5c6877; --line:#d3d9e0;
+  --accent:#2b4a83; --accent-fg:#ffffff; --accent-soft:#e1e8f4;
+  --ok:#1f7a55; --ok-bg:#ddf0e7; --ng:#b03a2e; --ng-bg:#f7e0dc;
+  --f-display:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10151c; --surface:#19202a; --fg:#e6eaf0; --muted:#94a0b0; --line:#2b3542;
+    --accent:#8fb0ee; --accent-fg:#0e1624; --accent-soft:#222e44;
+    --ok:#5cc79a; --ok-bg:#17382b; --ng:#f08a7c; --ng-bg:#40201c; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10151c; --surface:#19202a; --fg:#e6eaf0; --muted:#94a0b0; --line:#2b3542;
+  --accent:#8fb0ee; --accent-fg:#0e1624; --accent-soft:#222e44;
+  --ok:#5cc79a; --ok-bg:#17382b; --ng:#f08a7c; --ng-bg:#40201c; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+img{max-width:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.7;
+  padding-block:20px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-family:var(--f-display);font-size:1.7rem;line-height:1.3;margin:0;font-weight:700;letter-spacing:.04em}
+.sub{margin:0;color:var(--muted);font-size:.85rem}
+nav.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+nav.tabs button{background:none;border:0;padding:8px 16px;border-bottom:3px solid transparent;color:var(--muted);font-weight:500;margin-bottom:-1px}
+nav.tabs button[aria-current="true"]{color:var(--fg);border-bottom-color:var(--accent);font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+.stat b{display:block;font-family:var(--f-display);font-size:1.5rem;line-height:1.3;font-variant-numeric:tabular-nums}
+.stat span{font-size:.75rem;color:var(--muted);letter-spacing:.06em}
+.decks{display:flex;flex-direction:column;gap:12px}
+.deck{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;grid-template-columns:1fr auto;gap:8px 16px;align-items:center}
+.deck h2{font-family:var(--f-display);font-size:1.15rem;margin:0;line-height:1.4}
+.deck p{margin:0;color:var(--muted);font-size:.82rem;line-height:1.5}
+.deck .bar{grid-column:1 / -1}
+.btns{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.bar{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--line)}
+.bar i{display:block;height:100%}
+.bar .b-learn{background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.bar .b-done{background:var(--accent)}
+.legend{grid-column:1 / -1;display:flex;gap:16px;flex-wrap:wrap;font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.legend .lm{color:var(--ng);font-weight:700}
+.btn{background:var(--accent);color:var(--accent-fg);border:0;border-radius:6px;padding:9px 18px;font-weight:700;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line);font-weight:500}
+.btn.warn{background:var(--ng-bg);color:var(--ng);border:1px solid var(--ng);font-weight:700}
+.btn[disabled]{opacity:.45;cursor:default}
+.mix{background:var(--accent-soft);border:1px solid var(--accent);border-radius:6px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.mix.miss{background:var(--ng-bg);border-color:var(--ng)}
+.mix b{font-family:var(--f-display);font-size:1.1rem}
+.mix p{margin:0;font-size:.82rem;color:var(--muted)}
+.mode{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+.mode b{font-family:var(--f-display);font-size:1.05rem}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--accent);border-radius:6px;overflow:hidden}
+.seg button{background:transparent;border:0;padding:10px 8px;font-weight:500;color:var(--accent)}
+.seg button+button{border-left:1px solid var(--accent)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);font-weight:700}
+.mode p{margin:0;font-size:.8rem;color:var(--muted)}
+/* quiz */
+.prog{display:flex;align-items:center;gap:12px;font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.prog .bar{flex:1;height:6px}
+.prog .bar i{background:var(--accent)}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px 16px;display:flex;flex-direction:column;gap:16px}
+.q .tagline{font-size:.75rem;letter-spacing:.08em;color:var(--muted)}
+.q .ask{font-family:var(--f-display);font-size:1.45rem;line-height:1.6;margin:0;text-wrap:balance}
+.q .ask em{font-style:normal;color:var(--accent);border-bottom:3px solid var(--accent);padding:0 2px}
+.q .ask .w{font-size:2.2rem;display:block;line-height:1.3}
+.blist{display:flex;flex-direction:column;gap:16px}
+.blist .q .ask{font-size:1.25rem}
+.blist .q .ask .w{font-size:1.8rem}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:center;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px;min-width:0}
+.opt kbd{font-family:var(--f-body);font-size:.75rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;text-align:center;line-height:22px;background:var(--surface)}
+.opt span{overflow-wrap:anywhere}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.opt.ng{background:var(--ng-bg);border-color:var(--ng);color:var(--ng)}
+.opt[disabled]{cursor:default}
+.fb{border-radius:6px;padding:12px 14px;font-size:.92rem;display:flex;flex-direction:column;gap:6px}
+.fb.ok{background:var(--ok-bg)} .fb.ng{background:var(--ng-bg)}
+.fb strong{font-size:1rem}
+.fb.ok strong{color:var(--ok)} .fb.ng strong{color:var(--ng)}
+.fb .mini{font-size:.82rem;color:var(--muted);overflow-wrap:anywhere}
+.row{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.score{font-family:var(--f-display);font-size:3rem;line-height:1.2;font-variant-numeric:tabular-nums}
+.miss{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.miss li{border-left:3px solid var(--ng);padding:2px 0 2px 12px;font-size:.9rem}
+.miss li small{color:var(--muted);display:block}
+.group h2{font-family:var(--f-display);font-size:1.05rem;margin:0 0 8px}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.85rem}
+th,td{padding:6px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-size:.72rem;color:var(--muted);font-weight:500;letter-spacing:.05em;background:var(--bg)}
+td.w{font-family:var(--f-display);font-weight:700;font-size:1rem}
+tr:last-child td{border-bottom:0}
+td.m{white-space:normal;min-width:11em}
+.note{font-size:.8rem;color:var(--muted)}
+.reset{margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fin{position:sticky;bottom:0;background:var(--bg);padding:10px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+@media (max-width:480px){
+  .stats{gap:8px} .stat{padding:8px 10px}
+  .deck{grid-template-columns:1fr} .deck .btn{width:100%}
+  .q .ask{font-size:1.25rem}
+}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.memo{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:4px 10px;font-size:.8rem;font-weight:700}
+.pop{position:fixed;inset:0;background:rgba(10,15,25,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
+.pbox{background:var(--surface);color:var(--fg);border-radius:8px;max-width:640px;width:100%;max-height:90vh;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.phead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.phead h2{font-family:var(--f-display);font-size:1.15rem;margin:0}
+.mrow{display:grid;grid-template-columns:6em 1fr;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.mh{background:var(--accent-soft);font-weight:700;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;font-size:.85rem}
+.mb{padding:10px 12px;font-family:var(--f-display);font-size:1.05rem;line-height:1.9}
+.mb .r{color:var(--ng);font-weight:700}
+@media (max-width:480px){.mrow{grid-template-columns:4.6em 1fr}.mb{font-size:1rem}}
+@media (prefers-reduced-motion: no-preference){
+  .bar i{transition:width .3s}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="pop" id="pop" hidden role="dialog" aria-modal="true" aria-labelledby="popT"><div class="pbox"><div class="phead"><h2 id="popT">助動詞の接続【暗記】</h2><button class="btn ghost" data-close id="popClose">閉じる</button></div><div id="popBody"></div></div></div>
+
+<script>
+/* ===== データ ===== */
+const A=(id,w,o)=>Object.assign({id,w},o);
+const AUX=[
+ A('ru','る',{conn:'四段・ナ変・ラ変の未然形',type:'下二段型',mean:['自発','可能','受身','尊敬'],f:['れ','れ','る','るる','るれ','れよ']}),
+ A('raru','らる',{conn:'四段・ナ変・ラ変以外の未然形',type:'下二段型',mean:['自発','可能','受身','尊敬'],f:['られ','られ','らる','らるる','らるれ','られよ']}),
+ A('su','す',{conn:'四段・ナ変・ラ変の未然形',type:'下二段型',mean:['使役','尊敬'],f:['せ','せ','す','する','すれ','せよ']}),
+ A('sasu','さす',{conn:'四段・ナ変・ラ変以外の未然形',type:'下二段型',mean:['使役','尊敬'],f:['させ','させ','さす','さする','さすれ','させよ']}),
+ A('shimu','しむ',{conn:'未然形',type:'下二段型',mean:['使役','尊敬'],f:['しめ','しめ','しむ','しむる','しむれ','しめよ']}),
+ A('zu','ず',{conn:'未然形',type:'特殊型',mean:['打消'],f:['ず/ざら','ず/ざり','ず','ぬ/ざる','ね/ざれ','ざれ']}),
+ A('mu','む',{conn:'未然形',type:'四段型',mean:['推量','意志','適当','勧誘','婉曲','仮定'],f:['','','む','む','め','']}),
+ A('muzu','むず',{conn:'未然形',type:'サ変型',mean:['推量','意志','適当','勧誘','婉曲','仮定'],f:['','','むず','むずる','むずれ','']}),
+ A('mashi','まし',{conn:'未然形',type:'特殊型',mean:['反実仮想','ためらいの意志'],f:['ませ/ましか','','まし','まし','ましか','']}),
+ A('ji','じ',{conn:'未然形',type:'無変化型',mean:['打消推量','打消意志'],f:['','','じ','じ','じ','']}),
+ A('maji','まじ',{conn:'終止形(ラ変型には連体形)',type:'シク活用型',mean:['打消推量','打消意志','不可能','不適当','禁止','打消当然'],f:['まじから','まじく/まじかり','まじ','まじき/まじかる','まじけれ','']}),
+ A('ki','き',{conn:'連用形',type:'特殊型',mean:['過去'],f:['(せ)','','き','し','しか','']}),
+ A('keri','けり',{conn:'連用形',type:'ラ変型',mean:['過去','詠嘆'],f:['(けら)','','けり','ける','けれ','']}),
+ A('tsu','つ',{conn:'連用形',type:'下二段型',mean:['完了','強意'],f:['て','て','つ','つる','つれ','てよ']}),
+ A('nu','ぬ',{conn:'連用形',type:'ナ変型',mean:['完了','強意'],f:['な','に','ぬ','ぬる','ぬれ','ね'],tag:'完了',hint:'連用形に接続'}),
+ A('tari1','たり',{conn:'連用形',type:'ラ変型',mean:['完了','存続'],f:['たら','たり','たり','たる','たれ','たれ'],tag:'完了',hint:'連用形に接続'}),
+ A('ri','り',{conn:'サ変の未然形・四段の已然形(命令形)',type:'ラ変型',mean:['完了','存続'],f:['ら','り','り','る','れ','れ']}),
+ A('kemu','けむ',{conn:'連用形',type:'四段型',mean:['過去推量','過去の原因推量','過去の伝聞・婉曲'],f:['','','けむ','けむ','けめ','']}),
+ A('tashi','たし',{conn:'連用形',type:'ク活用型',mean:['希望'],f:['たから','たく/たかり','たし','たき/たかる','たけれ','']}),
+ A('mahoshi','まほし',{conn:'未然形',type:'シク活用型',mean:['希望'],f:['まほしから','まほしく/まほしかり','まほし','まほしき/まほしかる','まほしけれ','']}),
+ A('ramu','らむ',{conn:'終止形(ラ変型には連体形)',type:'四段型',mean:['現在推量','現在の原因推量','伝聞・婉曲'],f:['','','らむ','らむ','らめ','']}),
+ A('meri','めり',{conn:'終止形(ラ変型には連体形)',type:'ラ変型',mean:['推定','婉曲'],f:['','めり','めり','める','めれ','']}),
+ A('nari1','なり',{conn:'終止形(ラ変型には連体形)',type:'ラ変型',mean:['伝聞','推定'],f:['','なり','なり','なる','なれ',''],tag:'伝聞推定',hint:'終止形に接続'}),
+ A('beshi','べし',{conn:'終止形(ラ変型には連体形)',type:'ク活用型',mean:['推量','意志','可能','当然','命令','適当'],f:['べから','べく/べかり','べし','べき/べかる','べけれ','']}),
+ A('rashi','らし',{conn:'終止形(ラ変型には連体形)',type:'無変化型',mean:['根拠のある推定'],f:['','','らし','らし/らしき','らし','']}),
+ A('nari2','なり',{conn:'体言・連体形',type:'形容動詞ナリ活用型',mean:['断定','存在'],f:['なら','なり/に','なり','なる','なれ','なれ'],tag:'断定',hint:'体言・連体形に接続'}),
+ A('tari2','たり',{conn:'体言',type:'形容動詞タリ活用型',mean:['断定'],f:['たら','たり/と','たり','たる','たれ','たれ'],tag:'断定',hint:'体言に接続'}),
+ A('gotoshi','ごとし',{conn:'体言・連体形(+の・が)',type:'ク活用型',mean:['比況'],f:['','ごとく','ごとし','ごとき','','']})
+];
+const FORM=['未然形','連用形','終止形','連体形','已然形','命令形'];
+const SENT=[
+ {s:['人に笑は','る','。'],ans:'受身',o:['自発','可能','尊敬'],e:'「笑は」は四段の未然形で、「る」が付く。「人に」(動作の相手)があるので受身。'},
+ {s:['昔、男あり','けり','。'],ans:'過去',o:['詠嘆','完了','推量'],e:'物語の地の文で、昔のことを語り伝える「けり」は過去。'},
+ {s:['花の色は移りに','けり','ないたづらにわが身世にふるながめせしまに'],ans:'詠嘆',o:['過去','完了','推量'],e:'和歌の中の「けり」は、気づいて「〜なあ」と感じる詠嘆。直後の「な」(詠嘆の終助詞)も手がかり。'},
+ {s:['我、あの山に登ら','む','。'],ans:'意志',o:['推量','勧誘','婉曲'],e:'主語が一人称(我)の「む」は意志。三人称なら推量、二人称なら適当・勧誘。'},
+ {s:['雨も降ら','ず','。'],ans:'打消',o:['打消推量','過去','完了'],e:'未然形「降ら」に付く「ず」は打消。'},
+ {s:['人をして行か','しむ','。'],ans:'使役',o:['尊敬','受身','可能'],e:'「人をして(人に〜させる)」の形があるので使役。'},
+ {s:['桜の花、今日散り','ぬ','。'],ans:'完了',o:['打消','過去','推量'],e:'「散り」は連用形。連用形に付く「ぬ」は完了(ナ変型)。'},
+ {s:['花の散ら','ぬ','春なし。'],ans:'打消',o:['完了','強意','過去'],e:'「散ら」は未然形。未然形に付く「ぬ」は打消「ず」の連体形で、下の「春」にかかる。'},
+ {s:['いまごろ都には雪降る','らむ','。'],ans:'現在推量',o:['過去推量','意志','反実仮想'],e:'終止形「降る」に付く「らむ」で、目に見えない今の様子を想像している。現在推量。'},
+ {s:['遠くより人の声す','なり','。'],ans:'伝聞・推定',o:['断定','存在','完了'],e:'終止形「す」に付く「なり」は伝聞・推定。声という聴覚が根拠。'},
+ {s:['これは秋の月','なり','。'],ans:'断定',o:['伝聞・推定','完了','存続'],e:'体言「月」に付く「なり」は断定。'},
+ {s:['帝、御覧ぜ','られ','けり。'],ans:'尊敬',o:['受身','自発','可能'],e:'主語は帝で、敬語「御覧ず」にさらに付いている。敬語を伴い主語が高貴な人なら尊敬(二重の敬語で最高敬語)。'},
+ {s:['故郷のことが思ひ出で','らる','。'],ans:'自発',o:['可能','受身','尊敬'],e:'「思ひ出づ」など心情・知覚を表す動詞に付く「る・らる」は自発。'},
+ {s:['かの山には登ら','れ','ず。'],ans:'可能',o:['自発','受身','尊敬'],e:'打消(ず)を伴う「る・らる」は可能で、「〜できない」の意。'},
+ {s:['人に物を持た','せ','たり。'],ans:'使役',o:['尊敬','受身','可能'],e:'「人に」と相手が示され、その人に動作をさせているので使役。'},
+ {s:['我は決して行か','じ','。'],ans:'打消意志',o:['打消推量','不可能','禁止'],e:'主語が一人称(我)の「じ」は打消意志。'},
+ {s:['雨降れば、人も来','じ','。'],ans:'打消推量',o:['打消意志','不可能','禁止'],e:'主語が三人称(人)の「じ」は打消推量。'},
+ {s:['故郷へ帰り','たし','。'],ans:'希望',o:['推量','意志','打消'],e:'連用形「帰り」に付く「たし」は希望。'},
+ {s:['風に紅葉の散る','めり','。'],ans:'推定',o:['伝聞','過去','断定'],e:'目で見た様子から判断する推定(視覚推定)の「めり」。耳で聞く根拠の「なり」と区別する。'},
+ {s:['春過ぎて夏来たる','らし','白妙の衣干したり天の香具山'],ans:'根拠のある推定',o:['現在推量','過去推量','伝聞'],e:'下に「衣干したり」という根拠が示されている。根拠に基づく推定は「らし」。'},
+ {s:['昔、見','し','人。'],ans:'過去',o:['完了','存続','詠嘆'],e:'連用形「見」に付く「し」は、過去の助動詞「き」の連体形。'},
+ {s:['花咲け','る','枝。'],ans:'存続',o:['過去','詠嘆','推量'],e:'「咲け」は四段の已然形(命令形)。これに付く「る」は「り」の連体形で、「咲いている」の意の存続。'},
+ {s:['世の中に絶えて桜のなかりせば春の心はのどけから','まし',''],ans:'反実仮想',o:['推量','意志','婉曲'],e:'「せば〜まし」の形で、事実に反することを仮に想像する反実仮想。'},
+ {s:['光陰は矢の','ごとし','。'],ans:'比況',o:['推定','婉曲','断定'],e:'「〜のようだ」と例える比況。'}
+];
+const KEIGO=[
+ ['のたまふ','尊敬語','おっしゃる'],['おはす','尊敬語','いらっしゃる'],['御覧ず','尊敬語','ご覧になる'],
+ ['大殿籠る','尊敬語','おやすみになる'],['思す','尊敬語','お思いになる'],
+ ['聞こゆ','謙譲語','申し上げる'],['申す','謙譲語','申し上げる'],['奏す','謙譲語','(天皇・上皇に)申し上げる'],
+ ['啓す','謙譲語','(皇后・皇太子に)申し上げる'],['承る','謙譲語','お聞きする'],['まかる','謙譲語','退出する'],
+ ['侍り','丁寧語','あります・ございます'],['候ふ','丁寧語','あります・ございます']
+];
+const J=(deck,cat,w,conn,mean,o)=>Object.assign({deck,cat,w,conn,mean},o||{});
+const JO=[
+ J('kakari','係助詞','ぞ','連体形','強意'),
+ J('kakari','係助詞','なむ','連体形','強意',{hint:'係助詞'}),
+ J('kakari','係助詞','や','連体形','疑問・反語'),
+ J('kakari','係助詞','か','連体形','疑問・反語'),
+ J('kakari','係助詞','こそ','已然形','強意',{note:'「こそ」だけが已然形で結ぶ。ほかの係助詞は連体形で結ぶ。'}),
+ J('jsetsu','接続助詞','ば',null,'順接仮定条件',{hint:'未然形+ば',note:'「もし〜ならば」。'}),
+ J('jsetsu','接続助詞','ば',null,'順接確定条件',{hint:'已然形+ば',note:'「〜ので」(原因・理由)、「〜と」(偶然)、「〜といつも」(恒常)。'}),
+ J('jsetsu','接続助詞','とも','終止形(形容詞型には連用形)','逆接仮定条件',{note:'「たとえ〜ても」。'}),
+ J('jsetsu','接続助詞','ど','已然形','逆接確定条件',{note:'「〜けれども」。'}),
+ J('jsetsu','接続助詞','ども','已然形','逆接確定条件',{note:'「〜けれども」。'}),
+ J('jsetsu','接続助詞','が','連体形','単純接続・逆接確定条件',{hint:'接続助詞'}),
+ J('jsetsu','接続助詞','に','連体形','単純接続・順接確定条件・逆接確定条件',{hint:'接続助詞'}),
+ J('jsetsu','接続助詞','を','連体形','単純接続・順接確定条件・逆接確定条件',{hint:'接続助詞'}),
+ J('jsetsu','接続助詞','て','連用形','単純接続'),
+ J('jsetsu','接続助詞','で','未然形','打消接続(〜ないで)'),
+ J('jsetsu','接続助詞','つつ','連用形','反復・継続・並行'),
+ J('jsetsu','接続助詞','ものの','連体形','逆接確定条件'),
+ J('jsetsu','接続助詞','ものを','連体形','逆接確定条件',{note:'「〜のに」。詠嘆をこめることも多い。'}),
+ J('jshu','終助詞','ばや','未然形','自己の願望(〜たい)'),
+ J('jshu','終助詞','なむ','未然形','他に対する願望(〜てほしい)',{hint:'終助詞'}),
+ J('jshu','終助詞','てしがな','連用形','自己の願望(〜たい)'),
+ J('jshu','終助詞','にしがな','連用形','自己の願望(〜たい)'),
+ J('jshu','終助詞','もがな','体言など','願望(〜があればなあ)'),
+ J('jshu','終助詞','な','終止形(ラ変型には連体形)','禁止(〜するな)',{hint:'終助詞'}),
+ J('jshu','終助詞','な〜そ','連用形(カ変・サ変は未然形)','禁止(〜するな)',{note:'「な」と「そ」で動詞をはさむ。'}),
+ J('jshu','終助詞','かし',null,'念押し(〜よ・ね)',{note:'文末に付く。'}),
+ J('jkaku','格助詞','が・の',null,'主格・連体格・同格・体言の代用'),
+ J('jkaku','格助詞','より',null,'起点・経由・比較・手段・即時'),
+ J('jkaku','格助詞','から',null,'起点・経由'),
+ J('jkaku','格助詞','にて',null,'場所・手段・原因'),
+ J('jkaku','格助詞','して',null,'手段・使役の対象・共同'),
+ J('jkaku','格助詞','へ',null,'方向'),
+ J('jkaku','副助詞','だに',null,'類推・最小限の限定',{note:'「〜さえ」「せめて〜だけでも」。'}),
+ J('jkaku','副助詞','すら',null,'類推'),
+ J('jkaku','副助詞','さへ',null,'添加',{note:'「その上〜までも」。'}),
+ J('jkaku','副助詞','のみ',null,'限定・強調'),
+ J('jkaku','副助詞','ばかり',null,'限定・程度'),
+ J('jkaku','副助詞','まで',null,'程度・限度')
+];
+function joInfo(j){
+  return `${j.w}${j.hint?'（'+j.hint+'）':''} ｜ ${j.cat}`+(j.conn?` ｜ ${j.deck==='kakari'?'結び':'接続'}:${j.conn}`:'')+` ｜ 意味:${j.mean}`+(j.note?'<br>'+j.note:'');
+}
+const PSENT=[
+ {s:['雪','の','降る。'],ans:'主格',o:['連体格','同格','体言の代用'],e:'「雪が降る」と「が」に言い換えられ、述語「降る」にかかるので主格。'},
+ {s:['京','の','人。'],ans:'連体格',o:['主格','同格','体言の代用'],e:'下の体言「人」を修飾している。「京の人」と「の」のまま訳せる連体格。'},
+ {s:['白き鳥','の','、嘴と脚と赤き、鴫の大きさなる'],ans:'同格',o:['主格','連体格','体言の代用'],e:'「Aの、…連体形」の形で「A(で)…」と言い換えられる同格。「白い鳥で、嘴と脚が赤い」。'},
+ {s:['雨降ら','ば','、行かじ。'],ans:'順接仮定条件',o:['順接確定条件','逆接仮定条件','単純接続'],e:'未然形+ばは仮定。「もし降ったら」。'},
+ {s:['雨降れ','ば','、行かず。'],ans:'順接確定条件',o:['順接仮定条件','逆接確定条件','単純接続'],e:'已然形+ばは確定。「降ったので」。'},
+ {s:['山高けれ','ど','、登りぬ。'],ans:'逆接確定条件',o:['逆接仮定条件','順接確定条件','単純接続'],e:'已然形+どは逆接確定。「高いけれども」。'},
+ {s:['たとひ雨降る','とも','、行かむ。'],ans:'逆接仮定条件',o:['逆接確定条件','順接仮定条件','単純接続'],e:'終止形+とも。「たとひ」と呼応して「たとえ降っても」。'},
+ {s:['月も見','で','寝ぬ。'],ans:'打消接続',o:['単純接続','逆接確定条件','原因・理由'],e:'未然形「見」に付く「で」は「〜ないで」の打消接続。'},
+ {s:['歩み','つつ','詠む。'],ans:'並行',o:['反復','逆接確定条件','打消接続'],e:'連用形に付く「つつ」。「歩きながら詠む」と二つの動作が並行している。'},
+ {s:['花','ぞ','咲く。'],ans:'強意',o:['疑問','反語','詠嘆'],e:'「ぞ」は連体形「咲く」で結ぶ係助詞。強調する。'},
+ {s:['雨','なむ','降りける。'],ans:'強意',o:['疑問','反語','詠嘆'],e:'連体形「ける」で結ぶ係り結びの「なむ」。強意。'},
+ {s:['花','こそ','咲きたれ。'],ans:'強意',o:['疑問','反語','詠嘆'],e:'「こそ」を已然形「咲きたれ」で結ぶ係り結び。強調する。'},
+ {s:['いかで月を見','ばや','。'],ans:'自己の願望',o:['他に対する願望','禁止','念押し'],e:'未然形に付く「ばや」は自己の願望。「見たい」。'},
+ {s:['早う帰ら','なむ','。'],ans:'他に対する願望',o:['強意+推量','自己の願望','禁止'],e:'未然形「帰ら」に付く「なむ」は他に対する願望。連用形に付く「なむ」なら「ぬ」+「む」。'},
+ {s:['な泣き','そ','。'],ans:'禁止',o:['願望','念押し','詠嘆'],e:'「な〜そ」で「〜するな」の禁止。間にはさまれる語は連用形。'},
+ {s:['一目','だに','見ばや。'],ans:'最小限の限定',o:['類推','添加','程度'],e:'願望と呼応し「せめて一目だけでも」の意。'},
+ {s:['雨','さへ','降りぬ。'],ans:'添加',o:['類推','限定','程度'],e:'「その上、雨までも」と付け加える添加。'},
+ {s:['都','より','来る人。'],ans:'起点',o:['比較','手段','即時'],e:'場所を表す語に付き「〜から」の意。'},
+ {s:['富士','より','高き山なし。'],ans:'比較',o:['起点','手段','即時'],e:'「富士より高い」と、程度を比べている。'},
+ {s:['馬','にて','行く。'],ans:'手段',o:['場所','原因','起点'],e:'乗り物に付き「〜で」と手段を表す。'}
+];
+const DECKS=[
+ {id:'conn',name:'助動詞の接続',desc:'どの活用形に付くか。ここが識別の入口'},
+ {id:'mean',name:'助動詞の意味',desc:'ひとつの助動詞が持つ意味を全部'},
+ {id:'type',name:'助動詞の活用型',desc:'下二段型・ラ変型・特殊型など'},
+ {id:'form',name:'助動詞の活用形',desc:'未然〜命令の形を一つずつ'},
+ {id:'sent',name:'例文で意味を識別',desc:'接続・主語・文脈から意味を決める'},
+ {id:'keigo',name:'敬語動詞',desc:'尊敬・謙譲・丁寧と現代語訳'},
+ {id:'kakari',name:'係り結び',desc:'係助詞の意味と、結びの活用形'},
+ {id:'jsetsu',name:'接続助詞',desc:'ば・ど・とも・て・で・つつ…の接続と意味'},
+ {id:'jshu',name:'終助詞',desc:'願望・禁止・念押しを表す語'},
+ {id:'jkaku',name:'格助詞・副助詞',desc:'の・より・にて、だに・さへ・のみなど'},
+ {id:'psent',name:'助詞を例文で識別',desc:'「の」の4用法、ばの仮定と確定、係り結びなど'}
+];
+
+/* ===== カード生成 ===== */
+const CARDS=[];
+AUX.forEach(a=>{
+  CARDS.push({id:'conn:'+a.id,deck:'conn'},{id:'mean:'+a.id,deck:'mean'},{id:'type:'+a.id,deck:'type'});
+  a.f.forEach((x,i)=>{ if(x) CARDS.push({id:'form:'+a.id+':'+i,deck:'form'}); });
+});
+SENT.forEach((_,i)=>CARDS.push({id:'sent:'+i,deck:'sent'}));
+KEIGO.forEach((_,i)=>CARDS.push({id:'keigo:'+i+':k',deck:'keigo'},{id:'keigo:'+i+':m',deck:'keigo'}));
+JO.forEach((j,i)=>{ if(j.conn)CARDS.push({id:'jo:c:'+i,deck:j.deck}); CARDS.push({id:'jo:m:'+i,deck:j.deck}); });
+PSENT.forEach((_,i)=>CARDS.push({id:'psent:'+i,deck:'psent'}));
+
+const byId=id=>AUX.find(a=>a.id===id);
+const shuffle=arr=>{const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const uniq=arr=>[...new Set(arr)];
+function choices(ans,pool,n=4){
+  const d=shuffle(uniq(pool).filter(x=>x!==ans)).slice(0,n-1);
+  return shuffle([ans,...d]);
+}
+const lblTag=a=>a.w+(a.tag?'（'+a.tag+'）':'');
+const lblHint=a=>a.w+(a.hint?'（'+a.hint+'）':'');
+const meanStr=a=>a.mean.join('・');
+function auxInfo(a){
+  const forms=a.f.map((x,i)=>x?FORM[i].replace('形','')+' '+x:'').filter(Boolean).join('　');
+  return `${lblTag(a)} ｜ 接続:${a.conn} ｜ 型:${a.type} ｜ 意味:${meanStr(a)}<br>${forms}`;
+}
+
+function build(id){
+  const p=id.split(':');
+  if(p[0]==='conn'){const a=byId(p[1]);
+    return {tag:'接続',ask:`<span class="w">${lblTag(a)}</span>に接続する語の形は?`,opts:choices(a.conn,AUX.map(x=>x.conn)),ans:a.conn,expl:auxInfo(a)};}
+  if(p[0]==='mean'){const a=byId(p[1]);
+    return {tag:'意味',ask:`<span class="w">${lblHint(a)}</span>の意味をすべて挙げたものは?`,opts:choices(meanStr(a),AUX.map(meanStr)),ans:meanStr(a),expl:auxInfo(a)};}
+  if(p[0]==='type'){const a=byId(p[1]);
+    return {tag:'活用型',ask:`<span class="w">${lblTag(a)}</span>の活用の型は?`,opts:choices(a.type,AUX.map(x=>x.type)),ans:a.type,expl:auxInfo(a)};}
+  if(p[0]==='form'){const a=byId(p[1]),i=+p[2],ans=a.f[i];
+    const own=a.f.filter(x=>x&&x!==ans);
+    const other=AUX.flatMap(x=>x.f).filter(x=>x&&x!==ans&&!own.includes(x));
+    const pool=shuffle(own).concat(shuffle(other));
+    return {tag:'活用形',ask:`<span class="w">${lblTag(a)}</span>の${FORM[i]}は?`,opts:choices(ans,pool.slice(0,12)),ans,expl:auxInfo(a)};}
+  if(p[0]==='sent'){const s=SENT[+p[1]];
+    return {tag:'識別',ask:`${s.s[0]}<em>${s.s[1]}</em>${s.s[2]}<br><span style="font-size:1rem">「${s.s[1]}」の意味は?</span>`,opts:shuffle([s.ans,...s.o]),ans:s.ans,expl:s.e};}
+  if(p[0]==='jo'){const j=JO[+p[2]],lbl=j.w+(j.hint?'（'+j.hint+'）':'');
+    const same=JO.filter(x=>x.deck===j.deck);
+    if(p[1]==='c'){
+      const pool=same.map(x=>x.conn).filter(Boolean).concat(['未然形','連用形','終止形','連体形','已然形']);
+      return {tag:j.cat,ask:`<span class="w">${lbl}</span>${j.deck==='kakari'?'の結びの活用形は?':'に接続する語の形は?'}`,opts:choices(j.conn,pool),ans:j.conn,expl:joInfo(j)};}
+    return {tag:j.cat,ask:`<span class="w">${lbl}</span>の意味は?`,opts:choices(j.mean,same.map(x=>x.mean).concat(JO.map(x=>x.mean))),ans:j.mean,expl:joInfo(j)};}
+  if(p[0]==='psent'){const s=PSENT[+p[1]];
+    return {tag:'識別',ask:`${s.s[0]}<em>${s.s[1]}</em>${s.s[2]}<br><span style="font-size:1rem">「${s.s[1]}」の意味・用法は?</span>`,opts:shuffle([s.ans,...s.o]),ans:s.ans,expl:s.e};}
+  if(p[0]==='keigo'){const k=KEIGO[+p[1]];
+    if(p[2]==='k') return {tag:'敬語',ask:`<span class="w">${k[0]}</span>の種類は?`,opts:['尊敬語','謙譲語','丁寧語'],ans:k[1],expl:`${k[0]}は${k[1]}。${k[2]}。`};
+    return {tag:'敬語',ask:`<span class="w">${k[0]}</span>(${k[1]})の現代語訳は?`,opts:choices(k[2],KEIGO.map(x=>x[2])),ans:k[2],expl:`${k[0]}は${k[1]}。${k[2]}。`};}
+}
+
+/* ===== 記録 =====
+   カードの記録 b: 0=未学習 / 1=直近で間違えた(=復習対象) / 2〜5=正解を重ねた段階
+   間違えると b=1 になり、次に正解するまで「間違えた問題」として残る */
+const KEY='kobun-trainer-v1';
+const DAY=86400000, GAP=[0,0,1,3,7,21];
+let S={cards:{},days:{},mode:'1'};
+try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);if(o&&o.cards)S=o;}}catch(e){}
+if(S.mode!=='all')S.mode='1';
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
+const dkey=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const isDue=c=>{const r=S.cards[c.id];return !r||r.d<=Date.now();};
+const isMiss=c=>{const r=S.cards[c.id];return !!r&&r.b===1;};
+function record(id,ok){
+  const now=Date.now(), r=S.cards[id]||{b:0,d:0};
+  r.b=ok?Math.min(5,r.b===0?2:r.b+1):1;
+  r.d=ok?now+GAP[r.b]*DAY:now;
+  S.cards[id]=r;
+  const k=dkey(now), g=S.days[k]||{n:0,ok:0};
+  g.n++; if(ok)g.ok++; S.days[k]=g; save();
+}
+function streak(){
+  let n=0,t=Date.now();
+  if(!S.days[dkey(t)]) t-=DAY;
+  while(S.days[dkey(t)]){n++;t-=DAY;}
+  return n;
+}
+function deckStat(deck){
+  const cs=CARDS.filter(c=>deck==='all'||c.deck===deck);
+  let none=0,learn=0,done=0,due=0,miss=0;
+  cs.forEach(c=>{const r=S.cards[c.id];
+    if(!r)none++; else if(r.b>=4)done++; else learn++;
+    if(r&&r.b===1)miss++;
+    if(isDue(c))due++;});
+  return {total:cs.length,none,learn,done,due,miss};
+}
+
+/* ===== 画面 ===== */
+const $app=document.getElementById('app');
+let view='home', sess=null, confirmReset=false;
+
+function head(){
+  const inPractice=view==='home'||view==='quiz'||view==='batch'||view==='result';
+  return `<header class="top"><div><h1>古文文法トレーナー</h1><p class="sub">マドンナ古文と並行して、出題と復習で文法を定着させる</p></div></header>
+  <nav class="tabs"><button data-act="tab" data-v="home" aria-current="${inPractice}">練習</button><button data-act="tab" data-v="ref" aria-current="${view==='ref'}">一覧表</button></nav>`;
+}
+function renderHome(){
+  const t=S.days[dkey(Date.now())]||{n:0,ok:0};
+  const all=deckStat('all');
+  const rate=t.n?Math.round(t.ok/t.n*100)+'%':'–';
+  const decks=DECKS.map(d=>{
+    const s=deckStat(d.id), pc=n=>(n/s.total*100).toFixed(1)+'%';
+    const missBtn=s.miss?`<button class="btn warn" data-act="start" data-d="${d.id}" data-m="miss">間違い復習 ${s.miss}</button>`:'';
+    return `<section class="deck"><div><h2>${d.name}</h2><p>${d.desc}</p></div>
+      <div class="btns"><button class="btn" data-act="start" data-d="${d.id}">${s.due?'練習する':'復習する'}</button>${missBtn}</div>
+      <div class="bar" role="img" aria-label="定着${s.done}、学習中${s.learn}、未学習${s.none}"><i class="b-done" style="width:${pc(s.done)}"></i><i class="b-learn" style="width:${pc(s.learn)}"></i></div>
+      <div class="legend"><span>定着 ${s.done}</span><span>学習中 ${s.learn}</span><span>未学習 ${s.none}</span>${s.miss?`<span class="lm">間違い ${s.miss}</span>`:''}<span>今日の出題対象 ${s.due}/${s.total}</span></div></section>`;
+  }).join('');
+  const reset=confirmReset
+    ?`<div class="reset"><span class="note">記録をすべて消します。</span><button class="btn ghost" data-act="reset-yes">消す</button><button class="btn ghost" data-act="reset-no">やめる</button></div>`
+    :`<div class="reset"><button class="btn ghost" data-act="reset">記録をリセット</button><span class="note">記録はこのブラウザにだけ保存されます。</span></div>`;
+  const modeBox=`<div class="mode"><b>出題の形式</b>
+    <div class="seg" role="group" aria-label="出題の形式">
+      <button data-act="mode" data-m="1" aria-pressed="${S.mode==='1'}">1問ずつ</button>
+      <button data-act="mode" data-m="all" aria-pressed="${S.mode==='all'}">まとめて表示</button></div>
+    <p>${S.mode==='1'?'1問答えるごとに解説が出て、「次へ」で進みます。じっくり取り組みたいとき向け。':'10問を1ページにまとめて表示します。好きな順に答えられ、最後に結果を見ます。'}</p></div>`;
+  const missBox=`<div class="mix miss"><div><b>間違えた問題だけ復習</b><p>${all.miss?`これまでに間違えて、まだ正解できていない問題が ${all.miss} 問あります。正解すると、ここから消えます。`:'いま復習が必要な問題はありません。間違えた問題がここにたまります。'}</p></div><button class="btn warn" data-act="start" data-d="all" data-m="miss" ${all.miss?'':'disabled'}>復習する</button></div>`;
+  return head()+`<div class="stats"><div class="stat"><b>${t.n}</b><span>今日の解答数</span></div><div class="stat"><b>${rate}</b><span>今日の正答率</span></div><div class="stat"><b>${streak()}日</b><span>連続学習</span></div></div>
+  ${modeBox}
+  ${missBox}
+  <div class="mix"><div><b>全分野ミックス</b><p>出題対象 ${all.due} / ${all.total}。間違えたカードは毎回先に出ます。</p></div><button class="btn" data-act="start" data-d="all">10問に挑戦</button></div>
+  <div class="decks">${decks}</div>
+  <p class="note">正解すると次の出題は 1日後 → 3日後 → 7日後 → 21日後 と空き、間違えると次の練習で最初から出ます。「定着」は4段階目以上のカードです。「間違い」は、直近で間違えて、まだ正解し直していないカードです。</p>${reset}`;
+}
+/* ids を直接渡して出題することもできる(結果画面の「間違えた問題だけもう一度」用) */
+function makeSession(deck,kind,ids){
+  let pick;
+  if(ids){
+    pick=ids.slice();
+  }else if(kind==='miss'){
+    const pool=CARDS.filter(c=>(deck==='all'||c.deck===deck)&&isMiss(c));
+    pick=shuffle(pool).slice(0,20).map(c=>c.id);
+  }else{
+    const pool=CARDS.filter(c=>deck==='all'||c.deck===deck);
+    const due=pool.filter(isDue);
+    const rank=c=>{const r=S.cards[c.id];return r?r.b+Math.random()*.9:1.5+Math.random();};
+    let p=due.sort((a,b)=>rank(a)-rank(b)).slice(0,10);
+    if(p.length<10){
+      const rest=shuffle(pool.filter(c=>!p.includes(c)));
+      p=p.concat(rest.slice(0,10-p.length));
+    }
+    pick=p.map(c=>c.id);
+  }
+  const queue=shuffle(pick);
+  const s={deck,kind:kind||'',mode:S.mode,queue,idx:0,q:null,sel:-1,results:[],requeued:{},total:queue.length};
+  if(s.mode==='all'){s.qs=queue.map(build);s.sels=queue.map(()=>-1);}
+  return s;
+}
+function begin(s){
+  sess=s;
+  if(s.mode==='all'){view='batch';render();}
+  else{view='quiz';nextQ();}
+}
+function nextQ(){
+  if(sess.idx>=sess.queue.length){view='result';render();return;}
+  sess.q=build(sess.queue[sess.idx]);sess.sel=-1;render();
+}
+const isAuxId=id=>/^(conn|mean|type|form|sent):/.test(id);
+const memoBtn=id=>isAuxId(id)?`<button class="memo" data-act="memo">助動詞の接続【暗記】</button>`:'';
+function renderQuiz(){
+  const q=sess.q, ans=sess.sel>=0, ok=ans&&q.opts[sess.sel]===q.ans;
+  const opts=q.opts.map((o,i)=>{
+    let cls='';
+    if(ans){if(o===q.ans)cls='ok';else if(i===sess.sel)cls='ng';}
+    return `<button class="opt ${cls}" data-act="ans" data-i="${i}" ${ans?'disabled':''}><kbd>${i+1}</kbd><span>${o}</span></button>`;
+  }).join('');
+  const fb=ans?`<div class="fb ${ok?'ok':'ng'}" role="status"><strong>${ok?'正解':'不正解　答え: '+q.ans}</strong><div class="mini">${q.expl}</div></div><div class="row"><button class="btn" data-act="next" id="nextBtn">${sess.idx+1>=sess.queue.length?'結果を見る':'次へ'}</button></div>`:'';
+  const pct=(sess.idx/sess.queue.length*100).toFixed(0);
+  const kindTag=sess.kind==='miss'?'間違えた問題の復習　':'';
+  return `<div class="prog"><button class="btn ghost" data-act="quit">やめる</button><div class="bar"><i style="width:${pct}%"></i></div><span>${sess.idx+1} / ${sess.queue.length}</span></div>
+  <div class="q"><div class="qtop"><div class="tagline">${kindTag}${q.tag}</div>${memoBtn(sess.queue[sess.idx])}</div><p class="ask">${q.ask}</p><div class="opts">${opts}</div>${fb}</div>`;
+}
+function renderBatch(){
+  const n=sess.qs.length, done=sess.sels.filter(x=>x>=0).length;
+  const kindTag=sess.kind==='miss'?'間違えた問題の復習　':'';
+  const cards=sess.qs.map((q,qi)=>{
+    const sel=sess.sels[qi], ans=sel>=0, ok=ans&&q.opts[sel]===q.ans;
+    const opts=q.opts.map((o,i)=>{
+      let cls='';
+      if(ans){if(o===q.ans)cls='ok';else if(i===sel)cls='ng';}
+      return `<button class="opt ${cls}" data-act="bans" data-q="${qi}" data-i="${i}" ${ans?'disabled':''}><kbd>${i+1}</kbd><span>${o}</span></button>`;
+    }).join('');
+    const fb=ans?`<div class="fb ${ok?'ok':'ng'}" role="status"><strong>${ok?'正解':'不正解　答え: '+q.ans}</strong><div class="mini">${q.expl}</div></div>`:'';
+    return `<div class="q"><div class="qtop"><div class="tagline">${kindTag}第${qi+1}問　${q.tag}</div>${memoBtn(sess.queue[qi])}</div><p class="ask">${q.ask}</p><div class="opts">${opts}</div>${fb}</div>`;
+  }).join('');
+  const pct=(done/n*100).toFixed(0);
+  const left=n-done;
+  return `<div class="prog"><button class="btn ghost" data-act="quit">やめる</button><div class="bar"><i style="width:${pct}%"></i></div><span>${done} / ${n}</span></div>
+  <div class="blist">${cards}</div>
+  <div class="fin"><span>${left?`あと ${left} 問`:'全問に答えました'}</span><button class="btn" data-act="finish">結果を見る</button></div>`;
+}
+function renderResult(){
+  const ok=sess.results.filter(r=>r.ok).length, n=sess.results.length;
+  const miss=sess.results.filter(r=>!r.ok);
+  const missIds=uniq(miss.map(r=>r.id));
+  const list=!n?'<p>まだ解いた問題がありません。</p>'
+    :miss.length?`<h2 style="font-family:var(--f-display);font-size:1.05rem;margin:0">間違えた問題</h2><ul class="miss">${miss.map(r=>{const q=build(r.id);return `<li>${q.ask.replace(/<br>.*$/,'').replace(/<[^>]+>/g,'')}<small>答え: ${q.ans}</small></li>`;}).join('')}</ul>`:'<p>全問正解です。</p>';
+  const retryMiss=missIds.length?`<button class="btn warn" data-act="retry-miss">間違えた問題だけもう一度（${missIds.length}問）</button>`:'';
+  return `<div class="q"><div class="tagline">結果</div><div class="score">${ok} / ${n}</div>${list}
+  <div class="row"><button class="btn ghost" data-act="home">ホームへ</button>${retryMiss}<button class="btn" data-act="start" data-d="${sess.deck}" data-m="${sess.kind}">もう一度</button></div></div>`;
+}
+function renderRef(){
+  const groups=[];
+  AUX.forEach(a=>{let g=groups.find(x=>x.c===a.conn);if(!g){g={c:a.conn,l:[]};groups.push(g);}g.l.push(a);});
+  const order=['未然形','連用形','終止形(ラ変型には連体形)','体言・連体形','体言','四段・ナ変・ラ変の未然形','四段・ナ変・ラ変以外の未然形','サ変の未然形・四段の已然形(命令形)','体言・連体形(+の・が)'];
+  groups.sort((a,b)=>order.indexOf(a.c)-order.indexOf(b.c));
+  const html=groups.map(g=>`<section class="group"><h2>${g.c}に接続</h2><div class="scroll"><table><thead><tr><th>語</th><th>意味</th><th>型</th>${FORM.map(f=>`<th>${f}</th>`).join('')}</tr></thead><tbody>${
+    g.l.map(a=>`<tr><td class="w">${lblTag(a)}</td><td class="m">${meanStr(a)}</td><td>${a.type}</td>${a.f.map(x=>`<td>${x||'–'}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`).join('');
+  const kg=`<section class="group"><h2>敬語動詞</h2><div class="scroll"><table style="min-width:420px"><thead><tr><th>語</th><th>種類</th><th>現代語訳</th></tr></thead><tbody>${KEIGO.map(k=>`<tr><td class="w">${k[0]}</td><td>${k[1]}</td><td class="m">${k[2]}</td></tr>`).join('')}</tbody></table></div></section>`;
+  const pg=`<section class="group"><h2>助詞</h2><div class="scroll"><table style="min-width:560px"><thead><tr><th>語</th><th>種類</th><th>接続・結び</th><th>意味</th></tr></thead><tbody>${JO.map(j=>`<tr><td class="w">${j.w}${j.hint?'<small>（'+j.hint+'）</small>':''}</td><td>${j.cat}</td><td>${j.conn||'–'}</td><td class="m">${j.mean}</td></tr>`).join('')}</tbody></table></div></section>`;
+  return head()+`<p class="note">接続ごとにまとめた助動詞の一覧です。表は横にスクロールできます。「–」はその形が存在しません。(カッコ)は例外的な形です。</p>`+html+kg+pg;
+}
+function render(keepY){
+  $app.innerHTML=view==='home'?renderHome():view==='ref'?renderRef():view==='quiz'?renderQuiz():view==='batch'?renderBatch():renderResult();
+  window.scrollTo(0,keepY===undefined?0:keepY);
+}
+function answer(i){
+  if(sess.sel>=0)return;
+  sess.sel=i;
+  const id=sess.queue[sess.idx], ok=sess.q.opts[i]===sess.q.ans;
+  record(id,ok);
+  sess.results.push({id,ok});
+  if(!ok&&!sess.requeued[id]){sess.requeued[id]=1;sess.queue.push(id);}
+  render(window.scrollY);
+  const b=document.getElementById('nextBtn');if(b)b.focus({preventScroll:true});
+}
+function answerBatch(qi,i){
+  if(sess.sels[qi]>=0)return;
+  sess.sels[qi]=i;
+  const id=sess.queue[qi], ok=sess.qs[qi].opts[i]===sess.qs[qi].ans;
+  record(id,ok);
+  sess.results.push({id,ok});
+  render(window.scrollY);
+}
+$app.addEventListener('click',e=>{
+  const t=e.target.closest('[data-act]');if(!t||t.disabled)return;
+  const a=t.dataset.act;
+  if(a==='tab'){view=t.dataset.v;confirmReset=false;render();}
+  else if(a==='mode'){S.mode=t.dataset.m==='all'?'all':'1';save();render(window.scrollY);}
+  else if(a==='start'){begin(makeSession(t.dataset.d,t.dataset.m||''));}
+  else if(a==='retry-miss'){
+    const ids=uniq(sess.results.filter(r=>!r.ok).map(r=>r.id));
+    const d=sess.deck;
+    begin(makeSession(d,'miss',ids));
+  }
+  else if(a==='ans')answer(+t.dataset.i);
+  else if(a==='bans')answerBatch(+t.dataset.q,+t.dataset.i);
+  else if(a==='finish'){view='result';render();}
+  else if(a==='next'){sess.idx++;nextQ();}
+  else if(a==='quit'||a==='home'){view='home';render();}
+  else if(a==='reset'){confirmReset=true;render();}
+  else if(a==='reset-no'){confirmReset=false;render();}
+  else if(a==='reset-yes'){S={cards:{},days:{},mode:S.mode};save();confirmReset=false;render();}
+});
+document.addEventListener('keydown',e=>{
+  if(view!=='quiz'||!sess||!sess.q||!document.getElementById('pop').hidden)return;
+  if(sess.sel<0&&/^[1-4]$/.test(e.key)&&+e.key<=sess.q.opts.length)answer(+e.key-1);
+});
+/* ===== 暗記ポップ(助動詞の接続の語呂) ===== */
+const MEMO=[
+ ['未然形接続','〔む〕〔ず〕〔むず〕とする〔じ〕、〔さす〕と〔しむ〕、〔さず〕〔らる〕と〔まし〕<br>未然に防が〔まほし〕'],
+ ['連用形接続','〔けり〕〔つ〕〔き〕〔たり〕〔ぬ〕用済みさ〔けむ〕〔たし〕。<br>完全にフラれた〔り〕ーさん　サ(さ)未(み)四(し)已(い)'],
+ ['終止形接続','〔メリー〕さん〔まじ〕に〔なり〕すぎと〔伝え聞く〕。〔らむ〕らむと輝く〔らし〕い彼の眼に最後は〔ラ体〕で〔終〕わる〔べし〕'],
+ ['体言連体形接続','マトリックス〔体(からだ)〕〔ごとし〕　〔なり〕〔たり〕']
+];
+const pop=document.getElementById('pop');
+let popOpener=null;
+document.getElementById('popBody').innerHTML=MEMO.map(m=>`<div class="mrow"><div class="mh">${m[0]}</div><div class="mb">${m[1].replace(/〔([^〕]+)〕/g,'<span class="r">〔$1〕</span>')}</div></div>`).join('');
+function openPop(op){popOpener=op;pop.hidden=false;document.body.style.overflow='hidden';document.getElementById('popClose').focus();}
+function closePop(){pop.hidden=true;document.body.style.overflow='';if(popOpener&&document.contains(popOpener))popOpener.focus({preventScroll:true});}
+document.addEventListener('click',e=>{
+  const m=e.target.closest('[data-act="memo"]');
+  if(m){openPop(m);return;}
+  if(!pop.hidden&&(e.target===pop||e.target.closest('[data-close]')))closePop();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!pop.hidden)closePop();});
+render();
+</script>
+</body></html>
